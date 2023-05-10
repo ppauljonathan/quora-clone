@@ -1,0 +1,16 @@
+<h2>Verify your email</h2>
+
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
+
+<p>hi, <%= @user.name %>, a verification email was sent to your email id (<%= @user.email %>), with a verification token , please enter it in the box below</p>
+
+<%= form_with url: '/users/validate_verification_token', scope: :validate do |form| %>
+
+  <%= form.hidden_field :user_id, value: @user.id %>
+  <%= form.label :verification_token %>
+  <%= form.text_field :verification_token %>
+  <%= form.submit %>
+<% end %>
+

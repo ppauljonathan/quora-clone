@@ -1,0 +1,11 @@
+<h1>WELCOME TO QUORA CLONE</h1>
+
+<% if flash[:notice] %>
+  <%= flash[:notice] %>
+<% end %>
+
+<ul>
+  <% @users.each do |user| %>
+    <%= user.name %>
+  <% end %>
+</ul>
