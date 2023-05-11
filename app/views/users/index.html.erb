@@ -1,7 +1,7 @@
-<h1>WELCOME TO QUORA CLONE</h1>
-
 <% if flash[:notice] %>
-  <%= flash[:notice] %>
+  <div class="error-block">
+    Error: <%= flash[:notice] %>
+  </div>
 <% end %>
 
 <ul>

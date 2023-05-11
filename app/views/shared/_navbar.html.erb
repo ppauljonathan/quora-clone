@@ -1,0 +1,7 @@
+<nav class="navbar">
+  <%= link_to 'QuoraClone', users_path, class: 'navbar-title' %>
+  <%# <div class="navbar-title">QuoraClone</div> %>
+  <div class="navbar-list">
+    <%= link_to 'Signup', signup_path, class: 'navbar-buttons' unless session[:user_id]%>
+  </div>
+</nav>

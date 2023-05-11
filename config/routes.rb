@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   controller :users do
-    get 'signup' => :new
+    get 'signup'
     post 'signup' => :create
   end
 

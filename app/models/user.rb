@@ -9,7 +9,7 @@ class User < ApplicationRecord
   def verification_token_valid?(token)
     return false if verified_at || token != verification_token
 
-    update verified_at: Time.now
+    update(verified_at: Time.now, credits: (credits + 5))
   end
 
   private

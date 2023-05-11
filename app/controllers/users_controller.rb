@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def new
+  def signup
     @user = User.new
   end
 
@@ -14,7 +14,7 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to email_verification_users_path, flash: { user_id: @user.id } }
       else
-        format.html { render :new, notice: @user.errors, status: 422 }
+        format.html { render :signup, notice: @user.errors, status: 422 }
       end
     end
   end

@@ -1,0 +1,47 @@
+.navbar {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100vw;
+  height: 7vh;
+  background: var(--red);
+}
+
+.navbar > * {
+  display: inline;
+}
+
+.navbar-title {
+  font-size: 5vh;
+  color: var(--white);
+  text-decoration: none;
+  text-align: center;
+}
+
+.navbar-title:hover {
+  color: var(--bright-white);
+}
+
+.navbar-list {
+  float: right;
+  width: fit-content;
+  position: relative;
+  top: 25%;
+}
+
+.navbar-buttons {
+  display: inline;
+  font-size: 3vh;
+  color: var(--white);
+  border: 0.2vh solid var(--white);
+  border-radius: 1vh;
+  padding: 1vh;
+  text-decoration: none;
+  margin-right: 1vh;
+}
+
+.navbar-buttons:hover {
+  color: var(--bright-white);
+  border-color: var(--bright-white);
+}
+ 
