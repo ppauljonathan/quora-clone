@@ -65,4 +65,16 @@ padding: unset;
   padding: 2%;
   border: 0.5vmin solid var(--red);
   background: rgba(255, 0, 0, 0.326);
+  border-radius: 2vh;
+}
+
+.message-block {
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  margin-bottom: 2%;
+  padding: 2%;
+  border: 0.5vmin solid var(--yellow);
+  background: rgba(170, 170, 0, 0.326);
+  border-radius: 2vh;
 }

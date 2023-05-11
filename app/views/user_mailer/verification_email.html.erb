@@ -1,6 +1,4 @@
-<p>Hello</p>
+<p>Hello <%= @user.name %></p>
 <p>Thank you for signing up to Quora Clone</p>
-<p>Here is your verification_token: </p>
-<code>
-  <%= @user.verification_token %>
-</code>
+<p>click the link below to verify your email id: </p>
+ <a href="localhost:3000/confirmation/?token=<%= @user.verification_token %>&id=<%= @user.id %>"></a>

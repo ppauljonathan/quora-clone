@@ -1,24 +1,36 @@
 class User < ApplicationRecord
-  has_secure_password
-
+  validates :name, presence: true
   validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  
+  has_secure_password
 
   before_create :generate_verification_token
   after_create_commit :send_verification_email
+
   
   def verification_token_valid?(token)
-    return false if verified_at || token != verification_token
+    return false if verified? || token != verification_token
 
     update(verified_at: Time.now, credits: (credits + 5))
   end
 
+  def verified?
+    verified_at?
+  end
+
+  def resend_verification_mail
+    generate_verification_token
+    update verified_at: nil
+    send_verification_email
+  end
   private
 
     def generate_verification_token
-      self.verification_token = (rand * (10 ** 7)).to_i
+      self.verification_token = SecureRandom.base64
     end
 
     def send_verification_email
       UserMailer.verification_email(id).deliver_later
     end
+
 end
