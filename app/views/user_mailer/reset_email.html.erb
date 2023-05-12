@@ -1,0 +1,3 @@
+<p>Hello <%= @user.name %></p>
+<p>click the link below to reset your password</p>
+ <button><a href="localhost:3000/reset_password/edit/?token=<%= @user.reset_token %>&id=<%= @user.id %>">Click Here</a></button>

@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  resources :users, id: /\d+/, except: %i[new create]
+  resources :users, id: /\d+/
 
   controller :registrations do
     get 'signup' => :new
@@ -11,11 +11,19 @@ Rails.application.routes.draw do
   controller :sessions do
     get 'login' => :new
     post 'login' => :create
+    delete 'logout' => :destroy
   end
 
   controller :confirmations do
     get 'confirmation' => :verify
     post 'confirmation' => :resend
+  end
+
+  controller :passwords do
+    get 'reset_password' => :new
+    post 'reset_password' => :create
+    get 'reset_password/edit' => :edit
+    patch 'reset_password' => :update
   end
 
   # Defines the root path route ("/")

@@ -10,4 +10,10 @@ class UserMailer < ApplicationMailer
 
     mail to: @user.email, subject: 'Confirm your email address'
   end
+
+  def reset_email(user_id)
+    @user = User.find(user_id)
+
+    mail to: @user.email, subject: 'Reset your password'
+  end
 end

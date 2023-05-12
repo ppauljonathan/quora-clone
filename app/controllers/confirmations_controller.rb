@@ -1,4 +1,7 @@
 class ConfirmationsController < ApplicationController
+  before_action :redirect_to_homepage_if_logged_in
+  skip_before_action :authorize
+
   def verify
     unless params[:id] && params[:token]
       return render :verify
@@ -6,11 +9,9 @@ class ConfirmationsController < ApplicationController
 
     user = User.find(params[:id])
     if user.verification_token_valid? params[:token]
-      flash.now[:notice] = 'email was verified successfully, you can log in now'
-      render 'sessions/new'
+      redirect_to login_path, notice: 'email was verified successfully, you can log in now'
     else
-      flash.now[:error] = 'the token was not valid'
-      render 'sessions/new'
+      redirect_to login_path, flash: { token_error: 'the token was not valid' }
     end
   end
 
