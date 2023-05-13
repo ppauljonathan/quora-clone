@@ -3,6 +3,10 @@
     <div class="message-block">
       <%= flash[:notice] %>
     </div>
+  <% elsif flash[:alert] %>
+    <div class="error-block">
+      <%= flash[:alert] %>
+    </div>
   <% end %>
   <div class="form-heading">Reset your Password</div>
   <br>

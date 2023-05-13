@@ -20,16 +20,14 @@ class ConfirmationsController < ApplicationController
 
     if user
       user.resend_verification_mail
-      redirect_to login_path, notice: 'Please verify your email before logging in, an email with a verification link has been sent to your email id'
+      redirect_to login_path, notice: 'Verification email sent'
     else
       flash.now[:notice] = 'User with given email was not found'
       render :verify, status: 422
     end
   end
 
-  private
-
-    def email_params
-      params.require(:email)
-    end
+  private def email_params
+    params.require(:email)
+  end
 end

@@ -15,7 +15,7 @@ class SessionsController < ApplicationController
       return render :new, status: 422
     end
 
-    cookies.signed[:user_id] = { value: user.id, expires: 2.weeks_from_now } if user_params[:remember_me]
+    cookies.signed[:user_id] = { value: user.id, expires: 24.weeks.from_now } if user_params[:remember_me]
 
     session[:user_id] = user.id
     redirect_to users_path

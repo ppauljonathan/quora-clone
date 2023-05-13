@@ -13,8 +13,8 @@ class RegistrationsController < ApplicationController
       if @user.save
         format.html do
           redirect_to(login_path,
-          notice: 'Please verify your email to log in, an email with a verification link has been sent to your registered email address')
-        end 
+                      notice: 'Verify your email to login')
+        end
       else
         format.html { render :new, notice: @user.errors, status: 422 }
       end

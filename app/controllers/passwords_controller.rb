@@ -1,6 +1,7 @@
 class PasswordsController < ApplicationController
   before_action :redirect_to_homepage_if_logged_in
   skip_before_action :authorize
+  before_action :set_user, only: :edit
 
   def create
     user = User.find_by_email email_params
@@ -17,11 +18,6 @@ class PasswordsController < ApplicationController
   end
 
   def edit
-    unless params[:id] && params[:token]
-      return redirect_to reset_password_path, notice: 'Cannot access this path'
-    end
-
-    @user = User.find(params[:id])
     unless @user.reset_token_valid? params[:token]
       return redirect_to reset_password_path, notice: 'the token was not valid, please initiate reset password action again'
     end
@@ -43,5 +39,10 @@ class PasswordsController < ApplicationController
 
   private def user_params
     params.require(:user)
+  end
+
+  private def set_user
+    @user = User.find_by_id(params[:id])
+    redirect_to reset_password_path, alert: 'Invalid User' unless @user
   end
 end

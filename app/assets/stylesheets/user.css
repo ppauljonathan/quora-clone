@@ -1,0 +1,77 @@
+.top-panel {
+  width: 100vw;
+  height: 30vh;
+  border-bottom: 2px solid var(--black);
+}
+
+.profile-picture {
+  width: 25vmin;
+  height: 25vmin;
+  border: 2px solid var(--black);
+  border-radius: 50%;
+  position: relative;
+  top: 50%;
+  left: 2%;
+  transform: translate(0%, -50%);
+}
+
+.no-photo-message {
+  position: relative;
+  max-width: 20vmin;
+  word-wrap: normal;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.user-details {
+  height: inherit;
+  width: 60vw;
+  position: relative;
+  top: -85%;
+  left: 33vmin;
+}
+
+.user-name {
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+.topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  max-height: 15vh;
+}
+
+.topic {
+  display: inline;
+  padding: 0.25em;
+  margin: 0.25em;
+  border: 2px solid black;
+}
+
+.function-button-list {
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  top: 10%;
+  right: 2%;
+}
+
+.function-button {
+  font-size: large;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+  border: 2px solid var(--red);
+  background: var(--red);
+  color: var(--bright-white);
+  border-radius: 0.5em;
+  text-align: center;
+  display: block;
+}
+
+.function-button:hover, .highlighted-function-button {
+  background: var(--bright-red);
+}

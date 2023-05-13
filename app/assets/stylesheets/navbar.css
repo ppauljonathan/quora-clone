@@ -55,9 +55,20 @@
   border-radius: 1vh;
   padding: 1vh;
   margin-top: -12%;
-  margin-left: 1vh;
   margin-right: 1vh;
   font-family: 'Courier New', Courier, monospace;
+}
+
+.navbar-button-highlight {
+  display: inline;
+  font-size: 2vh;
+  border-radius: 1vh;
+  padding: 1vh;
+  text-decoration: none;
+  margin-right: 1vh;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--bright-yellow);
+  border: 0.2vh solid var(--bright-yellow);
 }
 
 .navbar-buttons:hover, .navbar-form-buttons:hover {

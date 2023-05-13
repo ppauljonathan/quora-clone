@@ -11,4 +11,8 @@ class ApplicationController < ActionController::Base
 
     session[:user_id] = cookies.signed[:user_id]
   end
+
+  private def current_user
+    @current_user = User.find(session[:user_id])
+  end
 end

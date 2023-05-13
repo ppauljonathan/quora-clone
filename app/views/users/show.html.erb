@@ -1,0 +1,33 @@
+<div class="top-panel">
+  <div class="profile-picture">
+    <div class="no-photo-message">Upload a profile picture</div>
+    <%= image_tag url_for(@user.profile_picture) if @user.profile_picture.any? %>
+  </div>
+
+  <div class="user-details">
+    <div class="user-name">
+      <%= @user.name %>
+    </div>
+    <div class="user-email">
+      <%= @user.email %>
+    </div>
+    <br>
+    <div class="topic-list-title">Your Topics:</div>
+    <div class="topics-list">
+      <% @topics.each do |topic| %>
+        <div class="topic"><%= topic %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="function-button-list">
+    <%= highlighted_link 'Edit Details',
+                         'function-button',
+                         'highlighted-function-button',
+                         edit_user_path(id: params[:id]) %>
+    <a class="function-button">Followers</a>
+    <a class="function-button">Questions</a>
+    <a class="function-button">Answers</a>
+    <a class="function-button">Comments</a>
+  </div>
+</div>
