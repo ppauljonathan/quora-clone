@@ -8,12 +8,14 @@ class UsersController < ApplicationController
   end
 
   def show
-    @topics = ['Science & Technology', 'Mathematics', 'Space']
+    @topics = @user.topic_list
+  end
+
+  def edit
+    @topics = @user.topic_list.join(', ')
   end
 
   def update
-    @user.profile_picture_attachment = nil unless user_params[:profile_picture]
-
     if @user.update(user_params)
       redirect_to user_path, notice: 'succesfully updated'
     else
@@ -23,11 +25,12 @@ class UsersController < ApplicationController
   end
 
   private def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id(params[:id])
+    redirect_to users_path, notice: 'user not found' unless @user
   end
 
   private def user_params
-    params.require(:user).permit(:name, :profile_picture)
+    params.require(:user).permit(:name, :profile_picture, :topic_list)
   end
 
   private def check_if_current_user

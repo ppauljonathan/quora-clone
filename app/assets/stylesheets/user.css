@@ -38,8 +38,12 @@
 }
 
 .user-name {
-  font-size: xx-large;
+  font-size: 6vh;
   font-weight: bold;
+}
+
+.user-email {
+  font-size: 2vh;
 }
 
 .topics-list {
@@ -49,11 +53,16 @@
   max-height: 15vh;
 }
 
+.topic-list-title {
+  font-size: 2vh;
+}
+
 .topic {
   display: inline;
   padding: 0.25em;
   margin: 0.25em;
   border: 2px solid black;
+  font-size: 2vh;
 }
 
 .function-button-list {
@@ -65,7 +74,7 @@
 }
 
 .function-button {
-  font-size: large;
+  font-size: 2.3vh;
   padding: 0.2em;
   margin-bottom: 0.2em;
   border: 2px solid var(--red);
@@ -77,6 +86,6 @@
   text-decoration: none;
 }
 
-.function-button:hover, .highlighted-function-button {
+.function-button:hover {
   background: var(--bright-red);
 }

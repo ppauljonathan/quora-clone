@@ -16,16 +16,25 @@
     <%= form.label :name, class: 'form-label' %>
     <%= form.text_field :name, class: 'form-field' %>
   </div>
-  <br>
+  &nbsp;
 
   <div>
     <%= form.label 'Upload a profile picture', class: 'form-label' %>
     <%= form.file_field :profile_picture, accept: 'image/png,image/gif,image/jpeg' %>
   </div>
-  <br>
+  &nbsp;
+
+  <div>
+    <%= form.label 'Select the topics', class: 'form-label' %>
+    <%= form.text_field :topic_list, class: 'form-field', value: @topics, id: 'search', autocomplete: 'off'  %>
+    <ul id="search-results"></ul>
+  </div>
+  &nbsp;
 
   <div>
     <%= form.button 'Save Changes', class: 'form-submit' %>
     <%= link_to 'Cancel Changes', user_path, class: 'form-cancel' %>
   </div>
 <% end %>
+
+<%= javascript_include_tag 'topics_dropdown' %>

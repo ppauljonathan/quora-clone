@@ -8,6 +8,9 @@ class User < ApplicationRecord
   after_create_commit :send_verification_email
 
   has_one_attached :profile_picture
+  has_many :questions
+
+  acts_as_taggable_on :topics
 
   def verification_token_valid?(token)
     return false if verified? || token != verification_token

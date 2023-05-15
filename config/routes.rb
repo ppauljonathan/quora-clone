@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   resources :users, id: /\d+/
 
+  resources :questions, param: :identifier
+
   controller :registrations do
     get 'signup' => :new
     post 'signup' => :create
@@ -25,6 +27,8 @@ Rails.application.routes.draw do
     get 'reset_password/edit' => :edit
     patch 'reset_password' => :update
   end
+
+  get 'search', to: 'topics#search'
 
   # Defines the root path route ("/")
   # root "articles#index"
