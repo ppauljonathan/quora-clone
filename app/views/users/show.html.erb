@@ -1,8 +1,19 @@
 <div class="top-panel">
-  <div class="profile-picture">
-    <div class="no-photo-message">Upload a profile picture</div>
-    <%= image_tag url_for(@user.profile_picture) if @user.profile_picture.any? %>
-  </div>
+  <% if flash[:notice] %>
+    <div class="message-block">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
+
+  <% if @user.profile_picture.blank? %>
+    <div class="profile-picture" style = "background-image: url('/assets/default-pfp.jpg')">
+  <% else %>
+    <div
+      class="profile-picture",
+      style = "background-image: url(<%= url_for @user.profile_picture %>)"
+    >
+  <% end %>
+    </div>
 
   <div class="user-details">
     <div class="user-name">

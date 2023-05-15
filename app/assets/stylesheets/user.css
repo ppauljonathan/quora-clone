@@ -13,6 +13,9 @@
   top: 50%;
   left: 2%;
   transform: translate(0%, -50%);
+  z-index: 10;
+  background-size: cover;
+  background-position: center;
 }
 
 .no-photo-message {
@@ -23,6 +26,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  z-index: -20;
 }
 
 .user-details {
@@ -70,6 +74,7 @@
   border-radius: 0.5em;
   text-align: center;
   display: block;
+  text-decoration: none;
 }
 
 .function-button:hover, .highlighted-function-button {
