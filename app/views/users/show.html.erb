@@ -1,9 +1,10 @@
+<% if flash[:notice] %>
+  <div class="message-block">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
 <div class="top-panel">
-  <% if flash[:notice] %>
-    <div class="message-block">
-      <%= flash[:notice] %>
-    </div>
-  <% end %>
 
   <% if @user.profile_picture.blank? %>
     <div class="profile-picture" style = "background-image: url('/assets/default-pfp.jpg')">
@@ -32,10 +33,7 @@
   </div>
 
   <div class="function-button-list">
-    <%= highlighted_link 'Edit Details',
-                         'function-button',
-                         'highlighted-function-button',
-                         edit_user_path(id: params[:id]) %>
+    <%= link_to 'Edit', edit_user_path, class: 'function-button' if @user.id == session[:user_id]%>
     <a class="function-button">Followers</a>
     <a class="function-button">Questions</a>
     <a class="function-button">Answers</a>
