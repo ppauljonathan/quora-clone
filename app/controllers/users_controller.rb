@@ -26,7 +26,7 @@ class UsersController < ApplicationController
 
   private def set_user
     @user = User.find_by_id(params[:id])
-    redirect_to users_path, notice: 'user not found' unless @user
+    redirect_to root_path, alert: 'user not found' unless @user
   end
 
   private def user_params
@@ -34,6 +34,6 @@ class UsersController < ApplicationController
   end
 
   private def check_if_current_user
-    redirect_back_or_to users_path, notice: 'cannot edit this user' unless current_user == @user
+    redirect_back_or_to root_path, alert: 'cannot edit this user' unless current_user == @user
   end
 end

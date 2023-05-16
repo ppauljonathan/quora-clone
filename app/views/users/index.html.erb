@@ -1,12 +1,4 @@
-<% if flash[:error] %>
-  <div class="error-block">
-    Error: <%= flash[:error] %>
-  </div>
-<% elsif flash[:notice] %>
-  <div class="message-block">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
+<%= render 'shared/message_blocks' %>
 
 <ul>
   <% @users.each do |user| %>

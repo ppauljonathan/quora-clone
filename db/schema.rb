@@ -47,6 +47,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_15_123704) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["title"], name: "index_questions_on_title"
+    t.index ["url_slug"], name: "index_questions_on_url_slug"
     t.index ["user_id"], name: "index_questions_on_user_id"
   end
 

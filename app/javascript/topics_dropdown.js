@@ -2,7 +2,7 @@ const searchInput = document.getElementById('search');
 const searchResults = document.getElementById('search-results');
 
 function fetchResults(searchTerm) {
-  fetch(`/search?term=${searchTerm}`)
+  fetch(`/topics/search?term=${searchTerm}`)
     .then(response => response.json())
     .then(data => displayResults(data));
 }

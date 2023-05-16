@@ -1,0 +1,19 @@
+<div class='question-card'>
+  <%= link_to question.title, question_path(url_slug: question.url_slug), class: 'question-heading' %>
+  <div class="question-content"><%= question.content.truncate(60) %></div>
+  <div class="question-asked-by">
+    <div class="question-sub-headings">
+      author:
+      <div class="topic"><%= question.user.name %></div>
+    </div>
+  </div>
+  &nbsp;
+  <div class="topics-list">
+    <div class="question-sub-headings">
+      topics:
+    </div>
+    <% question.topic_list.each do |topic| %>
+      <div class="topic"><%= topic %></div>
+    <% end %>
+  </div>
+</div>

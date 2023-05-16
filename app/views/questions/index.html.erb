@@ -1,2 +1,23 @@
-<h1>Questions#index</h1>
-<p>Find me in app/views/questions/index.html.erb</p>
+<%= render 'shared/message_blocks' %>
+
+<div class="user-name">Questions</div>
+
+<%= render @questions %>
+
+<%= form_with method: :get, scope: :topics, url: root_path, class: 'footer-form' do |form|%>
+  <div class="footer-form-header">Filter Questions by Topics</div>
+  <div class="check-list">
+    <% @topics.each do |topic| %>
+      <div class="check-element">
+      <% if @selected&.include? topic %>
+        <%= form.check_box topic, include_hidden: false, checked: true, class: 'check-box' %>
+      <% else %>
+        <%= form.check_box topic, include_hidden: false, class: 'check-box' %>
+      <% end %>
+      <%= form.label topic, class: 'footer-form-label' %>
+      </div>
+    <% end %>
+  </div>
+  <%= form.submit 'Filter', class: 'footer-form-submit' %>
+  <%= link_to 'Clear', questions_path, class: 'footer-form-submit' %>
+<% end %>

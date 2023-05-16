@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :authorize
 
   private def redirect_to_homepage_if_logged_in
-    redirect_to users_path if session[:user_id]
+    redirect_to root_path if session[:user_id]
   end
 
   private def authorize

@@ -16,7 +16,7 @@ class RegistrationsController < ApplicationController
                       notice: 'Verify your email to login')
         end
       else
-        format.html { render :new, notice: @user.errors, status: 422 }
+        format.html { render :new, alert: @user.errors, status: 422 }
       end
     end
   end

@@ -22,7 +22,7 @@ class ConfirmationsController < ApplicationController
       user.resend_verification_mail
       redirect_to login_path, notice: 'Verification email sent'
     else
-      flash.now[:notice] = 'User with given email was not found'
+      flash.now[:alert] = 'User with given email was not found'
       render :verify, status: 422
     end
   end

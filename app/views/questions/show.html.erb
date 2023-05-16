@@ -1,2 +1,19 @@
-<h1>Questions#show</h1>
-<p>Find me in app/views/questions/show.html.erb</p>
+<div class="user-name"><%= @question.title %></div>
+
+<% if @user.profile_picture.blank? %>
+  <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
+<% else %>
+  <div
+    class="profile-thumbnail-in-question",
+    style = "background-image: url(<%= url_for @user.profile_picture %>)"
+  >
+<% end %>
+
+<div class="question-user-name">
+<%= @user.name %>
+</div>
+
+<%# <div class="question-content" style='font-size: 3vh'><%= @question.content %>
+<%# </div> %>
+
+

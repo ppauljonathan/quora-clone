@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
     cookies.signed[:user_id] = { value: user.id, expires: 24.weeks.from_now } if user_params[:remember_me]
 
     session[:user_id] = user.id
-    redirect_to users_path
+    redirect_to root_path
   end
 
   def destroy

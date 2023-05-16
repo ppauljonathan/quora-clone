@@ -1,9 +1,5 @@
 <div class="center-align" style="text-align: center">
-  <% if flash[:notice] %>
-    <div class="error-block">
-      Error: <%= flash[:notice] %>
-    </div>
-  <% end %>
+  <%= render 'shared/message_blocks' %>
 
   <div class="form-heading">Verify your email</div>
 
@@ -14,4 +10,3 @@
     <%= form.submit 'Submit', class: 'form-submit' %>
   <% end %>
 </div>
-

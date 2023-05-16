@@ -13,13 +13,13 @@ class PasswordsController < ApplicationController
         notice: 'An email to reset password has been sent to the email, if you have not received the email, trigger the action again'
       )
     else
-      redirect_to reset_password_path, notice: 'User with given email was not found'
+      redirect_to reset_password_path, alert: 'User with given email was not found'
     end
   end
 
   def edit
     unless @user.reset_token_valid? params[:token]
-      return redirect_to reset_password_path, notice: 'the token was not valid, please initiate reset password action again'
+      return redirect_to reset_password_path, alert: 'the token was not valid, please initiate reset password action again'
     end
   end
 

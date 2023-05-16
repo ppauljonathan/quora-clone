@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  root 'questions#index'
+
   resources :users, id: /\d+/
 
-  resources :questions, param: :identifier
+  resources :questions, param: :url_slug
 
   controller :registrations do
     get 'signup' => :new
@@ -28,7 +30,7 @@ Rails.application.routes.draw do
     patch 'reset_password' => :update
   end
 
-  get 'search', to: 'topics#search'
+  get 'topics/search'
 
   # Defines the root path route ("/")
   # root "articles#index"

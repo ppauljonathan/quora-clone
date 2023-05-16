@@ -3,7 +3,7 @@ class TopicsController < ApplicationController
 
   def search
     search_regexp = Regexp.new "^#{params[:term]}", 'i'
-    all_topics = ActsAsTaggableOn::Tag.pluck :name
+    all_topics = ActsAsTaggableOn::Tag.for_context(:topics).distinct.pluck(:name)
 
     respond_to do |format|
       format.json { render json: all_topics.grep(search_regexp) }

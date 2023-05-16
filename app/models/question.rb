@@ -5,11 +5,19 @@ class Question < ApplicationRecord
 
   belongs_to :user
 
+  acts_as_taggable_on :topics
+
   def to_param
     url_slug
   end
 
+  private def words_in_title
+    title.split.count
+  end
+
   private def generate_url_slug
+    return self.url_slug = title.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
+
     sample_slug = title.truncate_words(URL_SLUG_WORD_LENGTH)
                        .parameterize
 
