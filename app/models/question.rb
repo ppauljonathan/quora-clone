@@ -7,6 +7,8 @@ class Question < ApplicationRecord
 
   acts_as_taggable_on :topics
 
+  has_rich_text :content
+
   def to_param
     url_slug
   end

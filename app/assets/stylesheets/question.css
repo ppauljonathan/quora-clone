@@ -103,3 +103,26 @@
 .question-search-form > input {
   margin-left: 2%;
 }
+
+.new-question-form {
+  width: 60vw;
+  padding: 5%;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.new-question-form > div > input {
+  width: 60vw;
+}
+
+.new-question-form > * {
+  margin-bottom: 2%;
+}
+
+.question-form-title {
+  position: relative;
+  width: fit-content;
+  left: 50%;
+  transform: translate(-50%);
+}

@@ -1,0 +1,29 @@
+<%= form_with model: question, class: 'new-question-form' do |form| %>
+  <% if question.errors.any? %>
+    <div class="error-block">
+      <div class="form-error-heading">
+        The following errors prevented the questiion from being saved
+      </div>
+      <ul class="form-error-list">
+        <% question.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-content">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-field' %>
+  </div>
+  <div class="form-content">
+    <%= form.label :content, class: 'form-label' %>
+    <%= form.hidden_field :content, id: 'question_content' %>
+    <trix-editor input="question_content" style="height: 30vh; overflow: scroll;"></trix-editor>
+  </div>
+  <div class="form-content">
+    <%= form.label :topics, class: 'form-label' %>
+    <%= form.text_field :topic_list, class: 'form-field' %>
+  </div>
+  <%= form.submit 'Publish', class: 'form-submit' %>
+  <%= form.submit 'Save as Draft', class: 'form-cancel' %>
+<% end %>
