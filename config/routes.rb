@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   resources :users, id: /\d+/
 
-  resources :questions, param: :url_slug
+  resources :questions, param: :url_slug do
+    collection do
+      get 'search'
+    end
+  end
 
   controller :registrations do
     get 'signup' => :new

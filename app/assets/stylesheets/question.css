@@ -91,3 +91,15 @@
   width: fit-content;
   word-wrap: unset;
 }
+
+.question-search-form {
+  position: relative;
+  float: right;
+  display: flex;
+  right: 2%;
+  padding: auto;
+}
+
+.question-search-form > input {
+  margin-left: 2%;
+}

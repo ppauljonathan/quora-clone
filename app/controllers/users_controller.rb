@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update]
-
   before_action :check_if_current_user, only: %i[edit update]
+  skip_before_action :authorize, only: %i[index show]
 
   def index
     @users = User.all

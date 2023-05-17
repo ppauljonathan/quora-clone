@@ -1,6 +1,13 @@
 <%= render 'shared/message_blocks' %>
 
-<div class="user-name">Questions</div>
+<div class="user-name">
+  Questions
+  <%= form_with method: :get, url: 'questions/search', class: 'question-search-form' do |form|%>
+    <%= form.search_field :title, placeholder: 'Search Question by Topic', class: 'form-field' %>
+    <%= form.submit 'search', class: 'form-cancel' %>
+  <% end %>
+</div>
+<br>
 
 <%= render @questions %>
 

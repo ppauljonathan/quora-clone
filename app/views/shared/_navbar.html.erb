@@ -12,6 +12,11 @@
                            'navbar-buttons',
                            'navbar-button-highlight',
                            user_path(id: session[:user_id]) %>
+                          
+      <%= highlighted_link 'Ask a Question',
+                           'navbar-buttons',
+                           'navbar-button-highlight',
+                           new_question_path %>
       
       <%= button_to 'Logout', logout_path, class: 'navbar-form-buttons', method: :delete %>
     <% else %>
