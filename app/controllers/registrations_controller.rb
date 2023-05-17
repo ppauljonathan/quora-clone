@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-  before_action :redirect_to_homepage_if_logged_in
+  before_action :redirect_if_logged_in
   skip_before_action :authorize
 
   def new
@@ -9,15 +9,10 @@ class RegistrationsController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html do
-          redirect_to(login_path,
-                      notice: 'Verify your email to login')
-        end
-      else
-        format.html { render :new, notice: @user.errors, status: 422 }
-      end
+    if @user.save
+      redirect_to login_path, notice: 'Verify your email to login'
+    else
+      render :new, notice: @user.errors, status: 422
     end
   end
 

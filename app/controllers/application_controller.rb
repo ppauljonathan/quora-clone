@@ -1,18 +1,15 @@
 class ApplicationController < ActionController::Base
   before_action :authorize
 
-  private def redirect_to_homepage_if_logged_in
-    redirect_to users_path if session[:user_id]
+  private def redirect_if_logged_in
+    redirect_back_or_to users_path if current_user
   end
 
   private def authorize
-    return if session[:user_id]
-    return redirect_to login_url unless cookies.signed[:user_id]
-
-    session[:user_id] = cookies.signed[:user_id]
+    redirect_to login_url unless current_user
   end
 
   private def current_user
-    @current_user = User.find(session[:user_id])
+    @current_user ||= User.find_by_id(session[:user_id] || cookies.signed[:user_id])
   end
 end

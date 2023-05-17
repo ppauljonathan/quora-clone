@@ -1,4 +1,4 @@
 <p>Hello <%= @user.name %></p>
 <p>Thank you for signing up to Quora Clone</p>
 <p>click the link below to verify your email id: </p>
- <%= link_to 'Click Here', confirmation_url(token: @user.verification_token, id: @user.id) %>
+ <%= link_to 'Click Here', confirmation_url(token: @user.verification_token) %>

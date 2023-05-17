@@ -12,8 +12,6 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user.profile_picture_attachment = nil unless user_params[:profile_picture]
-
     if @user.update(user_params)
       redirect_to user_path, notice: 'succesfully updated'
     else

@@ -1,7 +1,7 @@
 <nav class="navbar">
   <%= link_to 'QuoraClone', users_path, class: 'navbar-title' %>
   <div class="navbar-list">
-    <% if session[:user_id] %>
+    <% if @current_user %>
 
       <%= highlighted_link 'Home',
                            'navbar-buttons',
@@ -11,7 +11,7 @@
       <%= highlighted_link 'Account',
                            'navbar-buttons',
                            'navbar-button-highlight',
-                           user_path(id: session[:user_id]) %>
+                           user_path(id: @current_user) %>
       
       <%= button_to 'Logout', logout_path, class: 'navbar-form-buttons', method: :delete %>
     <% else %>

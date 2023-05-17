@@ -1,25 +1,22 @@
 class ConfirmationsController < ApplicationController
-  before_action :redirect_to_homepage_if_logged_in
+  before_action :redirect_if_logged_in
   skip_before_action :authorize
 
   def verify
-    unless params[:id] && params[:token]
-      return render :verify
-    end
+    return unless params[:token]
 
-    user = User.find(params[:id])
-    if user.verification_token_valid? params[:token]
+    user = User.find_by_verification_token(params[:token])
+    if user.try :verify
       redirect_to login_path, notice: 'email was verified successfully, you can log in now'
     else
-      redirect_to login_path, flash: { token_error: 'the token was not valid' }
+      flash.now[:token_error] = 'Token was invalid, enter email to verify again'
+      render :verify
     end
   end
 
   def resend
     user = User.find_by_email email_params
-
-    if user
-      user.resend_verification_mail
+    if user.try :resend_verification_mail
       redirect_to login_path, notice: 'Verification email sent'
     else
       flash.now[:notice] = 'User with given email was not found'

@@ -1,13 +1,6 @@
 <%= form_with scope: :user, class: 'form center-align' do |form| %>
   <div class="form-heading">Login</div>
-  <% if flash[:token_error] %>
-    <div class="error-block">
-      <%= flash[:token_error] %>
-      <div>
-        click <%= link_to 'this link', confirmation_path %> to resend the email
-      </div>
-    </div>
-  <% elsif flash[:error] %>
+  <% if flash[:error] %>
     <div class="error-block">
       <%= flash[:error] %>
     </div>

@@ -3,6 +3,10 @@
     <div class="error-block">
       Error: <%= flash[:notice] %>
     </div>
+  <% elsif flash[:token_error] %>
+    <div class="error-block">
+      <%= flash[:token_error] %>
+    </div>
   <% end %>
 
   <div class="form-heading">Verify your email</div>
@@ -14,4 +18,3 @@
     <%= form.submit 'Submit', class: 'form-submit' %>
   <% end %>
 </div>
-
