@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   before_action :authorize
 
   private def redirect_if_logged_in
-    redirect_back_or_to users_path if current_user
+    redirect_back_or_to root_path if current_user
   end
 
   private def authorize
