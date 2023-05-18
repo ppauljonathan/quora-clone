@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   before_action :check_if_current_user, only: %i[edit update]
   skip_before_action :authorize, only: %i[index show]
 
+  skip_before_action :authorize, only: %i[index show]
+  before_action :current_user, only: %i[index show]
+
+
   def index
     @users = User.all
   end

@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     cookies.signed[:user_id] = { value: @user.id, expires: 24.weeks.from_now } if user_params[:remember_me]
 
     session[:user_id] = @user.id
-    redirect_to users_path
+    redirect_to root_path
   end
 
   def destroy
@@ -22,20 +22,18 @@ class SessionsController < ApplicationController
 
   private def set_user_from_email
     @user = User.find_by(email: user_params[:email])
-    redirect_to login_path unless @user
+    redirect_to login_path, alert: 'Invalid email/password combination' unless @user
   end
 
   private def authenticate_user
     return if @user.try(:authenticate, user_params[:password])
 
-    flash.now[:error] = 'Invalid email/password combination'
-    render :new, status: 422
+    redirect_to login_path, alert: 'Invalid email/password combination'
   end
 
   private def check_verified_user
     return if @user.verified?
 
-    flash.now[:token_error] = 'User is not verified yet'
-    render :new, status: 422
+    redirect_to login_path, flash: { token_error: 'User is not verified yet' }
   end
 end
