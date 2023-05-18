@@ -11,7 +11,7 @@
       <%= highlighted_link 'Account',
                            'navbar-buttons',
                            'navbar-button-highlight',
-                           user_path(id: session[:user_id]) %>
+                           user_path(id: @current_user.id) %>
                           
       <%= highlighted_link 'Ask a Question',
                            'navbar-buttons',

@@ -29,7 +29,7 @@
   </div>
 
   <div class="function-button-list">
-    <%= link_to 'Edit', edit_user_path, class: 'function-button' if @user.id == session[:user_id]%>
+    <%= link_to 'Edit', edit_user_path, class: 'function-button' if @user == @current_user%>
     <a class="function-button">Followers</a>
     <a class="function-button">Questions</a>
     <a class="function-button">Answers</a>

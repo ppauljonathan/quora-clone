@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   skip_before_action :authorize, only: %i[index show]
   before_action :current_user, only: %i[index show]
 
-
   def index
     @users = User.all
   end
@@ -38,6 +37,6 @@ class UsersController < ApplicationController
   end
 
   private def check_if_current_user
-    redirect_back_or_to root_path, alert: 'cannot edit this user' unless current_user == @user
+    redirect_back_or_to root_path, notice: 'cannot edit this user' unless current_user == @user
   end
 end

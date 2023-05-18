@@ -12,8 +12,7 @@ namespace :admin do
       puts 'Password Confirmation:'
       user.password_confirmation = $stdin.noecho(&:gets).chomp
       user.verified_at = Time.now
-      user.is_admin = true
-      user.credits = 5
+      user.admin!
     end
     if new_user.save
       puts 'User created successfully'

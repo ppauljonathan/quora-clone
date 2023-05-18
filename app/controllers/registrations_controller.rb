@@ -10,7 +10,7 @@ class RegistrationsController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to login_path, notice: 'Verify your email to login'
+      redirect_to confirmation_path, notice: 'Verify your email to login'
     else
       render :new, notice: @user.errors, status: 422
     end

@@ -1,21 +1,28 @@
 class User < ApplicationRecord
   include Tokenizable
 
+  ROLES = {
+    user: 0,
+    admin: 1
+  }
+
   validates :name, presence: true
-  validates :email, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
+  validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   has_secure_password
 
   before_create :generate_verification_token
-  after_create_commit :send_verification_email
+  after_commit :send_verification_email
 
   has_one_attached :profile_picture
   has_many :questions
 
   acts_as_taggable_on :topics
 
+  enum :role, ROLES, default: :user
+
   def verify
-    update(verified_at: Time.now) unless verified?
+    update(verification_token: nil, verified_at: Time.now) unless verified?
   end
 
   def verified?
@@ -23,15 +30,13 @@ class User < ApplicationRecord
   end
 
   def resend_verification_mail
-    return false unless update(verification_token: generate_token(:verification), verified_at: nil)
-
-    send_verification_email
+    update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
   def send_reset_mail
     return false unless generate_reset_token
 
-    UserMailer.reset_email(id).deliver_later
+    UserMailer.with(user_id: id).reset_email.deliver_later
   end
 
   private def generate_verification_token
@@ -39,7 +44,9 @@ class User < ApplicationRecord
   end
 
   private def send_verification_email
-    UserMailer.verification_email(id).deliver_later
+    return unless verification_token && !verified?
+
+    UserMailer.with(user_id: id).verification_email.deliver_later
   end
 
   private def generate_reset_token

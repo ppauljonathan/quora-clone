@@ -10,6 +10,6 @@ class ApplicationController < ActionController::Base
   end
 
   private def current_user
-    @current_user ||= User.find_by_id(session[:user_id] || cookies.signed[:user_id])
+    @current_user ||= User.find_by_id(cookies.signed[:user_id])
   end
 end

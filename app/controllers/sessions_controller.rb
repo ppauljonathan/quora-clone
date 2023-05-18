@@ -3,16 +3,18 @@ class SessionsController < ApplicationController
   before_action :set_user_from_email, :authenticate_user, :check_verified_user, only: :create
   skip_before_action :authorize
 
-  def create
-    cookies.signed[:user_id] = { value: @user.id, expires: 24.weeks.from_now } if user_params[:remember_me]
+  REMEMBER_ME_EXPIRES = 24.weeks.from_now
 
-    session[:user_id] = @user.id
+  def create
+    expires_at = user_params[:remember_me] ? REMEMBER_ME_EXPIRES : nil
+
+    cookies.signed[:user_id] = { value: @user.id, expires: expires_at }
+
     redirect_to root_path
   end
 
   def destroy
     cookies.delete :user_id
-    session[:user_id] = nil
     redirect_to login_path
   end
 
@@ -34,6 +36,6 @@ class SessionsController < ApplicationController
   private def check_verified_user
     return if @user.verified?
 
-    redirect_to login_path, flash: { token_error: 'User is not verified yet' }
+    redirect_to confirmation_path, flash: { token_error: 'User is not verified yet' }
   end
 end

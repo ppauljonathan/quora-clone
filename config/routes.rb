@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users, id: /\d+/
+  resources :users
 
   resources :questions, param: :url_slug do
     collection do
