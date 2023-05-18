@@ -1,12 +1,12 @@
 <nav class="navbar">
-  <%= link_to 'QuoraClone', users_path, class: 'navbar-title' %>
+  <%= link_to 'QuoraClone', root_path, class: 'navbar-title' %>
   <div class="navbar-list">
     <% if @current_user %>
 
       <%= highlighted_link 'Home',
                            'navbar-buttons',
                            'navbar-button-highlight',
-                           users_path %>
+                           root_path %>
 
       <%= highlighted_link 'Account',
                            'navbar-buttons',

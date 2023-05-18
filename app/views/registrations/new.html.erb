@@ -26,9 +26,11 @@
   <div>
     <%= form.label :password, class: 'form-label' %>
     <%= form.password_field :password, class: 'form-field' %>
-    <br>
-    <input type="checkbox" onclick="showPassword()">
-    Show Password
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.password_field :password_confirmation, class: 'form-field' %>
   </div>
 
   <%= form.button 'Signup', class: 'form-submit' %>

@@ -44,7 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_13_101244) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.integer "credits", default: 0
-    t.boolean "is_admin", default: false
+    t.integer "role"
     t.datetime "verified_at", precision: nil
     t.datetime "disabled_at", precision: nil
     t.string "verification_token"

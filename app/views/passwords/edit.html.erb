@@ -23,5 +23,13 @@
     Show Password
   </div>
 
+  <div>
+    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.password_field :password_confirmation, class: 'form-field' %>
+    <br>
+    <input type="checkbox" onclick="showPassword()">
+    Show Password
+  </div>
+
   <%= form.button 'Reset', class: 'form-submit' %>
 <% end %>
