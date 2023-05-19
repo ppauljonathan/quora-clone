@@ -60,8 +60,9 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 10%;
+  top: 15vh;
   right: 2%;
+  transform: translate(0%, -25%);
 }
 
 .function-button {

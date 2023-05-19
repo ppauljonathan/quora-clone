@@ -19,7 +19,7 @@
   border-radius: 2vh;
 }
 
-.form-submit {
+.form-submit, .delete-user {
   background: var(--red);
   padding: 1%;
   font-size: 3vh;
@@ -38,9 +38,9 @@
   text-decoration: none;
 }
 
-.form-submit:hover {
+.form-submit:hover, .delete-user:hover {
   background: var(--bright-red);
-  color: var(--bright-white)
+  color: var(--bright-white);
 }
 
 .form-cancel:hover {

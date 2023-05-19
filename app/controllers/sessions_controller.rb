@@ -36,6 +36,6 @@ class SessionsController < ApplicationController
   private def check_verified_user
     return if @user.verified?
 
-    redirect_to confirmation_path, flash: { token_error: 'User is not verified yet' }
+    redirect_to confirmation_path, alert: 'User is not verified yet'
   end
 end

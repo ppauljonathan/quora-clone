@@ -24,12 +24,6 @@
   margin-top: 0.5%;
 }
 
-.question-content {
-  margin-left: 2%;
-  margin-top: 1%;
-  margin-bottom: 1%;
-  font-size: 2vh;
-}
 
 .footer-form {
   background: var(--red);
@@ -57,6 +51,7 @@
 .check-element {
   padding: 1%;
   display: flex;
+  word-wrap: unset;
 }
 
 .footer-form-submit {
@@ -90,6 +85,8 @@
   font-size: 3vh;
   width: fit-content;
   word-wrap: unset;
+  position: relative;
+  padding: 1%;
 }
 
 .question-search-form {
@@ -125,4 +122,55 @@
   width: fit-content;
   left: 50%;
   transform: translate(-50%);
+}
+
+.question-show-title {
+  font-weight: bold;
+  font-size: 5vh;
+  margin-left: 3%;
+}
+
+.question-content {
+  margin-bottom: 1%;
+  font-size: 2vh;
+  padding: 3%;
+  width: 80vw;
+}
+
+.question-user-details {
+  display: flex;
+  width: 25vw;
+  margin-left: 3%;
+}
+
+.question-files {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.file-item {
+  padding: 2%;
+  width: fit-content;
+}
+
+.file-item:hover {
+  background-color: var(--white);
+}
+
+.file-item > img {
+  width: 15vw;
+  height: auto;
+  display: block;
+  margin: auto;
+}
+
+.form-check {
+  position: absolute;
+}
+
+.delete-user {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 400%);
 }

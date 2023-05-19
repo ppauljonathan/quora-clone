@@ -1,0 +1,7 @@
+.trix-button--icon-increase-nesting-level,
+.trix-button--icon-decrease-nesting-level { display: none; }
+
+.trix-button-group--file-tools > * { display: none; }
+
+.trix-button-group--file-tools { width: 0%; height: 0%; }
+

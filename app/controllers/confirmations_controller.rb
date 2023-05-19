@@ -1,7 +1,7 @@
 class ConfirmationsController < ApplicationController
   before_action :redirect_if_logged_in
   before_action :check_token, :set_user_from_verification_token, only: :verify
-  before_action :set_user_from_email, only: :resend
+  before_action :set_user_from_email, :check_if_already_verified, only: :resend
   skip_before_action :authorize
 
   def verify
@@ -16,6 +16,10 @@ class ConfirmationsController < ApplicationController
     params.require(:email)
   end
 
+  private def check_if_already_verified
+    redirec_to login_path, alert: 'User is already verified' if @user.verified?
+  end
+
   private def check_token
     render :verify unless params[:token]
   end
@@ -25,7 +29,7 @@ class ConfirmationsController < ApplicationController
 
     return if @user
 
-    flash.now[:token_error] = 'Token was invalid, enter email to verify again'
+    flash.now[:alert] = 'Token was invalid, enter email to verify again'
     render :verify, status: 422
   end
 

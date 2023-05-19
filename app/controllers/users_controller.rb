@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
+  before_action :set_user, only: %i[show edit update destroy]
   before_action :check_if_current_user, only: %i[edit update]
   skip_before_action :authorize, only: %i[index show]
 
@@ -24,6 +24,14 @@ class UsersController < ApplicationController
     else
       flash.now[:error] = @user.errors
       render :edit, status: 422
+    end
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_to root_path, notice: 'User deleted Successfully'
+    else
+      redirect_to user_path(@user.id), alert: @user.errors
     end
   end
 

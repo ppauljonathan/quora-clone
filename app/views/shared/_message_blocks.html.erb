@@ -6,13 +6,6 @@
   <div class="error-block">
     <%= flash[:alert] %>
   </div>
-<% elsif flash[:token_error] %>
-  <div class="error-block">
-    <%= flash[:token_error] %>
-    <div>
-      click <%= link_to 'this link', confirmation_path %> to resend the email
-    </div>
-  </div>
 <% elsif flash[:error] %>
   <div class="error-block">
     <%= flash[:error] %>

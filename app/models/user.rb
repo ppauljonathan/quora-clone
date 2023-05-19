@@ -22,7 +22,7 @@ class User < ApplicationRecord
   enum :role, ROLES, default: :user
 
   def verify
-    update(verification_token: nil, verified_at: Time.now) unless verified?
+    update(verification_token: nil, verified_at: Time.now, credits: 5) unless verified?
   end
 
   def verified?

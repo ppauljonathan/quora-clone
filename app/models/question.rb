@@ -1,13 +1,24 @@
 class Question < ApplicationRecord
   URL_SLUG_WORD_LENGTH = 7
 
-  before_create :generate_url_slug
+  before_save :generate_url_slug
 
   belongs_to :user
 
   acts_as_taggable_on :topics
 
   has_rich_text :content
+  has_many_attached :files
+
+  default_scope { where.not(published_at: nil).order(created_at: :desc) }
+  scope :with_user, -> { includes :user }
+  scope :with_topics, -> { includes :topics }
+  scope :with_files, -> { includes :files_attachments }
+
+  validates :title, uniqueness: true, presence: true
+  validates :content, presence: true
+  validates :topic_list, presence: true
+  validates :url_slug, uniqueness: true, presence: true
 
   def to_param
     url_slug

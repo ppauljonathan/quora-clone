@@ -19,6 +19,10 @@
     <div class="user-email">
       <%= @user.email %>
     </div>
+    <div class="user-email">
+      You have <%= @user.credits %> credits remaining
+    </div>
+    
     &nbsp;
     <div class="topic-list-title">Your Topics:</div>
     <div class="topics-list">
@@ -32,6 +36,7 @@
     <%= link_to 'Edit', edit_user_path, class: 'function-button' if @user == @current_user%>
     <a class="function-button">Followers</a>
     <a class="function-button">Questions</a>
+    <%= link_to 'Drafts', edit_user_path, class: 'function-button' if @user == @current_user%>
     <a class="function-button">Answers</a>
     <a class="function-button">Comments</a>
   </div>

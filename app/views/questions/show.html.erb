@@ -1,19 +1,36 @@
-<div class="user-name"><%= @question.title %></div>
+<div class="question-show-title"><%= @question.title %></div>
 
-<% if @user.profile_picture.blank? %>
-  <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
-<% else %>
-  <div
-    class="profile-thumbnail-in-question",
-    style = "background-image: url(<%= url_for @user.profile_picture %>)"
-  >
-<% end %>
+<div class="question-user-details">
+  <% if @question.user.profile_picture.blank? %>
+    <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
+  <% else %>
+    <div
+      class="profile-thumbnail-in-question",
+      style = "background-image: url(<%= url_for @question.user.profile_picture %>)"
+    >
+  <% end %>
+    </div>
 
-<div class="question-user-name">
-<%= @user.name %>
+  <div class="question-user-name">
+  <%= @question.user.name %>
+  </div>
 </div>
 
 <div class="question-content" style='font-size: 3vh'><%= @question.content %>
 </div>
 
+<% if @question.files.any? %>
 
+<div class="form-heading">Attached Files:</div>
+<div class="question-files">
+  <% @question.files_attachments.each do |file| %>
+    <div class="file-item">
+      <%= image_tag file.preview(resize_to_limit: [100, 100]) %>
+      <br>
+      <%= file.blob.filename %>
+      <%= link_to 'Download', rails_blob_url(file) %>
+    </div>
+  <% end %>
+</div>
+
+<% end %>

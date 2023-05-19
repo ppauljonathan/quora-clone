@@ -32,10 +32,17 @@
   &nbsp;
 
   <div>
-    <%= form.button 'Save Changes', class: 'form-submit' %>
-    <%= link_to 'Cancel Changes', user_path, class: 'form-cancel' %>
+    <%= form.button 'Save', class: 'form-submit' %>
+    <%= link_to 'Discard', user_path, class: 'form-cancel' %>
   </div>
 <% end %>
+
+<%= button_to 'Delete Account',
+              user_path(@user.id),
+              class: 'delete-user',
+              method: :delete,
+              data: { turbo_confirm: 'Are you Sure you want to delete the user' } %>
+
 
 <%= javascript_include_tag 'topics_dropdown' %>
 
