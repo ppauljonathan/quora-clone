@@ -3,11 +3,16 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users
+  resources :users do
+    member do
+      get :questions
+      get :drafts
+    end
+  end
 
   resources :questions, param: :url_slug do
     collection do
-      get 'search'
+      get :search
     end
   end
 

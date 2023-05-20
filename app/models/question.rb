@@ -18,14 +18,9 @@ class Question < ApplicationRecord
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
   validates :topic_list, presence: true
-  validates :url_slug, uniqueness: true, presence: true
 
   def to_param
     url_slug
-  end
-
-  private def words_in_title
-    title.split.count
   end
 
   private def generate_url_slug
@@ -37,5 +32,9 @@ class Question < ApplicationRecord
     duplicate_slugs_count = self.class.where('url_slug LIKE ?', "#{sample_slug}%").count
 
     self.url_slug = sample_slug + "-#{duplicate_slugs_count + 1}"
+  end
+
+  private def words_in_title
+    title.split.count
   end
 end

@@ -2,7 +2,7 @@
   <% if question.errors.any? %>
     <div class="error-block">
       <div class="form-error-heading">
-        The following errors prevented the questiion from being saved
+        The following errors prevented the question from being saved
       </div>
       <ul class="form-error-list">
         <% question.errors.each do |error| %>
@@ -25,12 +25,17 @@
     <%= form.file_field :files, multiple: true, class: 'form-field', accept: 'application/pdf' %>
   </div>
   <div class="form-content">
-    <%= form.label :topics, class: 'form-label' %>
+    <%= form.label 'Topics (comma seperated)', class: 'form-label' %>
     <%= form.text_field :topic_list, class: 'form-field', id: 'search' %>
     <ul id="search-results"></ul>
   </div>
-  <%= form.submit 'Publish', class: 'form-submit' %>
-  <%= form.submit 'Save as Draft', class: 'form-cancel' %>
+
+  <% if @question.published_at? %>
+    <%= form.submit 'Save', class: 'form-submit' if @question.id %>
+  <% else %>
+    <%= form.submit 'Publish', class: 'form-submit' %>
+    <%= form.submit 'Save as Draft', class: 'form-cancel' %>
+  <% end %>
 <% end %>
 
 <%= javascript_include_tag 'topics_dropdown' %>

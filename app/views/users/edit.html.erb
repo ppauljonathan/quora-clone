@@ -1,5 +1,6 @@
 <%= form_with model: @user, class: 'center-align' do |form| %>
   <h1>Edit your details</h1>
+  <%= render 'shared/message_blocks' %>
   <% if @user.errors.any? %>
     <div class="error-block">
       <div class="form-error-heading">
@@ -25,7 +26,7 @@
   &nbsp;
 
   <div>
-    <%= form.label 'Select the topics', class: 'form-label' %>
+    <%= form.label 'Topics (comma seperated)', class: 'form-label' %>
     <%= form.text_field :topic_list, class: 'form-field', value: @topics, id: 'search', autocomplete: 'off'  %>
     <ul id="search-results"></ul>
   </div>
@@ -41,8 +42,6 @@
               user_path(@user.id),
               class: 'delete-user',
               method: :delete,
-              data: { turbo_confirm: 'Are you Sure you want to delete the user' } %>
-
+              form: { data: { turbo_confirm: 'Are you Sure you want to delete the user' } } %>
 
 <%= javascript_include_tag 'topics_dropdown' %>
-

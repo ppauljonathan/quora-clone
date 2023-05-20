@@ -9,7 +9,7 @@
 </div>
 <br>
 
-<%= render @questions %>
+<%= render @questions, editable: false %>
 
 <%= form_with method: :get, scope: :topics, url: root_path, class: 'footer-form' do |form|%>
   <div class="footer-form-header">Filter Questions by Topics</div>

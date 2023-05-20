@@ -81,3 +81,29 @@
 .function-button:hover {
   background: var(--bright-red);
 }
+
+.highlighted-function-button {
+  font-size: 2.3vh;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+  border: 2px solid var(--red);
+  background: var(--bright-red);
+  color: var(--bright-white);
+  border-radius: 0.5em;
+  text-align: center;
+  display: block;
+  text-decoration: none;  
+}
+
+.bottom-panel-title {
+  font-size: 6vh;
+  font-weight: bold;
+  padding-left: 2%; 
+}
+
+.delete-user {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 400%);
+}

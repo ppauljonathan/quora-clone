@@ -1,5 +1,6 @@
 <%= form_with model: @user, url: signup_path, class: 'form center-align' do |form| %>
   <div class="form-heading">Signup</div>
+  <%= render 'shared/message_blocks' %>
   <% if @user.errors.any? %>
     <div class="error-block">
       <div class="form-error-heading">

@@ -3,9 +3,12 @@
   <div class="question-asked-by">
     <div class="question-sub-headings">
       author:
-      <div class="topic"><%= question.user.name %></div>
+      <div class="topic"><%= question.user&.name || 'DEACTIVATED' %></div>
     </div>
   </div>
+  <% if @current_user == question.user && request.url.match(users_path) %>
+    <%= link_to 'Edit', edit_question_path(question.url_slug), class: 'edit-question-button' %>
+  <% end %>
   &nbsp;
   <div class="topics-list">
     <div class="question-sub-headings">
@@ -15,4 +18,5 @@
       <div class="topic"><%= topic.name %></div>
     <% end %>
   </div>
+
 </div>

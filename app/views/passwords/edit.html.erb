@@ -1,4 +1,5 @@
 <%= form_with model: @user, url: reset_password_path, class: 'form center-align' do |form| %>
+  <%= render 'shared/message_blocks' %>
   <div class="form-heading">Reset Password</div>
   <% if @user.errors.any? %>
     <div class="error-block">
