@@ -1,7 +1,9 @@
 .question-card {
-  width: 90vw;
+  position: relative;
+  width: 70vw;
   padding: 1%;
   margin: 1%;
+  margin-left: 16%;
   padding-left: 3%;
   border: 2px solid var(--black);
 }
@@ -25,12 +27,16 @@
 }
 
 
-.footer-form {
+.sidebar {
   background: var(--red);
-  position: relative;
+  position: absolute;
+  scroll-behavior: unset;
+  top: 6vh;
+  left: 0%;
   bottom: 0%;
   color: var(--white);
   padding: 2%;
+  width: 10vw;
 }
 
 .footer-form-header {
@@ -45,6 +51,7 @@
 .check-list {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   width: inherit;
 }
 
@@ -93,7 +100,6 @@
 
 .question-search-form {
   position: relative;
-  float: right;
   display: flex;
   right: 2%;
   padding: auto;

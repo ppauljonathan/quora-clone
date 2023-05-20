@@ -1,13 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :current_user
 
-  before_action :check_credits, except: %i[index show]
+  before_action :check_credits, except: %i[index show search]
   before_action :set_topics, :set_questions, only: %i[index search]
   before_action :set_question_details, only: :create
   before_action :set_unscoped_question, :check_access, only: %i[edit destroy show update]
   before_action :check_if_question_published, only: %i[create update]
 
-  skip_before_action :authorize, only: %i[index show serch]
+  skip_before_action :authorize, only: %i[index show search]
 
   def create
     if @question.save
