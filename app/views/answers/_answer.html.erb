@@ -7,8 +7,6 @@
     <br>
     <%= '(DRAFT)' unless answer.published_at? %>
   </div>
-
-  <%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' %>
 <% else %>
   <div class="question-user-details">
     <% if !answer.user || answer.user.profile_picture.blank? %>
@@ -30,6 +28,8 @@
     <% end %>
   </div>
 <% end %>
+
+<%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' if @current_user == answer.user %>
 
 <div class="answer-content">
   <%= answer.content %>
