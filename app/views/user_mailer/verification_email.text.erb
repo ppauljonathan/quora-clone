@@ -1,5 +1,5 @@
-Hello
-Thank you for signing up to Quora Clone
-Here is your verification_token:
+<%= t '.greeting' %> <%= @user.name %>
+<%= t '.message' %>
+<%= t '.link' %>
 
- <%= link_to 'Click Here', confirmation_url(token: @user.verification_token) %>
+ <%= confirmation_url(token: @user.verification_token) %>

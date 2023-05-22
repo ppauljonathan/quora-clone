@@ -8,16 +8,16 @@ class ConfirmationsController < ApplicationController
   def resend
     return unless @user.resend_verification_mail
 
-    flash[:token_notice] = 'Verification email sent'
+    flash[:token_notice] = t('.sent')
     redirect_to login_path
   end
 
   def verify
-    redirect_to login_path, notice: 'email was verified successfully, you can log in now' if @user.verify
+    redirect_to login_path, notice: t('.verified') if @user.verify
   end
 
   private def check_if_already_verified
-    redirec_to login_path, alert: 'User is already verified' if @user.verified?
+    redirect_to login_path, alert: t('.verified') if @user.verified?
   end
 
   private def check_token
@@ -33,7 +33,7 @@ class ConfirmationsController < ApplicationController
 
     return if @user
 
-    flash.now[:notice] = 'User with given email was not found'
+    flash.now[:notice] = t('.no-email')
     render :verify, status: 422
   end
 
@@ -42,7 +42,7 @@ class ConfirmationsController < ApplicationController
 
     return if @user
 
-    flash.now[:alert] = 'Token was invalid, enter email to verify again'
+    flash.now[:alert] = t('.token-invalid')
     render :verify, status: 422
   end
 end

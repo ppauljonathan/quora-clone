@@ -7,7 +7,7 @@ class RegistrationsController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      flash[:token_notice] = 'Verify your email to login'
+      flash[:token_notice] = t('.verify')
       redirect_to login_path
     else
       render :new, notice: @user.errors, status: 422

@@ -1,10 +1,10 @@
 <%= form_with model: @user, url: signup_path, class: 'form center-align' do |form| %>
-  <div class="form-heading">Signup</div>
+  <div class="form-heading"><%= t('.signup') %></div>
   <%= render 'shared/message_blocks' %>
   <% if @user.errors.any? %>
     <div class="error-block">
       <div class="form-error-heading">
-        The following errors prevented the User from being saved
+        <%= t '.error-msg' %>
       </div>
       <ul class="form-error-list">
         <% @user.errors.each do |error| %>
@@ -15,26 +15,26 @@
   <% end %>
 
   <div>
-    <%= form.label :name, class: 'form-label' %>
+    <%= form.label t('.name'), class: 'form-label' %>
     <%= form.text_field :name, class: 'form-field' %>
   </div>
 
   <div>
-    <%= form.label :email, class: 'form-label' %>
+    <%= form.label t('.email'), class: 'form-label' %>
     <%= form.email_field :email, class: 'form-field' %>
   </div>
 
   <div>
-    <%= form.label :password, class: 'form-label' %>
+    <%= form.label t('.password'), class: 'form-label' %>
     <%= form.password_field :password, class: 'form-field' %>
   </div>
 
   <div>
-    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.label t('.confirm'), class: 'form-label' %>
     <%= form.password_field :password_confirmation, class: 'form-field' %>
   </div>
 
-  <%= form.button 'Signup', class: 'form-submit' %>
+  <%= form.button t('.signup'), class: 'form-submit' %>
   
-  <div class="form-messages">Already a user? <%= link_to 'Login', login_path %></div>
+  <div class="form-messages"><%= t('.already') %> <%= link_to t('.login'), login_path %></div>
 <% end %>

@@ -3,27 +3,27 @@
   <div class="navbar-list">
     <% if @current_user %>
 
-      <%= highlighted_link 'Home',
+      <%= highlighted_link t('navbar.home'),
                            'navbar-buttons',
                            'navbar-button-highlight',
                            root_path %>
 
-      <%= highlighted_link 'Account',
+      <%= highlighted_link t('navbar.account'),
                            'navbar-buttons',
                            'navbar-button-highlight',
                            user_path(id: @current_user.id) %>
                           
-      <%= highlighted_link 'Ask a Question',
+      <%= highlighted_link t('navbar.question'),
                            'navbar-buttons',
                            'navbar-button-highlight',
                            new_question_path %>
      
-      <%= button_to 'Logout', logout_path, class: 'navbar-form-buttons', method: :delete %>
+      <%= button_to t('navbar.logout'), logout_path, class: 'navbar-form-buttons', method: :delete %>
     <% else %>
       <% if request.path == login_path %>
-        <%= link_to 'Signup', signup_path, class: 'navbar-buttons' %>
+        <%= link_to t('navbar.signup'), signup_path, class: 'navbar-buttons' %>
       <% else %>
-        <%= link_to 'Login', login_path, class: 'navbar-buttons' %>
+        <%= link_to t('navbar.login'), login_path, class: 'navbar-buttons' %>
       <% end %>
     <% end %>
   </div>

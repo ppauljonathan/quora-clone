@@ -6,7 +6,7 @@ class User < ApplicationRecord
     admin: 1
   }.freeze
 
-  validates :name, presence: true
+  validates :name, :password, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   has_secure_password

@@ -1,12 +1,12 @@
 <div class="center-align" style="text-align: center">
   <%= render 'shared/message_blocks' %>
 
-  <div class="form-heading">Verify your email</div>
+  <div class="form-heading"><%= t '.verify' %></div>
 
-  <div>please enter the email to send verification link</div>
+  <div><%= t '.email-prompt' %></div>
 
   <%= form_with do |form| %>
     <%= form.email_field :email, class: 'form-field' %>
-    <%= form.submit 'Submit', class: 'form-submit' %>
+    <%= form.submit t('.submit'), class: 'form-submit' %>
   <% end %>
 </div>

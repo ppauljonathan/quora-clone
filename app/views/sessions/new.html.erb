@@ -1,24 +1,24 @@
 <%= form_with scope: :user, class: 'form center-align' do |form| %>
-  <div class="form-heading">Login</div>
+  <div class="form-heading"><%= t('.login') %></div>
 
   <%= render 'shared/message_blocks' %>
 
   <div>
-    <%= form.label :email, class: 'form-label' %>
+    <%= form.label t('.email'), class: 'form-label' %>
     <%= form.email_field :email, class: 'form-field' %>
   </div>
 
   <div>
-    <%= form.label :password, class: 'form-label' %>
+    <%= form.label t('.password'), class: 'form-label' %>
     <%= form.password_field :password, class: 'form-field' %>
   </div>
 
   <div>
     <%= form.check_box :remember_me, include_hidden: false %>
-    <%= form.label :remember_me, 'Remember Me?' %>
+    <%= form.label :remember_me, t('.remember') %>
   </div>
-  <%= form.button 'Login', class: 'form-submit' %>
+  <%= form.button t('.login'), class: 'form-submit' %>
 
-  <div class="form-messages">Not a user? <%= link_to 'Signup', signup_path %></div>
-  <div class="form-messages"><%= link_to 'Forgot Password?', reset_password_path %></div>
+  <div class="form-messages"><%= t '.not' %> <%= link_to t('.signup'), signup_path %></div>
+  <div class="form-messages"><%= link_to t('.forgot'), reset_password_path %></div>
 <% end %>

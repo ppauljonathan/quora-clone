@@ -1,3 +1,4 @@
-<p>Hello <%= @user.name %></p>
-<p>click the link below to reset your password</p>
- <%= link_to 'Click Here', reset_password_edit_url(token: @user.reset_token) %>
+<p><%= t '.greeting' %> <%= @user.name %></p>
+<p><%= t '.message' %></p>
+<p><%= t '.link' %></p>
+ <%= link_to t('.click'), reset_password_edit_url(token: @user.reset_token) %>

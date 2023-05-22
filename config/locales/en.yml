@@ -1,33 +1,89 @@
-# Files in the config/locales directory are used for internationalization
-# and are automatically loaded by Rails. If you want to use locales other
-# than English, add the necessary files in this directory.
-#
-# To use the locales, use `I18n.t`:
-#
-#     I18n.t "hello"
-#
-# In views, this is aliased to just `t`:
-#
-#     <%= t("hello") %>
-#
-# To use a different locale, set it with `I18n.locale`:
-#
-#     I18n.locale = :es
-#
-# This would use the information in config/locales/es.yml.
-#
-# The following keys must be escaped otherwise they will not be retrieved by
-# the default I18n backend:
-#
-# true, false, on, off, yes, no
-#
-# Instead, surround them with single quotes.
-#
-# en:
-#   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
+es:
+  registrations:
+    new:
+      signup: 'Signup'
+      name: 'Name'
+      email: 'Email'
+      password: 'Password'
+      confirm: 'Password Confirmation'
+      already: 'Already a User?'
+      login: 'Login'
+      error-msg: 'The following error(s) prevented the User from being saved'
 
-en:
-  hello: "Hello world"
+    create:
+      verify: 'Verify your email to log in'
+
+  confirmations:
+    verify:
+      verify: 'Verify your email'
+      email-prompt: 'please enter the email to send verification link'
+      submit: 'Submit'
+      verified: 'email was verified successfully, you can log in now'
+      token-invalid: 'Token was invalid, enter email to verify again'
+      sent: 'Verification email sent'
+
+    resend:
+      no-email: 'User with given email was not found'
+      verified: 'User is already verified'
+
+  sessions:
+    new:
+      login: 'Login'
+      email: 'Email'
+      password: 'Password'
+      remember: 'Remember Me?'
+      not: 'Not a User?'
+      signup: 'Signup'
+      forgot: 'Forgot Password?'
+    
+    create:
+      email: 'Email'
+      password: 'Password'
+      invalid: "invalid %{email}/%{password} combination"
+
+  passwords:
+    create:
+      message: 'Email to reset password has been sent, trigger the action again if not received'
+    
+    update:
+      message: 'password has been reset successfully, please login'
+
+
+  user_mailer:
+    verification_email:
+      subject: 'Verify you email address'
+      greeting: 'Hello'
+      message: 'Thank you for signing up to Quora Clone'
+      link: 'click the link below to verify your email id:'
+      click: 'Click Here'
+
+    reset_email:
+      subject: 'Reset your Password'
+      greeting: 'Hello'
+      message: 'You have initiated a password reset request'
+      link: 'click the link below to reset your password'
+      click: 'Click Here'
+
+  navbar:
+    home: 'Home'
+    account: 'Account'
+    question: 'Ask a Question'
+    signup: 'Signup'
+    login: 'Login'
+    logout: 'Logout'
+
+  activerecord:
+    errors:
+      messages:
+        taken: 'has been taken'
+        blank: 'must not be blank'
+        confirmation: 'does not match'
+    
+    models:
+      user: 'User'
+
+    attributes:
+      user:
+        password: 'Password'
+        email: 'Email'
+        confirm: 'Confirm Password'

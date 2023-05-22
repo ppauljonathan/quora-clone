@@ -9,7 +9,7 @@ class PasswordsController < ApplicationController
   def create
     return unless @user.send_reset_mail
 
-    flash[:notice] = 'Email to reset password has been sent, trigger the action again if not received'
+    flash[:notice] = t('.message')
     redirect_to reset_password_path
   end
 
@@ -17,9 +17,10 @@ class PasswordsController < ApplicationController
     if @user.update(password: user_params[:password],
                     password_confirmation: user_params[:password_confirmation])
 
-      redirect_to login_path, notice: 'password has been reset successfully, please login'
+      redirect_to login_path, notice: t('.message')
     else
-      redirect_to reset_password_edit_path error: @user.errors
+      flash[:error] = @user.errors
+      render :edit, status: 422
     end
   end
 

@@ -22,7 +22,7 @@ class SessionsController < ApplicationController
   private def authenticate_user
     return if @user.try(:authenticate, user_params[:password])
 
-    redirect_to login_path, alert: 'Invalid email/password combination'
+    redirect_to login_path, alert: t('.invalid', email: t('.email'), password: t('.password'))
   end
 
   private def check_verified_user
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
 
   private def set_user_from_email
     @user = User.find_by(email: user_params[:email])
-    redirect_to login_path, alert: 'Invalid email/password combination' unless @user
+    redirect_to login_path, alert: t('.invalid', email: t('.email'), password: t('.password')) unless @user
   end
 
   private def user_params
