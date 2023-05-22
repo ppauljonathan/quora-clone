@@ -10,5 +10,8 @@
 <% when 'drafts' %>
   <div class="bottom-panel-title">Drafts</div>
   <%= render partial: 'questions/question', collection: @questions %>
+<% when 'answers' %>
+  <div class="bottom-panel-title">Answers</div>
+  <%= render partial: 'answers/answer', collection: @answers %>
 <% else %>
 <% end %>

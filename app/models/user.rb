@@ -16,10 +16,14 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
   has_many :questions, dependent: :nullify
+  has_many :answers, dependent: :nullify
 
   acts_as_taggable_on :topics
 
   enum :role, ROLES, default: :user
+
+  scope :with_topics, -> { includes :topics }
+  scope :with_profile_picture, -> { includes :profile_picture_attachment }
 
   def resend_verification_mail
     update(verification_token: generate_token(:verification), verified_at: nil)

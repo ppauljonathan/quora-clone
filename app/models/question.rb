@@ -9,15 +9,26 @@ class Question < ApplicationRecord
 
   has_rich_text :content
   has_many_attached :files
+  has_many :answers, dependent: :destroy_async
 
   default_scope { where.not(published_at: nil).order(created_at: :desc) }
-  scope :with_user, -> { includes :user }
+  scope :with_user, -> { includes user: :profile_picture_attachment }
   scope :with_topics, -> { includes :topics }
   scope :with_files, -> { includes :files_attachments }
+  scope :with_answers, -> { includes answers: [:rich_text_content, { user: :profile_picture_attachment }] }
+  scope :with_content, -> { includes :rich_text_content }
 
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
   validates :topic_list, presence: true
+
+  def editable?
+    answers.none?
+  end
+
+  def published_answers
+    answers.published
+  end
 
   def to_param
     url_slug

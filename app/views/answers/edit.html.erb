@@ -1,0 +1,12 @@
+<%= render 'questions/full_question', question: @answer.question %>
+
+<hr style="width: 80vw; margin: 2%; margin-left: 10%;">
+
+<div class="form-heading" style="margin-left: 4%">Edit Your Answer</div>
+
+<%= render 'form', answer: @answer, question: @answer.question.id %>
+
+<%= button_to 'Delete Answer',
+              @answer,
+              class: 'delete-answer',
+              method: :delete %>

@@ -1,0 +1,31 @@
+.answer-form {
+  padding: 5%;
+  width: 80vw;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.answer-show {
+  margin: 2%;
+  padding: 2%;
+  border: 2px solid var(--black);
+}
+
+.answer-show:hover {
+  background: var(--white);
+}
+
+.answer-content {
+  margin-top: 2%;
+  margin-left: 5%;
+}
+
+.question-on {
+  margin-left: 3%;
+}
+
+.delete-answer {
+  margin-left: 10%;
+  transform: translate(0%, -50%);
+}

@@ -1,10 +1,13 @@
 class UsersController < ApplicationController
-  before_action :current_user
-
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
+  before_action :set_answers, only: :answers
 
-  skip_before_action :authorize, only: %i[index show]
+  skip_before_action :authorize, only: %i[index show questions answers comments]
+
+  def answers
+    render :show
+  end
 
   def destroy
     if @user.destroy
@@ -46,8 +49,13 @@ class UsersController < ApplicationController
   end
 
   private def set_user
-    @user = User.includes(:topics).find_by_id(params[:id])
+    @user = User.with_topics.with_profile_picture.find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
+  end
+
+  private def set_answers
+    @answers = @user.answers.with_content
+    @answers = @answers.published unless @user == current_user
   end
 
   private def user_params
