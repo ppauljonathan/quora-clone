@@ -99,10 +99,11 @@
 }
 
 .question-search-form {
-  position: relative;
+  position: absolute;
   display: flex;
-  right: 2%;
   padding: auto;
+  top: 10vh;
+  right: 5vw;
 }
 
 .question-search-form > input {
@@ -197,4 +198,9 @@
   float: right;
   position: relative;
   top: -50%;
+}
+
+.filter-clear-form {
+  position: relative;
+  top: 5%;
 }

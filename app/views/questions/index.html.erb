@@ -3,33 +3,10 @@
 <div class="user-name", style="margin-left: 15%">
   Questions
 </div>
+<%= render 'searchbar' %>
 <br>
 
-<div class="sidebar">
-<%= form_with method: :get, scope: :topics, url: root_path, class: 'footer-form' do |form|%>
-  <div class="form-label">Filter Questions by Topics</div>
-  <br>
-  <div class="check-list">
-    <% @topics.each do |topic| %>
-      <div>
-      <% if @selected&.include? topic %>
-        <%= form.check_box topic, include_hidden: false, checked: true, class: 'check-box' %>
-      <% else %>
-        <%= form.check_box topic, include_hidden: false, class: 'check-box' %>
-      <% end %>
-      <%= form.label topic%>
-      </div>
-    <% end %>
-  </div>
-  <%= form.submit 'Filter' %>
-  <%= button_to 'Clear', questions_path, method: :get %>
-<% end %>
-<br>
-<%= form_with method: :get, url: 'questions/search', class: 'question-search-form' do |form|%>
-  <%= form.search_field :title, placeholder: 'Search Question by Topic', style: 'padding: 1%; width: 7vw' %>
-  <%= form.submit 'Search'%>
-<% end %>
-</div>
+<%= render 'sidebar' %>
 
-<%= render @questions, editable: false %>
+<%= render @questions %>
 

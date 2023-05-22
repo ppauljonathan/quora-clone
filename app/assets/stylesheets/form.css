@@ -10,6 +10,7 @@
 .form-label {
   display: block;
   font-size: 3vh;
+  word-wrap: break-word;
 }
 
 .form-field {

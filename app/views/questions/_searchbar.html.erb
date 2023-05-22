@@ -1,0 +1,4 @@
+<%= form_with method: :get, url: 'questions/search', class: 'question-search-form' do |form|%>
+  <%= form.search_field :title, placeholder: 'Search Question by Topic', class: 'form-field' %>
+  <%= form.submit 'Search', class: 'form-submit' %>
+<% end %>
