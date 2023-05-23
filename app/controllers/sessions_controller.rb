@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   end
 
   private def authenticate_user
-    return if @user.try(:authenticate, user_params[:password])
+    return if @user.authenticate user_params[:password]
 
     redirect_to login_path, alert: 'Invalid email/password combination'
   end
