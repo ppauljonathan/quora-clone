@@ -50,10 +50,13 @@ gem "image_processing", "~> 1.2"
 
 gem 'acts-as-taggable-on', '~> 9.0'
 
-gem 'trix'
+gem 'trix', '~> 0.10.1'
 
-gem 'poppler'
-gem 'fiddle'
+gem 'fiddle', '~>1.1.1'
+
+gem 'poppler', '~>4.1.5'
+
+gem 'ransack', '~>4.0.0'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

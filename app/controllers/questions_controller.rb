@@ -1,13 +1,13 @@
 class QuestionsController < ApplicationController
   before_action :current_user
 
-  before_action :check_credits, except: %i[index show search]
-  before_action :set_topics, :set_questions, only: %i[index search]
+  before_action :check_credits, except: %i[index show]
+  before_action :set_topics, :set_questions, only: %i[index]
   before_action :set_question_details, only: :create
   before_action :set_unscoped_question, :check_access, only: %i[edit destroy show update]
   before_action :check_if_question_published, only: %i[create update]
 
-  skip_before_action :authorize, only: %i[index show search]
+  skip_before_action :authorize, only: %i[index show]
 
   def create
     if @question.save
@@ -27,9 +27,6 @@ class QuestionsController < ApplicationController
     redirect_back_or_to user_path(@question.user_id)
   end
 
-  def edit
-  end
-
   def index
     return unless params[:topics]
 
@@ -39,12 +36,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-  end
-
-  def search
-    @questions = @questions.where('title LIKE ?', "%#{params[:title]}%")
-
-    render :index
   end
 
   def show
@@ -80,7 +71,8 @@ class QuestionsController < ApplicationController
   end
 
   private def set_questions
-    @questions = Question.with_user.with_topics
+    @q = Question.ransack(params[:q])
+    @questions = @q.result.with_user.with_topics
   end
 
   private def set_question_details

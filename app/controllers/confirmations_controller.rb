@@ -17,7 +17,7 @@ class ConfirmationsController < ApplicationController
   end
 
   private def check_if_already_verified
-    redirec_to login_path, alert: 'User is already verified' if @user.verified?
+    redirect_to login_path, alert: 'User is already verified' if @user.verified?
   end
 
   private def check_token

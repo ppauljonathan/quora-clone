@@ -23,6 +23,10 @@ class Question < ApplicationRecord
     url_slug
   end
 
+  def self.ransackable_attributes(_auth_object = nil)
+    ['title']
+  end
+
   private def generate_url_slug
     return self.url_slug = title.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
 
