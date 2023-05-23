@@ -1,0 +1,61 @@
+.form > * {
+  margin-bottom: 2%;
+}
+
+.form-heading {
+  font-size: 4vh;
+  font-weight: bold;
+}
+
+.form-label {
+  display: block;
+  font-size: 3vh;
+}
+
+.form-field {
+  width: 30vw;
+  font-size: 2vh;
+  padding: 1%;
+  border-radius: 2vh;
+}
+
+.form-submit {
+  background: var(--red);
+  padding: 1%;
+  font-size: 3vh;
+  color: var(--white);
+  border-radius: 2vh;
+  margin-bottom: 3%;
+}
+
+.form-cancel {
+  background: var(--white);
+  padding: 1%;
+  font-size: 3vh;
+  color: var(--black);
+  border-radius: 2vh;
+  margin-bottom: 3%;
+  text-decoration: none;
+}
+
+.form-submit:hover {
+  background: var(--bright-red);
+  color: var(--bright-white)
+}
+
+.form-cancel:hover {
+  background: var(--bright-black);
+}
+
+.form-error-heading {
+  font-weight: bold;
+  font-size: 2vh;
+}
+
+.form-error-list {
+  margin-left: 10%;
+}
+
+.form-messages {
+  text-align: center;
+}

@@ -1,0 +1,3 @@
+Hello <%= @user.name %>
+click the link below to reset your password
+<%= link_to 'Click Here', reset_password_edit_url(token: @user.reset_token) %>

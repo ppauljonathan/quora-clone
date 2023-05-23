@@ -1,0 +1,78 @@
+.navbar {
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100vw;
+  height: 7vh;
+  background: var(--red);
+}
+
+.navbar > * {
+  display: inline;
+}
+
+.navbar-title {
+  font-size: 5vh;
+  color: var(--white);
+  text-decoration: none;
+  text-align: center;
+}
+
+.navbar-title:hover {
+  color: var(--bright-white);
+}
+
+.navbar-list {
+  float: right;
+  width: fit-content;
+  position: relative;
+  top: 25%;
+}
+
+.navbar-list > form {
+  width: fit-content;
+  height: fit-content;
+  display: inline;
+}
+
+.navbar-buttons {
+  display: inline;
+  font-size: 2vh;
+  color: var(--white);
+  border: 0.2vh solid var(--white);
+  border-radius: 1vh;
+  padding: 1vh;
+  text-decoration: none;
+  margin-right: 1vh;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.navbar-form-buttons {
+  background: transparent;
+  font-size: 2vh;
+  color: var(--white);
+  border: 0.2vh solid var(--white);
+  border-radius: 1vh;
+  padding: 1vh;
+  margin-top: -12%;
+  margin-right: 1vh;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.navbar-button-highlight {
+  display: inline;
+  font-size: 2vh;
+  border-radius: 1vh;
+  padding: 1vh;
+  text-decoration: none;
+  margin-right: 1vh;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--bright-yellow);
+  border: 0.2vh solid var(--bright-yellow);
+}
+
+.navbar-buttons:hover, .navbar-form-buttons:hover {
+  color: var(--bright-white);
+  border-color: var(--bright-white);
+}
+ 

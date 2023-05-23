@@ -1,0 +1,15 @@
+<% if flash[:error] %>
+  <div class="error-block">
+    Error: <%= flash[:error] %>
+  </div>
+<% elsif flash[:notice] %>
+  <div class="message-block">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
+<ul>
+  <% @users.each do |user| %>
+    <%= user.name %>
+  <% end %>
+</ul>

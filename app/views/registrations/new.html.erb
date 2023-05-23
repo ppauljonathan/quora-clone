@@ -1,0 +1,39 @@
+<%= form_with model: @user, url: signup_path, class: 'form center-align' do |form| %>
+  <div class="form-heading">Signup</div>
+  <% if @user.errors.any? %>
+    <div class="error-block">
+      <div class="form-error-heading">
+        The following errors prevented the User from being saved
+      </div>
+      <ul class="form-error-list">
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :name, class: 'form-label' %>
+    <%= form.text_field :name, class: 'form-field' %>
+  </div>
+
+  <div>
+    <%= form.label :email, class: 'form-label' %>
+    <%= form.email_field :email, class: 'form-field' %>
+  </div>
+
+  <div>
+    <%= form.label :password, class: 'form-label' %>
+    <%= form.password_field :password, class: 'form-field' %>
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.password_field :password_confirmation, class: 'form-field' %>
+  </div>
+
+  <%= form.button 'Signup', class: 'form-submit' %>
+  
+  <div class="form-messages">Already a user? <%= link_to 'Login', login_path %></div>
+<% end %>

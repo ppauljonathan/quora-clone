@@ -1,0 +1,35 @@
+<%= form_with model: @user, url: reset_password_path, class: 'form center-align' do |form| %>
+  <div class="form-heading">Reset Password</div>
+  <% if @user.errors.any? %>
+    <div class="error-block">
+      <div class="form-error-heading">
+        The following errors prevented the User from being saved
+      </div>
+      <ul class="form-error-list">
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form.hidden_field :id, value: @user.id %>
+
+  <div>
+    <%= form.label :password, class: 'form-label' %>
+    <%= form.password_field :password, class: 'form-field' %>
+    <br>
+    <input type="checkbox" onclick="showPassword()">
+    Show Password
+  </div>
+
+  <div>
+    <%= form.label :password_confirmation, class: 'form-label' %>
+    <%= form.password_field :password_confirmation, class: 'form-field' %>
+    <br>
+    <input type="checkbox" onclick="showPassword()">
+    Show Password
+  </div>
+
+  <%= form.button 'Reset', class: 'form-submit' %>
+<% end %>

@@ -13,3 +13,68 @@
  *= require_tree .
  *= require_self
  */
+
+:root {
+--black: #000;
+--red: #a00;
+--green: #0a0;
+--yellow: #aa0;
+--blue: #00a;
+--magenta: #a0a;
+--cyan: #0aa;
+--white: #ddd;
+--bright-black: #666;
+--bright-red: #f00;
+--bright-green: #0f0;
+--bright-yellow: #ff0;
+--bright-blue: #00f;
+--bright-magenta: #f0f;
+--bright-cyan: #0ff;
+--bright-white: #fff;
+}
+
+* {
+margin: unset;
+padding: unset;
+}
+
+.main {
+  margin-top: 8vh;
+  height: 92vh;
+  width: 100vw;
+}
+
+.center-align {
+  width: fit-content;
+  height: fit-content;
+  max-width: 50vw;
+  padding: 2%;
+  border: 0.5vmin solid var(--red);
+  border-radius: 5vh;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.error-block {
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  margin-bottom: 2%;
+  padding: 2%;
+  border: 0.5vmin solid var(--red);
+  background: rgba(255, 0, 0, 0.326);
+  border-radius: 2vh;
+}
+
+.message-block {
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  margin-bottom: 2%;
+  padding: 2%;
+  border: 0.5vmin solid var(--yellow);
+  background: rgba(170, 170, 0, 0.326);
+  border-radius: 2vh;
+}

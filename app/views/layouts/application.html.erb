@@ -7,10 +7,15 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag 'show_password' %>
   </head>
 
   <body>
-    <%= yield %>
+    
+    <%= render 'shared/navbar' %>
+
+    <div class="main">
+      <%= yield %>
+    </div>
   </body>
 </html>
