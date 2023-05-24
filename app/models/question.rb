@@ -7,7 +7,7 @@ class Question < ApplicationRecord
   validates :url_slug, presence: true
 
   before_validation :generate_url_slug
-  before_save :published_at
+  before_save :save_as
 
   default_scope { order created_at: :desc }
   scope :published, -> { where.not published_at: nil }
@@ -17,6 +17,8 @@ class Question < ApplicationRecord
   acts_as_taggable_on :topics
   has_rich_text :content
   has_many_attached :files
+
+  attr_accessor :save_as_draft
 
   def author?(author)
     author == user
@@ -54,7 +56,7 @@ class Question < ApplicationRecord
   end
 
   private def save_as
-    self.published_at = save_as_draft ? Time.now : nil
+    self.published_at = save_as_draft ? nil : Time.now
   end
 
   private def words_in_title
