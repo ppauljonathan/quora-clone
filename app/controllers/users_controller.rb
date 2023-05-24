@@ -9,6 +9,11 @@ class UsersController < ApplicationController
     @answers = @answers.published unless @user == current_user
   end
 
+  def comments
+    @comments = @user.comments.includes(:rich_text_content)
+    @comments = @comments.published unless @user == current_user
+  end
+
   def destroy
     if @user.destroy
       redirect_to root_path, notice: 'User deleted Successfully'

@@ -8,16 +8,19 @@ Rails.application.routes.draw do
       get :questions
       get :drafts
       get :answers
+      get :comments
     end
   end
 
   resources :questions, param: :url_slug do
-    collection do
-      get :search
-    end
+    get :comments, on: :member
   end
 
-  resources :answers
+  resources :answers do
+    get :comments, on: :member
+  end
+
+  resources :comments
 
   controller :registrations do
     get 'signup' => :new

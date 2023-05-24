@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
   def create
     @answer = current_user.answers.build(answer_params)
     flash[:notice] = 'created successfully' if @answer.save
-    redirect_to question_path(@answer.question.url_slug) 
+    redirect_to question_path(@answer.question.url_slug)
   end
 
   def destroy
@@ -36,9 +36,10 @@ class AnswersController < ApplicationController
 
   private def set_answer
     @answer = Answer.includes(:rich_text_content,
-                              question: [:rich_text_content,
-                                         { user: :profile_picture_attachment },
-                                         :files_attachments])
+                              { question: [:rich_text_content,
+                                           { user: :profile_picture_attachment },
+                                           :files_attachments] },
+                              { comments: :rich_text_content })
                     .find_by_id(params[:id])
     redirect_back_or_to current_user, alert: 'answer not found' unless @answer
   end

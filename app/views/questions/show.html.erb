@@ -1,6 +1,7 @@
 <%= render 'full_question', question: @question %>
 
 <% if @question.published_at? %>
+  <%= render 'option_list' %>
   <hr style="width: 80vw; margin: 2%; margin-left: 10%;">
   <div class="form-heading" style="margin-left: 4%">Answers:</div>
   <%= render @question.published_answers %>

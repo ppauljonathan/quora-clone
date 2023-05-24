@@ -1,10 +1,10 @@
 class QuestionsController < ApplicationController
   before_action :current_user
 
-  before_action :check_credits, except: %i[index show]
-  before_action :set_question, :check_access, only: %i[edit destroy show update]
+  before_action :check_credits, except: %i[index show comments]
+  before_action :set_question, :check_access, only: %i[edit destroy show update comments]
 
-  skip_before_action :authorize, only: %i[index show]
+  skip_before_action :authorize, only: %i[index show comments]
 
   def create
     @question = current_user.questions.build(question_params)
@@ -76,7 +76,8 @@ class QuestionsController < ApplicationController
                                   :files_attachments,
                                   :rich_text_content,
                                   { user: :profile_picture_attachment },
-                                  { answers: :rich_text_content })
+                                  { answers: :rich_text_content },
+                                  { comments: :rich_text_content })
                         .find_by_url_slug(params[:url_slug])
   end
 end

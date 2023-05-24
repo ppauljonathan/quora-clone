@@ -1,0 +1,7 @@
+<%= render 'shared/message_blocks' %>
+
+<%= render 'top_bar', user: @user %>
+
+<br>
+<div class="bottom-panel-title">Comments</div>
+<%= render partial: 'comments/comment', collection: @comments %>

@@ -1,0 +1,39 @@
+<div class="answer-show">
+<% if request.url.match? users_path %>
+  <div class="question-on">
+    ON: <%= link_to comment.question.title, comment.question %>
+    <br>
+    AT: <%= comment.updated_at %>
+    <br>
+    <%= '(DRAFT)' unless comment.published_at? %>
+  </div>
+<% else %>
+  <div class="question-user-details">
+    <% if !comment.user || comment.user.profile_picture.blank? %>
+      <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
+    <% else %>
+      <div
+        class="profile-thumbnail-in-question",
+        style = "background-image: url(<%= url_for comment.user.profile_picture %>)"
+      >
+    <% end %>
+      </div>
+
+    <% if comment.user %>
+      <%= link_to comment.user.name, user_path(comment.user.id), class: 'question-user-name' %>
+    <% else %>
+      <div class="question-user-name">
+        'DELETED'
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if @current_user == comment.user %>
+
+<div class="answer-content">
+  <%= comment.content %>
+</div>
+
+
+</div>

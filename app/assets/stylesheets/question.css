@@ -205,3 +205,11 @@
   position: relative;
   top: 5%;
 }
+
+.options-list {
+  width: 50vw;
+  height: fit-content;
+  display: flex;
+  margin: auto;
+}
+
