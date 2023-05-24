@@ -196,6 +196,10 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
     red-colors (0.3.0)
       matrix
     regexp_parser (2.8.0)
@@ -269,19 +273,20 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
-  fiddle
+  fiddle (~> 1.1.1)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
-  poppler
+  poppler (~> 4.1.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  ransack (~> 4.0.0)
   rubocop
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
-  trix
+  trix (~> 0.10.1)
   turbo-rails
   tzinfo-data
   web-console

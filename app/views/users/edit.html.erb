@@ -27,7 +27,7 @@
 
   <div>
     <%= form.label 'Topics (comma seperated)', class: 'form-label' %>
-    <%= form.text_field :topic_list, class: 'form-field', value: @topics, id: 'search', autocomplete: 'off'  %>
+    <%= form.text_field :topic_list, class: 'form-field', value: topic_list_for(@user), id: 'search', autocomplete: 'off'  %>
     <ul id="search-results"></ul>
   </div>
   &nbsp;

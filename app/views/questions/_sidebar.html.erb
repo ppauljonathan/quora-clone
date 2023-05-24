@@ -3,7 +3,7 @@
   <div class="form-label">Filter Questions by Topics</div>
   <br>
   <div class="check-list">
-    <% @topics.each do |topic| %>
+    <% topics.each do |topic| %>
       <div>
       <% if @selected&.include? topic %>
         <%= form.check_box topic, include_hidden: false, checked: true, class: 'check-box' %>

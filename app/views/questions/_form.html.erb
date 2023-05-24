@@ -26,16 +26,13 @@
   </div>
   <div class="form-content">
     <%= form.label 'Topics (comma seperated)', class: 'form-label' %>
-    <%= form.text_field :topic_list, class: 'form-field', id: 'search' %>
+    <%= form.text_field :topic_list,value: topic_list_for(question), class: 'form-field', id: 'search' %>
     <ul id="search-results"></ul>
   </div>
-
-  <% if @question.published_at? %>
-    <%= form.submit 'Save', class: 'form-submit' if @question.id %>
-  <% else %>
-    <%= form.submit 'Publish', class: 'form-submit' %>
-    <%= form.submit 'Save as Draft', class: 'form-cancel' %>
-  <% end %>
+  <%= form.check_box :save_as_draft, style: 'display: inline', include_hidden: false %>
+  <%= form.label 'Save as Draft?', class: 'form-label', style: 'display: inline' %>
+  <br>
+  <%= form.submit 'Submit', class: 'form-submit' %>
 <% end %>
 
 <%= javascript_include_tag 'topics_dropdown' %>

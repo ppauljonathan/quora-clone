@@ -18,12 +18,7 @@ class UsersController < ApplicationController
   end
 
   def drafts
-    @questions = Question.unscoped.where(user_id: @user.id, published_at: nil)
-    render :show
-  end
-
-  def edit
-    @topics = @user.topic_list.join(', ')
+    @questions = Question.drafts.includes(:user, :topics).where user_id: @user.id
   end
 
   def index
@@ -31,8 +26,7 @@ class UsersController < ApplicationController
   end
 
   def questions
-    @questions = Question.where(user_id: @user.id)
-    render :show
+    @questions = Question.published.includes(:user, :topics).where(user_id: @user.id)
   end
 
   def update

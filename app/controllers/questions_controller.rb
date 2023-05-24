@@ -1,15 +1,15 @@
 class QuestionsController < ApplicationController
-  before_action :check_credits, except: %i[index show search]
-  before_action :set_topics, :set_questions, only: %i[index search]
-  before_action :set_question_details, only: :create
-  before_action :set_unscoped_question, only: %i[edit destroy show update]
-  before_action :check_access, only: %i[edit destroy update]
-  before_action :check_if_editable, only: %i[edit update]
+  before_action :current_user
+
+  before_action :check_credits, except: %i[index show]
+  before_action :set_question, :check_access, only: %i[edit destroy show update]
   before_action :check_if_question_published, only: %i[create update]
 
-  skip_before_action :authorize, only: %i[index show search]
+  skip_before_action :authorize, only: %i[index show]
 
   def create
+    @question = current_user.questions.build(question_params)
+
     if @question.save
       redirect_to root_path, notice: 'Question Created'
     else
@@ -20,14 +20,18 @@ class QuestionsController < ApplicationController
   def destroy
     if @question.destroy
       flash[:notice] = 'Question deleted Successfully'
+      redirect_to user_path(@question.user_id)
     else
-      flash[:alert] = @question.errors
+      render :edit
     end
-
-    redirect_back_or_to user_path(@question.user_id)
   end
 
   def index
+    @search_results = Question.published
+                              .includes(:user, :topics)
+                              .ransack(params[:q])
+    @questions = @search_results.result
+
     return unless params[:topics]
 
     @questions = @questions.tagged_with params[:topics].keys, any: true
@@ -36,16 +40,6 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
-  end
-
-  def search
-    @questions = @questions.where('title LIKE ?', "%#{params[:title]}%")
-
-    render :index
-  end
-
-  def show
-    @user = @question.user
   end
 
   def update
@@ -57,13 +51,17 @@ class QuestionsController < ApplicationController
   end
 
   private def check_access
-    return if current_user == @question.user
+    return if @question.can_be_accessed_by?(current_user,
+                                            request.path,
+                                            request.method)
 
-    redirect_to root_path, notice: 'Cannot access this path'
+    redirect_back_or_to root_path, notice: 'Cannot access this path'
   end
 
   private def check_credits
-    redirect_back_or_to root_path, notice: 'Not enough credit' unless current_user.credits > 1
+    return if current_user.can_ask_question?
+
+    redirect_back_or_to root_path, notice: 'Not enough credit'
   end
 
   private def check_if_editable
@@ -77,28 +75,11 @@ class QuestionsController < ApplicationController
   end
 
   private def question_params
-    params.require(:question).permit(:title, :content, :topic_list, files: [])
+    params.require(:question).permit(:title, :content, :topic_list, :save_as_draft, files: [])
   end
 
-  private def set_questions
-    @questions = Question.with_user.with_topics
-  end
-
-  private def set_question_details
-    @question = Question.new(question_params)
-    @question.user = current_user
-  end
-
-  private def set_topics
-    @topics = ActsAsTaggableOn::Tag.for_context(:topics).distinct.pluck(:name)
-  end
-
-  private def set_unscoped_question
-    @question = Question.unscoped
-                        .with_user
-                        .with_topics
-                        .with_files
-                        .with_answers
+  private def set_question
+    @question = Question.includes(:user, :topics, :files_attachments, :rich_text_content)
                         .find_by_url_slug(params[:url_slug])
   end
 end
