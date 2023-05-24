@@ -9,14 +9,15 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  
+
   before_create :generate_verification_token
   after_commit :send_verification_email
-  
+
   has_secure_password
   has_one_attached :profile_picture
-  has_many :questions, dependent: :nullify
+  has_many :questions, dependent: :restrict_with_exception
   acts_as_taggable_on :topics
+  has_many :answers, dependent: :restrict_with_exception
 
   enum :role, ROLES, default: :user
 

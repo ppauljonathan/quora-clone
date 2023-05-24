@@ -43,12 +43,12 @@ class UsersController < ApplicationController
   end
 
   private def set_user
-    @user = User.with_topics.with_profile_picture.find_by_id(params[:id])
+    @user = User.includes(:profile_picture_attachment, :topics).find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
   end
 
   private def set_answers
-    @answers = @user.answers.with_content
+    @answers = @user.answers.includes(:rich_text_content)
     @answers = @answers.published unless @user == current_user
   end
 

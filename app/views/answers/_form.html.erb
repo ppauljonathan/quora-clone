@@ -5,10 +5,8 @@
   <trix-editor input="answer-content" class="my-trix-mod"></trix-editor>
   
   <br>
-  <% if answer.published_at? %>
-    <%= form.submit 'Save', class: 'form-submit' if answer.id %>
-  <% else %>
-    <%= form.submit 'Publish', class: 'form-submit' %>
-    <%= form.submit 'Save as Draft', class: 'form-cancel' %>
-  <% end %>
+  <%= form.check_box :save_as_draft, style: 'display: inline', include_hidden: false %>
+  <%= form.label 'Save as Draft?', class: 'form-label', style: 'display: inline' %>
+  <br>
+  <%= form.submit 'Submit', class: 'form-submit' %>
 <% end %>
