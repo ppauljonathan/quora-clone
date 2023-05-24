@@ -9,7 +9,6 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-
   before_create :generate_verification_token
   after_commit :send_verification_email
 
