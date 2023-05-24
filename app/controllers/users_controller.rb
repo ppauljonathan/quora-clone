@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
-  before_action :set_answers, only: :answers
 
   skip_before_action :authorize, only: %i[index show questions answers comments]
 
   def answers
-    render :show
+    @answers = @user.answers.includes(:rich_text_content)
+    @answers = @answers.published unless @user == current_user
   end
 
   def destroy
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def drafts
-    @questions = Question.drafts.includes(:user, :topics).where user_id: @user.id
+    @questions = @user.questions.drafts.includes(:user, :topics)
   end
 
   def index
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
   end
 
   def questions
-    @questions = Question.published.includes(:user, :topics).where(user_id: @user.id)
+    @questions = @user.questions.published.includes(:user, :topics)
   end
 
   def update
@@ -45,11 +45,6 @@ class UsersController < ApplicationController
   private def set_user
     @user = User.includes(:profile_picture_attachment, :topics).find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
-  end
-
-  private def set_answers
-    @answers = @user.answers.includes(:rich_text_content)
-    @answers = @answers.published unless @user == current_user
   end
 
   private def user_params

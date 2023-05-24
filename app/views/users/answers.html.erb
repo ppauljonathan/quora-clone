@@ -1,0 +1,7 @@
+<%= render 'shared/message_blocks' %>
+
+<%= render 'top_bar', user: @user %>
+
+<br>
+<div class="bottom-panel-title">Answers</div>
+<%= render partial: 'answers/answer', collection: @answers %>

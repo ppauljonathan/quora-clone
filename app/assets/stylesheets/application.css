@@ -16,7 +16,7 @@
 
 :root {
 --black: #000;
---red: #a00;
+--red: rgb(108, 29, 29);
 --green: #0a0;
 --yellow: #aa0;
 --blue: #00a;
@@ -24,7 +24,7 @@
 --cyan: #0aa;
 --white: #ddd;
 --bright-black: #666;
---bright-red: #f00;
+--bright-red: rgb(148, 48, 48);
 --bright-green: #0f0;
 --bright-yellow: #ff0;
 --bright-blue: #00f;
