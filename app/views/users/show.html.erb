@@ -3,12 +3,3 @@
 <%= render 'top_bar', user: @user %>
 
 <br>
-<% case request.url.split('/')[-1] %>
-<% when 'questions' %>
-  <div class="bottom-panel-title">Questions</div>
-  <%= render partial: 'questions/question', collection: @questions %>
-<% when 'drafts' %>
-  <div class="bottom-panel-title">Drafts</div>
-  <%= render partial: 'questions/question', collection: @questions %>
-<% else %>
-<% end %>

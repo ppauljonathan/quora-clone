@@ -9,17 +9,20 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  has_secure_password
-
+  
   before_create :generate_verification_token
   after_commit :send_verification_email
-
+  
+  has_secure_password
   has_one_attached :profile_picture
   has_many :questions, dependent: :nullify
-
   acts_as_taggable_on :topics
 
   enum :role, ROLES, default: :user
+
+  def can_ask_question?
+    credits > 1
+  end
 
   def resend_verification_mail
     update(verification_token: generate_token(:verification), verified_at: nil)
