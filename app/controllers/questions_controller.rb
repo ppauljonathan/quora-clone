@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
 
   before_action :check_credits, except: %i[index show]
   before_action :set_question, :check_access, only: %i[edit destroy show update]
-  before_action :check_if_question_published, only: %i[create update]
 
   skip_before_action :authorize, only: %i[index show]
 
@@ -24,7 +23,6 @@ class QuestionsController < ApplicationController
     else
       render :edit
     end
-
   end
 
   def index
@@ -65,18 +63,12 @@ class QuestionsController < ApplicationController
     redirect_back_or_to root_path, notice: 'Not enough credit'
   end
 
-  private def check_if_question_published
-    return if params[:commit] == 'Save as Draft' || @question.published_at?
-
-    @question.published_at = Time.now
-  end
-
   private def question_params
     params.require(:question).permit(:title, :content, :topic_list, :save_as_draft, files: [])
   end
 
   private def set_question
-    @question = Question.includes(:user, :topics, :files_attachments, :rich_text_content)
+    @question = Question.includes(:topics, :files_attachments, :rich_text_content, user: :profile_picture_attachment)
                         .find_by_url_slug(params[:url_slug])
   end
 end

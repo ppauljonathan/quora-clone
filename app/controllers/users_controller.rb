@@ -40,7 +40,7 @@ class UsersController < ApplicationController
   end
 
   private def set_user
-    @user = User.includes(:topics).find_by_id(params[:id])
+    @user = User.includes(:topics, :profile_picture_attachment).find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
   end
 
