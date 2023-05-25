@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   private def answer_params
-    params.require(:answer).permit(:content, :question_id, :save_as_draft)
+    params.require(:answer).permit(:content, :question_id)
   end
 
   private def check_if_draft_question

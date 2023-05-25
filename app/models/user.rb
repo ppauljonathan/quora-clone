@@ -5,6 +5,7 @@ class User < ApplicationRecord
     user: 0,
     admin: 1
   }.freeze
+  CREDITS_ON_VERIFICATION = 5
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -42,7 +43,11 @@ class User < ApplicationRecord
   end
 
   def verify
-    update(verification_token: nil, verified_at: Time.now, credits: 5) unless verified?
+    return if verified?
+
+    update(verification_token: nil,
+           verified_at: Time.now,
+           credits: CREDITS_ON_VERIFICATION)
   end
 
   private def generate_reset_token
