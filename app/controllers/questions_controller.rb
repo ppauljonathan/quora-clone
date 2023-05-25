@@ -1,4 +1,7 @@
 class QuestionsController < ApplicationController
+  QUESTIONS_PER_PAGE = 4
+
+
   before_action :check_credits, except: %i[index show]
   before_action :set_question, only: %i[edit destroy show update]
   before_action :can_view?, only: :show
@@ -27,7 +30,10 @@ class QuestionsController < ApplicationController
   end
 
   def index
+    @paginated_questions = Question.page(params[:page]).per(QUESTIONS_PER_PAGE)
     @search_results = Question.published
+                              .page(params[:page])
+                              .per(QUESTIONS_PER_PAGE)
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result

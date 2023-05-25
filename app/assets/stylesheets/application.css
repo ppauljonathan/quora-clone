@@ -78,3 +78,21 @@
   background: rgba(170, 170, 0, 0.326);
   border-radius: 2vh;
 }
+
+.page, .prev, .next, .first, .last {
+  padding: 2%;
+  margin: 2%;
+  background: var(--red);
+  border: 0.5vmin solid var(--black);
+  border-radius: 2vh;
+}
+
+.page:hover, .prev:hover, .next:hover, .first:hover, .last:hover, .current {
+  color: var(--bright-white);
+  background: var(--bright-red);
+}
+
+.page > a, .prev > a, .next > a, .first > a, .last > a {
+  text-decoration: none;
+  color: var(--white);
+}

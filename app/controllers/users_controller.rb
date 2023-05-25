@@ -1,12 +1,17 @@
 class UsersController < ApplicationController
+  ITEMS_PER_PAGE = 3
+
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
-  before_action :current_user, only: %i[index show]
+  before_action :current_user, only: %i[index show questions answers]
 
   skip_before_action :authorize, only: %i[index show questions answers comments]
 
   def answers
-    @answers = @user.answers.includes(:rich_text_content)
+    @answers = @user.answers
+                    .includes(:rich_text_content)
+                    .page(params[:page])
+                    .per(ITEMS_PER_PAGE)
     @answers = @answers.published unless @user == current_user
   end
 
@@ -19,7 +24,11 @@ class UsersController < ApplicationController
   end
 
   def drafts
-    @questions = @user.questions.drafts.includes(:user, :topics)
+    @questions = @user.questions
+                      .drafts
+                      .includes(:user, :topics)
+                      .page(params[:page])
+                      .per(ITEMS_PER_PAGE)
   end
 
   def index
@@ -27,7 +36,11 @@ class UsersController < ApplicationController
   end
 
   def questions
-    @questions = @user.questions.published.includes(:user, :topics)
+    @questions = @user.questions
+                      .published
+                      .includes(:user, :topics)
+                      .page(params[:page])
+                      .per(ITEMS_PER_PAGE)
   end
 
   def update

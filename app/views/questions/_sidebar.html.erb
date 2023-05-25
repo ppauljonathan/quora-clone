@@ -2,9 +2,9 @@
 <%= form_with method: :get, scope: :topics, url: root_path, class: 'footer-form' do |form|%>
   <div class="form-label">Filter Questions by Topics</div>
   <br>
-  <div class="check-list">
+  <div class="check-list" >
     <% topics.each do |topic| %>
-      <div>
+      <div class="check-element">
       <% if @selected&.include? topic %>
         <%= form.check_box topic, include_hidden: false, checked: true, class: 'check-box' %>
       <% else %>

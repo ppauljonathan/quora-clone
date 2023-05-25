@@ -5,6 +5,4 @@
 <div class="questions/question-content" style='font-size: 3vh; margin-left: 5%;'><%= question.content %>
 </div>
 
-<% if question.files.any? %>
-  <%= render 'question_file_attachments' %>
-<% end %>
+<%= render 'question_file_attachments', question: question %>

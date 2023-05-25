@@ -52,11 +52,13 @@ gem 'acts-as-taggable-on', '~> 9.0'
 
 gem 'trix', '~> 0.10.1'
 
-gem 'fiddle', '~>1.1.1'
+gem 'fiddle', '~> 1.1.1'
 
-gem 'poppler', '~>4.1.5'
+gem 'poppler', '~> 4.1.5'
 
-gem 'ransack', '~>4.0.0'
+gem 'ransack', '~> 4.0.0'
+
+gem 'kaminari', '~> 1.2.2'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

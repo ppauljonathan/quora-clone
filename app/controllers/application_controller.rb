@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :current_user, :authorize
+  before_action :authorize
 
   private def authorize
     redirect_to login_url, alert: 'Please Log in to continue' unless current_user
