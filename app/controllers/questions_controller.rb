@@ -1,8 +1,9 @@
 class QuestionsController < ApplicationController
-  before_action :current_user
-
   before_action :check_credits, except: %i[index show]
-  before_action :set_question, :check_access, only: %i[edit destroy show update]
+  before_action :set_question, only: %i[edit destroy show update]
+  before_action :can_view?, only: :show
+  before_action :can_edit?, only: %i[edit destroy update]
+  before_action :current_user, only: %i[index show]
 
   skip_before_action :authorize, only: %i[index show]
 
@@ -31,10 +32,9 @@ class QuestionsController < ApplicationController
                               .ransack(params[:q])
     @questions = @search_results.result
 
-    return unless params[:topics]
-
-    @questions = @questions.tagged_with params[:topics].keys, any: true
-    @selected = params[:topics].keys
+    @questions = @questions.tagged_with(params[:topics]&.keys || helpers.topics,
+                                        any: true)
+    @selected = params[:topics]&.keys
   end
 
   def new
@@ -47,6 +47,18 @@ class QuestionsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  private def can_edit?
+    return if @question.author? current_user
+
+    redirect_back_or_to root_path, alert: 'Cannot access this path'
+  end
+
+  private def can_view?
+    return if @question.author?(current_user) || @question.published_at?
+
+    redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
   private def check_access
