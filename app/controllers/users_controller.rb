@@ -12,7 +12,6 @@ class UsersController < ApplicationController
                     .includes(:rich_text_content)
                     .page(params[:page])
                     .per(ITEMS_PER_PAGE)
-    @answers = @answers.published unless @user == current_user
   end
 
   def destroy

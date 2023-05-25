@@ -33,10 +33,6 @@ class Question < ApplicationRecord
     answers.none?
   end
 
-  def published_answers
-    answers.published
-  end
-
   def to_param
     url_slug
   end

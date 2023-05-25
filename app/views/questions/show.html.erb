@@ -3,7 +3,7 @@
 <% if @question.published_at? %>
   <hr style="width: 80vw; margin: 2%; margin-left: 10%;">
   <div class="form-heading" style="margin-left: 4%">Answers:</div>
-  <%= render @question.published_answers %>
+  <%= render @question.answers %>
 
   <%= render 'answers/form', answer: Answer.new, question: @question.id %>
 <% end %>

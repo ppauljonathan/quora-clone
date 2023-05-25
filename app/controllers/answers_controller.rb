@@ -5,7 +5,7 @@ class AnswersController < ApplicationController
   def create
     @answer = current_user.answers.build(answer_params)
     flash[:notice] = 'created successfully' if @answer.save
-    redirect_to question_path(@answer.question.url_slug) 
+    redirect_to question_path(@answer.question.url_slug)
   end
 
   def destroy
@@ -25,7 +25,7 @@ class AnswersController < ApplicationController
   end
 
   private def answer_params
-    params.require(:answer).permit(:content, :question_id, :save_as_draft)
+    params.require(:answer).permit(:content, :question_id)
   end
 
   private def check_if_draft_question

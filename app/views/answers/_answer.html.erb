@@ -4,8 +4,6 @@
     ON: <%= link_to answer.question.title, answer.question %>
     <br>
     AT: <%= answer.updated_at %>
-    <br>
-    <%= '(DRAFT)' unless answer.published_at? %>
   </div>
 <% else %>
   <div class="question-user-details">
