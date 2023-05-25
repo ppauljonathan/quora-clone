@@ -25,15 +25,6 @@ class Question < ApplicationRecord
     author == user
   end
 
-  def can_be_accessed_by?(author, path, method)
-    return true if author? author
-    return false if draft?
-    return false if method != 'GET'
-    return false if path.split('/')[-1] == 'edit'
-
-    true
-  end
-
   def draft?
     !published_at?
   end
