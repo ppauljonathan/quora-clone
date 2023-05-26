@@ -16,7 +16,7 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :profile_picture
   acts_as_taggable_on :topics
-  with_options dependent: :restrict_with_exception do |assoc|
+  with_options dependent: :restrict_with_error do |assoc|
     assoc.has_many :questions
     assoc.has_many :answers
     assoc.has_many :comments

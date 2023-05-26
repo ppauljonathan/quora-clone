@@ -1,13 +1,10 @@
 <%= form_with model: comment, class: 'answer-form' do |form| %>
   <%= form.label 'Write Your Comment', class: 'form-label' %>
-  <%= form.hidden_field :commentable_type, value: question.class %>
-  <%= form.hidden_field :commentable_id, value: question.id %>
+  <%= form.hidden_field :commentable_type, value: resource.class %>
+  <%= form.hidden_field :commentable_id, value: resource.id %>
   <%= form.hidden_field :content, id: 'answer-content' %>
   <trix-editor input="answer-content" class="my-trix-mod"></trix-editor>
   
-  <br>
-  <%= form.check_box :save_as_draft, style: 'display: inline', include_hidden: false %>
-  <%= form.label 'Save as Draft?', class: 'form-label', style: 'display: inline' %>
   <br>
   <%= form.submit 'Submit', class: 'form-submit' %>
 <% end %>

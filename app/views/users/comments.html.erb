@@ -5,3 +5,7 @@
 <br>
 <div class="bottom-panel-title">Comments</div>
 <%= render partial: 'comments/comment', collection: @comments %>
+
+<div class="user-pagination-links">
+  <%= paginate @comments %>
+</div>

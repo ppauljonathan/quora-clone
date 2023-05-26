@@ -37,7 +37,7 @@
   color: var(--white);
   padding: 2%;
   width: 10vw;
-  height: max-content;
+  height: 100vh;
 }
 
 .footer-form-header {
@@ -50,7 +50,8 @@
 }
 
 .check-list {
-  height: 80vh;
+  height: fit-content;
+  max-height: 80vh;
   overflow: scroll;
 }
 

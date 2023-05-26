@@ -16,18 +16,13 @@
       >
     <% end %>
       </div>
-
-    <% if answer.user %>
-      <%= link_to answer.user.name, user_path(answer.user.id), class: 'question-user-name' %>
-    <% else %>
-      <div class="question-user-name">
-        'DELETED'
-      </div>
-    <% end %>
+    <%= link_to answer.user.name, user_path(answer.user.id), class: 'question-user-name' %>
   </div>
 <% end %>
 
-<%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' if @current_user == answer.user %>
+<%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' if @set_current_user == answer.user %>
+
+<%= link_to 'Comments', answer, class: 'edit-question-button' %>
 
 <div class="answer-content">
   <%= answer.content %>

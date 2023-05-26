@@ -54,7 +54,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
     t.integer "question_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "published_at", precision: nil
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -62,7 +61,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
   create_table "comments", force: :cascade do |t|
     t.string "commentable_type", null: false
     t.integer "commentable_id", null: false
-    t.datetime "published_at"
     t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

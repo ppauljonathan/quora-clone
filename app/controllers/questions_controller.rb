@@ -1,23 +1,28 @@
 class QuestionsController < ApplicationController
   QUESTIONS_PER_PAGE = 4
 
-
-  before_action :check_credits, except: %i[index show]
-  before_action :set_question, only: %i[edit destroy show update]
-  before_action :can_view?, only: :show
+  before_action :check_credits, except: %i[index show comments]
+  before_action :set_question, only: %i[edit destroy comments show update]
+  before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
-  before_action :current_user, only: %i[index show]
+  before_action :set_current_user, only: %i[index show comments]
 
   skip_before_action :authorize, only: %i[index show comments]
 
   def create
-    @question = current_user.questions.build(question_params)
+    @question = set_current_user.questions.build(question_params)
 
     if @question.save
       redirect_to root_path, notice: 'Question Created'
     else
       render :new
     end
+  end
+
+  def comments
+    @comments = @question.comments
+                         .page(params[:page])
+                         .per(QUESTIONS_PER_PAGE)
   end
 
   def destroy
@@ -46,6 +51,12 @@ class QuestionsController < ApplicationController
     @question = Question.new
   end
 
+  def show
+    @answers = @question.answers
+                        .page(params[:page])
+                        .per(QUESTIONS_PER_PAGE)
+  end
+
   def update
     if @question.update(question_params)
       redirect_to root_path, notice: 'Question Updated'
@@ -55,19 +66,19 @@ class QuestionsController < ApplicationController
   end
 
   private def can_edit?
-    return if @question.author? current_user
+    return if @question.author? set_current_user
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
   private def can_view?
-    return if @question.author?(current_user) || @question.published_at?
+    return if @question.author?(set_current_user) || @question.published_at?
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
   private def check_credits
-    return if current_user.can_ask_question?
+    return if set_current_user.can_ask_question?
 
     redirect_back_or_to root_path, notice: 'Not enough credit'
   end

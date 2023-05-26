@@ -1,0 +1,21 @@
+<%= render 'shared/message_blocks' %>
+
+<div class="question-user-details">
+  <% if !answer.user || answer.user.profile_picture.blank? %>
+    <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
+  <% else %>
+    <div
+      class="profile-thumbnail-in-question",
+      style = "background-image: url(<%= url_for answer.user.profile_picture %>)"
+    >
+  <% end %>
+    </div>
+  <%= link_to answer.user.name, user_path(answer.user.id), class: 'question-user-name' %>
+</div>
+
+<div style="margin-top: 2%; margin-left: 5%;">
+  ON: <%= link_to answer.question.title, answer.question %>
+</div>
+
+<div class="question-content" style='font-size: 3vh; margin-left: 5%;'><%= answer.content %>
+</div>

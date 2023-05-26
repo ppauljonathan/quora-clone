@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
-  include PublishableContent
-
   URL_SLUG_WORD_LENGTH = 7
+
+  attr_accessor :save_as_draft
 
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
@@ -9,14 +9,18 @@ class Question < ApplicationRecord
   validates :url_slug, presence: true
 
   before_validation :generate_url_slug
+  before_save :save_as
 
   default_scope { order created_at: :desc }
+  scope :published, -> { where.not published_at: nil }
+  scope :drafts, -> { where published_at: nil }
 
   belongs_to :user
   acts_as_taggable_on :topics
   has_many_attached :files
   has_many :answers
   has_many :comments, as: :commentable
+  has_rich_text :content
 
   def author?(author)
     author == user
@@ -46,6 +50,10 @@ class Question < ApplicationRecord
                        .parameterize
     duplicate_slugs_count = self.class.where('url_slug LIKE ?', "#{sample_slug}%").count
     self.url_slug = sample_slug + "-#{duplicate_slugs_count + 1}"
+  end
+
+  private def save_as
+    self.published_at = save_as_draft ? nil : Time.now
   end
 
   private def words_in_title

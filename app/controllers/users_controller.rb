@@ -2,28 +2,30 @@ class UsersController < ApplicationController
   ITEMS_PER_PAGE = 3
 
   before_action :set_user, except: %i[index]
-  before_action :check_if_current_user, only: %i[edit update drafts destroy]
-  before_action :current_user, only: %i[index show questions answers]
+  before_action :check_if_set_current_user, only: %i[edit update drafts destroy]
+  before_action :set_current_user, only: %i[index show questions answers comments]
 
   skip_before_action :authorize, only: %i[index show questions answers comments]
 
   def answers
     @answers = @user.answers
-                    .includes(:rich_text_content)
+                    .includes(:rich_text_content, :question)
                     .page(params[:page])
                     .per(ITEMS_PER_PAGE)
   end
 
   def comments
-    @comments = @user.comments.includes(:rich_text_content)
-    @comments = @comments.published unless @user == current_user
+    @comments = @user.comments
+                     .includes(:rich_text_content, :commentable)
+                     .page(params[:page])
+                     .per(ITEMS_PER_PAGE)
   end
 
   def destroy
     if @user.destroy
       redirect_to root_path, notice: 'User deleted Successfully'
     else
-      redirect_to user_path(@user.id), alert: @user.errors
+      render :edit
     end
   end
 
@@ -56,12 +58,12 @@ class UsersController < ApplicationController
     end
   end
 
-  private def check_if_current_user
-    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user == @user
+  private def check_if_set_current_user
+    redirect_back_or_to root_path, notice: 'cannot access this path' unless set_current_user == @user
   end
 
   private def set_user
-    @user = User.includes(:profile_picture_attachment, :topics).find_by_id(params[:id])
+    @user = User.find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
   end
 

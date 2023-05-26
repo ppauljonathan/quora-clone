@@ -4,7 +4,11 @@
   <%= render 'option_list' %>
   <hr style="width: 80vw; margin: 2%; margin-left: 10%;">
   <div class="form-heading" style="margin-left: 4%">Answers:</div>
-  <%= render @question.answers %>
+  <%= render @answers %>
+
+  <div class="user-pagination-links">
+    <%= paginate @answers %>
+  </div>
 
   <%= render 'answers/form', answer: Answer.new, question: @question.id %>
 <% end %>

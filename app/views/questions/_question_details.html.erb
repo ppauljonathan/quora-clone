@@ -10,14 +10,7 @@
     >
   <% end %>
     </div>
-
-  <% if question.user %>
-    <%= link_to question.user.name, user_path(question.user.id), class: 'question-user-name' %>
-  <% else %>
-    <div class="question-user-name">
-      'DELETED'
-    </div>
-  <% end %>
+  <%= link_to question.user.name, user_path(question.user.id), class: 'question-user-name' %>
 </div>
 
 <div class="topics-list", style="padding-left: 5%">

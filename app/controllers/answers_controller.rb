@@ -1,9 +1,11 @@
 class AnswersController < ApplicationController
+  COMMENTS_PER_PAGE = 4
+
   before_action :check_if_draft_question, only: %i[create]
-  before_action :set_answer, only: %i[edit update destroy]
+  before_action :set_answer, only: %i[show edit update destroy]
 
   def create
-    @answer = current_user.answers.build(answer_params)
+    @answer = set_current_user.answers.build(answer_params)
     flash[:notice] = 'created successfully' if @answer.save
     redirect_to question_path(@answer.question.url_slug)
   end
@@ -14,6 +16,12 @@ class AnswersController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def show
+    @comments = @answer.comments
+                       .page(params[:page])
+                       .per(COMMENTS_PER_PAGE)
   end
 
   def update
@@ -41,6 +49,6 @@ class AnswersController < ApplicationController
                                            :files_attachments] },
                               { comments: :rich_text_content })
                     .find_by_id(params[:id])
-    redirect_back_or_to current_user, alert: 'answer not found' unless @answer
+    redirect_back_or_to set_current_user, alert: 'answer not found' unless @answer
   end
 end

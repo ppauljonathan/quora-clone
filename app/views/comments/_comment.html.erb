@@ -1,11 +1,14 @@
 <div class="answer-show">
 <% if request.url.match? users_path %>
   <div class="question-on">
-    ON: <%= link_to comment.question.title, comment.question %>
+    <% if comment.commentable.class == Question %>
+      ON: <%= link_to comment.commentable.title, comment.commentable %>
+    <% elsif comment.commentable.class == Answer %>
+      ON: <%= link_to answer_path(comment.commentable.id), comment.commentable %>
+      
+    <% end %>
     <br>
     AT: <%= comment.updated_at %>
-    <br>
-    <%= '(DRAFT)' unless comment.published_at? %>
   </div>
 <% else %>
   <div class="question-user-details">
@@ -18,18 +21,11 @@
       >
     <% end %>
       </div>
-
-    <% if comment.user %>
-      <%= link_to comment.user.name, user_path(comment.user.id), class: 'question-user-name' %>
-    <% else %>
-      <div class="question-user-name">
-        'DELETED'
-      </div>
-    <% end %>
+    <%= link_to comment.user.name, user_path(comment.user.id), class: 'question-user-name' %>
   </div>
 <% end %>
 
-<%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if @current_user == comment.user %>
+<%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if @set_current_user == comment.user %>
 
 <div class="answer-content">
   <%= comment.content %>

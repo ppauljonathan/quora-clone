@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
 
   def create
-    @comment = current_user.comments.build(comment_params)
+    @comment = set_current_user.comments.build(comment_params)
     flash[:notice] = 'created successfully' if @comment.save
     redirect_back_or_to root_path
   end
@@ -24,15 +24,15 @@ class CommentsController < ApplicationController
   end
 
   private def comment_params
-    params.require(:comment).permit(:content, :commentable_type, :commentable_id, :save_as_draft)
+    params.require(:comment).permit(:content, :commentable_type, :commentable_id)
   end
 
   private def set_comment
     @comment = comment.includes(:rich_text_content,
-                                question: [:rich_text_content,
-                                           { user: :profile_picture_attachment },
-                                           :files_attachments])
+                                commentable: [:rich_text_content,
+                                              { user: :profile_picture_attachment},
+                                              :files_attachments])
                       .find_by_id(params[:id])
-    redirect_back_or_to current_user, alert: 'comment not found' unless @comment
+    redirect_back_or_to set_current_user, alert: 'comment not found' unless @comment
   end
 end
