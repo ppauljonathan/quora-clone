@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_27_125437) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -57,6 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
     t.bigint "question_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "reported_at", precision: nil
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -67,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "reported_at", precision: nil
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -79,9 +81,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "reported_at", precision: nil
     t.index ["title"], name: "index_questions_on_title"
     t.index ["url_slug"], name: "index_questions_on_url_slug"
     t.index ["user_id"], name: "index_questions_on_user_id"
+  end
+
+  create_table "reports", force: :cascade do |t|
+    t.string "reportable_type", null: false
+    t.bigint "reportable_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
+    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -135,5 +148,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
+  add_foreign_key "reports", "users"
   add_foreign_key "taggings", "tags"
 end

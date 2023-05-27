@@ -8,4 +8,5 @@
                         'function-button',
                         'highlighted-function-button',
                         comments_question_path(@question.url_slug) %>
+  <button class='function-button' onclick="reportAbuse('<%= @question.class %>', <%= @question.id %>)">Report Abuse</button>
 </div>

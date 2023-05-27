@@ -99,5 +99,6 @@ class QuestionsController < ApplicationController
                                   { answers: :rich_text_content },
                                   { comments: :rich_text_content })
                         .find_by_url_slug(params[:url_slug])
+    redirect_back_or_to questions_path, alert: 'question not found' unless @question
   end
 end

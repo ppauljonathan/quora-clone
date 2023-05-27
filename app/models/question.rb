@@ -11,7 +11,7 @@ class Question < ApplicationRecord
   before_validation :generate_url_slug
   before_save :save_as
 
-  default_scope { order created_at: :desc }
+  default_scope { order(created_at: :desc).where(reported_at: nil) }
   scope :published, -> { where.not published_at: nil }
   scope :drafts, -> { where published_at: nil }
 
@@ -21,6 +21,7 @@ class Question < ApplicationRecord
   has_many :answers
   has_many :comments, as: :commentable
   has_rich_text :content
+  has_many :reports, as: :reportable
 
   def author?(author)
     author == user

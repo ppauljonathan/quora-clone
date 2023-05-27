@@ -21,6 +21,7 @@ class User < ApplicationRecord
     assoc.has_many :answers
     assoc.has_many :comments
   end
+  has_many :reports
 
   enum :role, ROLES, default: :user
 

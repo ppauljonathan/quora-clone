@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :reports, only: :create
+
   controller :registrations do
     get 'signup' => :new
     post 'signup' => :create
