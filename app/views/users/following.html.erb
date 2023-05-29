@@ -1,0 +1,12 @@
+<%= render 'shared/message_blocks' %>
+
+<%= render 'top_bar', user: @user %>
+
+<br>
+<div class="bottom-panel-title">Following</div>
+<%= render 'user_card', users: @followings %>
+
+<div class="user-pagination-links">
+  <%= paginate @followings %>
+</div>
+

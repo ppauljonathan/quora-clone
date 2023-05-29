@@ -9,6 +9,10 @@ Rails.application.routes.draw do
       get :drafts
       get :answers
       get :comments
+      get :followers
+      get :following
+      post :follow
+      post :unfollow
     end
   end
 

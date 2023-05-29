@@ -1,11 +1,13 @@
 class UsersController < ApplicationController
   ITEMS_PER_PAGE = 3
+  USER_CARDS_PER_PAGE = 10
 
   before_action :set_user, except: %i[index]
   before_action :check_if_set_current_user, only: %i[edit update drafts destroy]
-  before_action :set_current_user, only: %i[index show questions answers comments]
+  before_action :set_current_user, only: %i[index show questions answers comments followers following]
+  before_action :check_if_not_current_user, only: %i[follow unfollow]
 
-  skip_before_action :authorize, only: %i[index show questions answers comments]
+  skip_before_action :authorize, only: %i[index show questions answers comments followers following]
 
   def answers
     @answers = @user.answers
@@ -37,6 +39,34 @@ class UsersController < ApplicationController
                       .per(ITEMS_PER_PAGE)
   end
 
+  def follow
+    @user.followers << set_current_user
+  rescue ActiveRecord::RecordNotUnique
+    redirect_back_or_to @user, alert: 'already followed'
+  else
+    redirect_back_or_to @user, notice: 'successful'
+  end
+
+  def followers
+    @followers = @user.followers
+                      .includes(:profile_picture_attachment)
+                      .page(params[:page])
+                      .per(USER_CARDS_PER_PAGE)
+  end
+
+  def following
+    @followings = @user.followings
+                       .includes(:profile_picture_attachment)
+                       .page(params[:page])
+                       .per(USER_CARDS_PER_PAGE)
+  end
+
+  def unfollow
+    @user.followers.delete set_current_user
+
+    redirect_back_or_to @user, notice: 'successful'
+  end
+
   def index
     @users = User.all
   end
@@ -56,6 +86,10 @@ class UsersController < ApplicationController
       flash.now[:error] = @user.errors
       render :edit, status: 422
     end
+  end
+
+  private def check_if_not_current_user
+    redirect_back_or_to root_path, notice: 'cannot follow self' if set_current_user == @user
   end
 
   private def check_if_set_current_user

@@ -22,6 +22,10 @@ class User < ApplicationRecord
     assoc.has_many :comments
   end
   has_many :reports
+  with_options join_table: :followings, class_name: 'User' do |assoc|
+    assoc.has_and_belongs_to_many :followers, association_foreign_key: 'follower_id'
+    assoc.has_and_belongs_to_many :followings, foreign_key: 'follower_id'
+  end
 
   enum :role, ROLES, default: :user
 
@@ -31,6 +35,10 @@ class User < ApplicationRecord
 
   def resend_verification_mail
     update(verification_token: generate_token(:verification), verified_at: nil)
+  end
+
+  def follows?(other_user_id)
+    following_ids.include? other_user_id
   end
 
   def send_reset_mail
