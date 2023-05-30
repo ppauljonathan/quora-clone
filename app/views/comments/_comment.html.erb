@@ -5,12 +5,13 @@
       ON: <%= link_to comment.commentable.title, comment.commentable %>
     <% elsif comment.commentable.class == Answer %>
       ON: <%= link_to answer_path(comment.commentable.id), comment.commentable %>
-      
     <% end %>
     <br>
     AT: <%= comment.updated_at %>
+    NET_UPVOTES:
   </div>
 <% else %>
+  <%= render 'shared/vote_panel', resource: comment %>
   <div class="question-user-details">
     <% if !comment.user || comment.user.profile_picture.blank? %>
       <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">

@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  QUESTIONS_PER_PAGE = 4
+  QUESTIONS_PER_PAGE = 10
 
   before_action :check_credits, except: %i[index show comments]
   before_action :set_question, only: %i[edit destroy comments show update]

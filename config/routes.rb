@@ -28,6 +28,11 @@ Rails.application.routes.draw do
 
   resources :reports, only: :create
 
+  controller :votes do
+    post 'votes/upvote' => :upvote
+    post 'votes/downvote' => :downvote
+  end
+
   controller :registrations do
     get 'signup' => :new
     post 'signup' => :create
