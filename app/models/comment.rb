@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
-  default_scope { where(reported_at: nil) }
+  default_scope { order(net_upvote_count: :desc).where(reported_at: nil) }
 
   def net_upvotes
     upvotes = votes.upvote.count
