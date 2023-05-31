@@ -3,7 +3,6 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[edit destroy show update]
   before_action :can_view?, only: :show
   before_action :can_edit?, only: %i[edit destroy update]
-  before_action :current_user, only: %i[index show]
 
   skip_before_action :authorize, only: %i[index show]
 
