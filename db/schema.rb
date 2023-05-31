@@ -55,9 +55,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   create_table "answers", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "question_id", null: false
+    t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reported_at", precision: nil
     t.integer "net_upvote_count", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
@@ -67,9 +67,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.bigint "user_id", null: false
+    t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reported_at", precision: nil
     t.integer "net_upvote_count", default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
@@ -89,7 +89,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "reported_at", precision: nil
     t.index ["title"], name: "index_questions_on_title"
     t.index ["url_slug"], name: "index_questions_on_url_slug"
     t.index ["user_id"], name: "index_questions_on_user_id"

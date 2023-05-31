@@ -13,6 +13,6 @@ class Report < ApplicationRecord
   private def check_reports
     return unless reportable.reports.count > MAX_REPORTED_BY
 
-    reportable.update(reported_at: Time.now)
+    reportable.update(published_at: nil)
   end
 end

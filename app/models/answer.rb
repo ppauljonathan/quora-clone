@@ -1,13 +1,13 @@
 class Answer < ApplicationRecord
   include Votable
+  include AbuseReportable
 
   belongs_to :user
   belongs_to :question
   has_many :comments, as: :commentable
   has_rich_text :content
-  has_many :reports, as: :reportable
 
   validates :content, presence: true
 
-  default_scope { where(reported_at: nil) }
+  default_scope { where.not(published_at: nil) }
 end

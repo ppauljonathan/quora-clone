@@ -3,14 +3,15 @@ class QuestionsController < ApplicationController
 
   before_action :check_credits, except: %i[index show comments]
   before_action :set_question, only: %i[edit destroy comments show update]
+  before_action :check_if_editable, only: %i[edit update destroy]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
-  before_action :set_current_user, only: %i[index show comments]
+  before_action :current_user, only: %i[index show comments]
 
   skip_before_action :authorize, only: %i[index show comments]
 
   def create
-    @question = set_current_user.questions.build(question_params)
+    @question = current_user.questions.build(question_params)
 
     if @question.save
       redirect_to root_path, notice: 'Question Created'
@@ -25,7 +26,6 @@ class QuestionsController < ApplicationController
                                    :rich_text_content,
                                    votes: :user)
                          .page(params[:page])
-                         .per(QUESTIONS_PER_PAGE)
   end
 
   def destroy
@@ -40,7 +40,6 @@ class QuestionsController < ApplicationController
   def index
     @search_results = Question.published
                               .page(params[:page])
-                              .per(QUESTIONS_PER_PAGE)
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result
@@ -60,7 +59,6 @@ class QuestionsController < ApplicationController
                                   :rich_text_content,
                                   votes: :user)
                         .page(params[:page])
-                        .per(QUESTIONS_PER_PAGE)
   end
 
   def update
@@ -72,19 +70,19 @@ class QuestionsController < ApplicationController
   end
 
   private def can_edit?
-    return if @question.author? set_current_user
+    return if @question.author? current_user
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
   private def can_view?
-    return if @question.author?(set_current_user) || @question.published_at?
+    return if @question.author?(current_user) || @question.published_at?
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
   private def check_credits
-    return if set_current_user.can_ask_question?
+    return if current_user.can_ask_question?
 
     redirect_back_or_to root_path, notice: 'Not enough credit'
   end
