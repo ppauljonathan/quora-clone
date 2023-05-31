@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_27_091236) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -71,6 +71,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_27_091236) do
     t.datetime "updated_at", null: false
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "followings", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "follower_id", null: false
+    t.index ["user_id", "follower_id"], name: "unique_followers", unique: true
   end
 
   create_table "questions", force: :cascade do |t|
