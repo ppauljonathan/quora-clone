@@ -6,7 +6,6 @@ class QuestionsController < ApplicationController
   before_action :check_if_editable, only: %i[edit update destroy]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
-  before_action :current_user, only: %i[index show comments]
 
   skip_before_action :authorize, only: %i[index show comments]
 
