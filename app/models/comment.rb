@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  include AbuseReportable
+
   belongs_to :commentable, polymorphic: true
   belongs_to :user
   has_rich_text :content
@@ -6,5 +8,5 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
-  default_scope { order(created_at: :desc).where(reported_at: nil) }
+  default_scope { order(created_at: :desc).where.not(published_at: nil) }
 end

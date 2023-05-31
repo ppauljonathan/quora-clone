@@ -5,3 +5,16 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+User.create!(name: 'Paul',
+             email: 'admin@quoraclone.com',
+             credits: 5,
+             password: 'secret',
+             verified_at: Time.now,
+             role: 'admin')
+
+User.create!(name: 'Jonathan',
+             email: 'user@quoraclone.com',
+             password: 'secret',
+             credits: 5,
+             verified_at: Time.now)
