@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :check_credits, except: %i[index show comments]
   before_action :set_question, only: %i[edit destroy comments show update]
+  before_action :check_if_editable, only: %i[edit update destroy]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
   before_action :current_user, only: %i[index show comments]
