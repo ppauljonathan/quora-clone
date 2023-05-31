@@ -2,7 +2,7 @@ class CommentsController < ApplicationController
   before_action :set_comment, only: %i[edit update destroy]
 
   def create
-    @comment = set_current_user.comments.build(comment_params)
+    @comment = current_user.comments.build(comment_params)
     flash[:notice] = 'created successfully' if @comment.save
     redirect_back_or_to root_path
   end
@@ -33,6 +33,6 @@ class CommentsController < ApplicationController
                                               { user: :profile_picture_attachment},
                                               :files_attachments])
                       .find_by_id(params[:id])
-    redirect_back_or_to set_current_user, alert: 'comment not found' unless @comment
+    redirect_back_or_to current_user, alert: 'comment not found' unless @comment
   end
 end
