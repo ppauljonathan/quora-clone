@@ -1,7 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
-  before_action :current_user, only: %i[index show questions answers comments]
 
   skip_before_action :authorize, only: %i[index show questions answers comments]
 
