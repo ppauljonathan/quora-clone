@@ -1,9 +1,7 @@
 class UsersController < ApplicationController
-  ITEMS_PER_PAGE = 3
-
   before_action :set_user, except: %i[index]
-  before_action :check_if_set_current_user, only: %i[edit update drafts destroy]
-  before_action :set_current_user, only: %i[index show questions answers comments]
+  before_action :check_if_current_user, only: %i[edit update drafts destroy]
+  before_action :current_user, only: %i[index show questions answers comments]
 
   skip_before_action :authorize, only: %i[index show questions answers comments]
 
@@ -11,14 +9,12 @@ class UsersController < ApplicationController
     @answers = @user.answers
                     .includes(:rich_text_content, :question)
                     .page(params[:page])
-                    .per(ITEMS_PER_PAGE)
   end
 
   def comments
     @comments = @user.comments
                      .includes(:rich_text_content, :commentable)
                      .page(params[:page])
-                     .per(ITEMS_PER_PAGE)
   end
 
   def destroy
@@ -34,7 +30,6 @@ class UsersController < ApplicationController
                       .drafts
                       .includes(:user, :topics)
                       .page(params[:page])
-                      .per(ITEMS_PER_PAGE)
   end
 
   def index
@@ -46,7 +41,6 @@ class UsersController < ApplicationController
                       .published
                       .includes(:user, :topics)
                       .page(params[:page])
-                      .per(ITEMS_PER_PAGE)
   end
 
   def update
@@ -58,8 +52,8 @@ class UsersController < ApplicationController
     end
   end
 
-  private def check_if_set_current_user
-    redirect_back_or_to root_path, notice: 'cannot access this path' unless set_current_user == @user
+  private def check_if_current_user
+    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user == @user
   end
 
   private def set_user

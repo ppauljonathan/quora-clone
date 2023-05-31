@@ -33,7 +33,7 @@
   <div class="function-button-list">
     <%= link_to 'Edit',
                 edit_user_path,
-                class: 'function-button' if user == @set_current_user%>
+                class: 'function-button' if user == @current_user%>
 
     <%= highlighted_link 'Followers',
                          'function-button',
@@ -48,7 +48,7 @@
     <%= highlighted_link 'Drafts',
                          'function-button',
                          'highlighted-function-button',
-                         drafts_user_path if user == @set_current_user %>
+                         drafts_user_path if user == @current_user %>
 
     <%= highlighted_link 'Answers',
                          'function-button',
