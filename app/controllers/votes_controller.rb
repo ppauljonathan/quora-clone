@@ -3,11 +3,11 @@ class VotesController < ApplicationController
   before_action :set_vote
   def downvote
     if @vote.upvote?
-      @vote.votable.decrement!(:net_upvote_count, 2)
+      @vote.votable.decrement(:net_upvote_count, 2)
     elsif @vote.downvote?
-      @vote.votable.increment!(:net_upvote_count, 1)
+      @vote.votable.increment(:net_upvote_count, 1)
     else
-      @vote.votable.decrement!(:net_upvote_count, 1)
+      @vote.votable.decrement(:net_upvote_count, 1)
     end
 
     @vote.vote_type = @vote.downvote? ? :unvote : :downvote
@@ -24,11 +24,11 @@ class VotesController < ApplicationController
 
   def upvote
     if @vote.downvote?
-      @vote.votable.increment!(:net_upvote_count, 2)
+      @vote.votable.increment(:net_upvote_count, 2)
     elsif @vote.upvote?
-      @vote.votable.decrement!(:net_upvote_count, 1)
+      @vote.votable.decrement(:net_upvote_count, 1)
     else
-      @vote.votable.increment!(:net_upvote_count, 1)
+      @vote.votable.increment(:net_upvote_count, 1)
     end
 
     @vote.vote_type = @vote.upvote? ? :unvote : :upvote
