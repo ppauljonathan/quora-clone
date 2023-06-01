@@ -14,8 +14,8 @@
     <div class="user-name" style="display: inline">
       <%= user.name %>
     </div>
-    <% unless @set_current_user.id == params[:id].to_i %>
-      <% if @set_current_user.follows? params[:id].to_i %>
+    <% unless current_user.id == params[:id].to_i %>
+      <% if current_user.follows? params[:id].to_i %>
         <%= button_to 'Unfollow', unfollow_user_path, class: 'function-button', form_class: 'follow-form' %>
       <% else %>
         <%= button_to 'Follow', follow_user_path, class: 'function-button', form_class: 'follow-form' %>
