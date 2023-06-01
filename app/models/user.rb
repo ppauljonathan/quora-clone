@@ -23,8 +23,8 @@ class User < ApplicationRecord
   end
   has_many :reports
   with_options join_table: :followings, class_name: 'User' do |assoc|
-    assoc.has_and_belongs_to_many :followers, association_foreign_key: 'follower_id'
-    assoc.has_and_belongs_to_many :followings, foreign_key: 'follower_id'
+    assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
+    assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
   end
 
   enum :role, ROLES, default: :user
@@ -38,7 +38,7 @@ class User < ApplicationRecord
   end
 
   def follows?(other_user_id)
-    following_ids.include? other_user_id
+    followee_ids.include? other_user_id
   end
 
   def send_reset_mail

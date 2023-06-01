@@ -44,14 +44,12 @@ class UsersController < ApplicationController
     @followers = @user.followers
                       .includes(:profile_picture_attachment)
                       .page(params[:page])
-                      .per(USER_CARDS_PER_PAGE)
   end
 
-  def following
-    @followings = @user.followings
+  def followees
+    @followees = @user.followees
                        .includes(:profile_picture_attachment)
                        .page(params[:page])
-                       .per(USER_CARDS_PER_PAGE)
   end
 
   def unfollow

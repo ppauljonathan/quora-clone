@@ -76,9 +76,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   end
 
   create_table "followings", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
+    t.bigint "followee_id", null: false
     t.bigint "follower_id", null: false
-    t.index ["user_id", "follower_id"], name: "unique_followers", unique: true
+    t.index ["followee_id", "follower_id"], name: "unique_followers", unique: true
   end
 
   create_table "questions", force: :cascade do |t|
