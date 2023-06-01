@@ -8,7 +8,8 @@
     <% end %>
     <br>
     AT: <%= comment.updated_at %>
-    NET_UPVOTES:
+    <br>
+    NET_UPVOTES: <%= answer.net_upvote_count %>
   </div>
 <% else %>
   <%= render 'shared/vote_panel', resource: comment %>
