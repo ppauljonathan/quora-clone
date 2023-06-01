@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get :answers
       get :comments
       get :followers
-      get :following
+      get :followees
       post :follow
       post :unfollow
     end
