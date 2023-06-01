@@ -33,7 +33,7 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @user.followers << set_current_user
+    @user.followers << current_user
   rescue ActiveRecord::RecordNotUnique
     redirect_back_or_to @user, alert: 'already followed'
   else
@@ -55,7 +55,7 @@ class UsersController < ApplicationController
   end
 
   def unfollow
-    @user.followers.delete set_current_user
+    @user.followers.delete current_user
 
     redirect_back_or_to @user, notice: 'successful'
   end
@@ -81,7 +81,7 @@ class UsersController < ApplicationController
   end
 
   private def check_if_not_current_user
-    redirect_back_or_to root_path, notice: 'cannot follow self' if set_current_user == @user
+    redirect_back_or_to root_path, notice: 'cannot follow self' if current_user == @user
   end
 
   private def check_if_current_user

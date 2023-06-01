@@ -1,4 +1,4 @@
-<% user_vote = resource.vote_by_user(@set_current_user) %>
+<% user_vote = resource.vote_by_user(current_user) %>
 <div class="vote-list">
   <svg 
     onclick="upvote(event, '<%= resource.class %>', <%= resource.id %>)"

@@ -18,10 +18,10 @@ class Answer < ApplicationRecord
   private def set_credits
     return unless changes[:net_upvote_count]
 
-    if net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was < MIN_NET_UPVOTES_FOR_CREDIT
-      user.increment(:credits, 1)
-    elsif net_upvote_count < MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was >= MIN_NET_UPVOTES_FOR_CREDIT
-      user.decrement(:credits, 1)
+    if net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was <= MIN_NET_UPVOTES_FOR_CREDIT
+      user.increment!(:credits, 1)
+    elsif net_upvote_count <= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was >= MIN_NET_UPVOTES_FOR_CREDIT
+      user.decrement!(:credits, 1)
     end
   end
 end

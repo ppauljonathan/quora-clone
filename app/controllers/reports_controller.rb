@@ -1,6 +1,6 @@
 class ReportsController < ApplicationController
   def create
-    @report = set_current_user.reports.build(report_params)
+    @report = current_user.reports.build(report_params)
     if @report.save
       redirect_back_or_to root_path, notice: 'reported'
     else

@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_user.comments.build(comment_params)
+    @comment.published_at = Time.now
     flash[:notice] = 'created successfully' if @comment.save
     redirect_back_or_to root_path
   end

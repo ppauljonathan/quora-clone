@@ -14,8 +14,8 @@
     <div class="user-name" style="display: inline">
       <%= user.name %>
     </div>
-    <% unless @set_current_user.id == params[:id].to_i %>
-      <% if @set_current_user.follows? params[:id].to_i %>
+    <% unless current_user.id == params[:id].to_i %>
+      <% if current_user.follows? params[:id].to_i %>
         <%= button_to 'Unfollow', unfollow_user_path, class: 'function-button', form_class: 'follow-form' %>
       <% else %>
         <%= button_to 'Follow', follow_user_path, class: 'function-button', form_class: 'follow-form' %>
@@ -40,7 +40,7 @@
   <div class="function-button-list">
     <%= link_to 'Edit',
                 edit_user_path,
-                class: 'function-button' if user == @current_user%>
+                class: 'function-button' if user == current_user%>
 
     <%= highlighted_link 'Followers',
                          'function-button',
@@ -60,7 +60,7 @@
     <%= highlighted_link 'Drafts',
                          'function-button',
                          'highlighted-function-button',
-                         drafts_user_path if user == @current_user %>
+                         drafts_user_path if user == current_user %>
 
     <%= highlighted_link 'Answers',
                          'function-button',

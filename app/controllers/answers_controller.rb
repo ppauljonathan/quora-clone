@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params)
+    @answer.published_at = Time.now
     flash[:notice] = 'created successfully' if @answer.save
     redirect_to question_path(@answer.question.url_slug)
   end
