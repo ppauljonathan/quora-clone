@@ -9,8 +9,6 @@ class ApplicationController < ActionController::Base
 
   private def current_user
     @current_user ||= User.find_by_id(cookies.signed[:user_id])
-    cookies.delete :user_id unless @current_user
-    @current_user
   end
 
   private def redirect_if_logged_in
