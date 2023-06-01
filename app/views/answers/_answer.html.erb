@@ -25,7 +25,7 @@
   <%= link_to 'Comments', answer, class: 'edit-question-button' %>
 <% end %>
 
-<%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' if @set_current_user == answer.user %>
+<%= link_to 'Edit', edit_answer_path(answer.id), class: 'edit-question-button' if current_user == answer.user %>
 
 
 <div class="answer-content">
