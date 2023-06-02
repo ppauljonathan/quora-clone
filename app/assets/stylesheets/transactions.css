@@ -1,0 +1,48 @@
+.transactions-table{
+  position: relative;
+  margin: auto;
+  margin-top: 2vh;
+  font-size: 2.5vh;
+  text-align: center;
+  width: 80%;
+}
+
+.transactions-table > thead {
+  background: var(--red);
+  color: var(--bright-white);
+  text-align: center;
+  padding: 1%;
+  border: 2px solid var(--black);
+}
+
+.transactions-table > tr, td {
+  padding: 1%;
+  border: 2px solid var(--black);
+  border-spacing: 0;
+  text-align: center;
+
+}
+
+.sno {
+  width: 7%;
+  overflow: hidden;
+}
+
+.tid {
+  width: 25%;
+  overflow: hidden;
+}
+
+.cred-pack {
+  width: 20%;
+  overflow: hidden;
+}
+
+.time {
+  width: 20%;
+  overflow: hidden;
+}
+
+.table-wrap {
+  width: 100%;
+}

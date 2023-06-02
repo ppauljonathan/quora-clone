@@ -1,0 +1,22 @@
+
+<div class='center-align'>
+<%= render 'shared/message_blocks' %>
+<div class="form-heading">Your Order</div>
+<br>
+    <div class="line-item">
+      <div class="form-heading">
+        <%= @order.credit_pack.credit_amount %>
+      </div>
+      <div class="credit-pack-description">credits</div>
+    </div>
+    <br>
+    <div class="form-label" style="display: flex;">
+      Price: ₹<div id="induvidual_price"><%= @order.credit_pack.price %></div>
+    </div>
+    <br>
+
+  <div class="other-buttons">
+    <%= button_to 'Proceed to Checkout', checkout_order_path, class: 'form-submit', style: 'margin-left: 5%; width: fit-content', data: { turbo: false } %>
+    <%= link_to 'Back', credit_packs_path, class: 'form-cancel', style: 'margin-left: 5%; padding: auto;' %>
+  </div>
+</div>

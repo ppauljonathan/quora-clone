@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'orders/new'
+  get 'credit_packs/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root 'questions#index'
@@ -27,6 +29,21 @@ Rails.application.routes.draw do
   resources :comments
 
   resources :reports, only: :create
+
+  controller :credit_packs do
+    get 'credit_packs' => :index
+  end
+
+  resources :orders, param: :number do
+    member do
+      get :cancel
+      get :checkout, to: 'orders#show'
+      get :success
+      post :checkout
+    end
+  end
+
+  resources :credit_transactions, only: %i[index show]
 
   controller :votes do
     post 'votes/upvote' => :upvote

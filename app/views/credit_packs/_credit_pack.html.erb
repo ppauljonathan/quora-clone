@@ -1,0 +1,17 @@
+<div class="user-card" style="border-top: 2vh solid var(--bright-red); display: block">
+  <div class="credit-pack-amount">
+    <%= credit_pack.credit_amount %>
+    <div class="credit-pack-description">credits</div>
+  </div>
+  <div class="credit-pack-price">
+    ₹<%= credit_pack.price %>
+  </div>
+  <div class="credit-pack-description">
+    <%= credit_pack.description %>
+  </div>
+  <%= button_to 'Purchase',
+                orders_path,
+                params: { order: { credit_pack_id: credit_pack.id, credit_pack_quantity: 1 } },
+                class: 'function-button',
+                style: 'margin: auto; margin-top: 5%' %>
+</div>

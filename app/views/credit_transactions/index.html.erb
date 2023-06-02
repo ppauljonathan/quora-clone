@@ -1,0 +1,16 @@
+<div class="form-heading">Your Transactions</div>
+
+<div class="table-wrap">
+  <table class="transactions-table">
+    <thead>
+      <td class="sno">Sno</td>
+      <td class="tid">Transaction Id</td>
+      <td class="cred-pack">Credits/Price</td>
+      <td class="time">Time</td>
+      <td class="status">Status</td>
+    </thead>
+    <% @credit_transactions.each_with_index do |credit_transaction, index| %>
+      <%= render 'credit_transaction', credit_transaction: credit_transaction, index: index %>
+    <% end %>
+  </table>
+</div>

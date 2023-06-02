@@ -26,6 +26,8 @@ class User < ApplicationRecord
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
     assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
   end
+  has_many :orders
+  has_many :credit_transactions
 
   enum :role, ROLES, default: :user
 

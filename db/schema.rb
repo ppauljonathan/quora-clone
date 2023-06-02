@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -75,10 +75,40 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "credit_packs", force: :cascade do |t|
+    t.decimal "price", precision: 7, scale: 2
+    t.integer "credit_amount"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "credit_transactions", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "user_id", null: false
+    t.string "stripe_session_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_credit_transactions_on_order_id"
+    t.index ["user_id"], name: "index_credit_transactions_on_user_id"
+  end
+
   create_table "followings", id: false, force: :cascade do |t|
     t.bigint "followee_id", null: false
     t.bigint "follower_id", null: false
     t.index ["followee_id", "follower_id"], name: "unique_followers", unique: true
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "credit_pack_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.string "number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_pack_id"], name: "index_orders_on_credit_pack_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -165,6 +195,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "credit_transactions", "orders"
+  add_foreign_key "credit_transactions", "users"
+  add_foreign_key "orders", "credit_packs"
+  add_foreign_key "orders", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "reports", "users"
   add_foreign_key "taggings", "tags"
