@@ -245,6 +245,7 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.6.2)
       ruby_http_client (~> 3.4)
+    spring (4.1.1)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -308,6 +309,7 @@ DEPENDENCIES
   rubocop
   selenium-webdriver
   sendgrid-ruby (~> 6.6.2)
+  spring
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
