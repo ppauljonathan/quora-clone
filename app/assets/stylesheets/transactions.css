@@ -23,6 +23,10 @@
 
 }
 
+tr:nth-child(even) {
+  background: var(--white);
+}
+
 .sno {
   width: 7%;
   overflow: hidden;

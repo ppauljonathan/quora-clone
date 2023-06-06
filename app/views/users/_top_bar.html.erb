@@ -24,15 +24,16 @@
     <div class="user-email">
       <%= user.email %>
     </div>
-    <div class="user-email">
+    <br>
+    <div class="button-holder">
       Credits: <%= user.credits %>
-      <%= link_to 'Buy More Credits', credit_packs_path, class: 'function-button', style: 'width: fit-content' if user == current_user %>
-      <%= highlighted_link 'Your Credit Transactions',
-                           'function-button',
-                           'highlighted-function-button',
-                           credit_transactions_path,
-                           style: 'width: fit-content' if user == current_user %>
+      <% if user == current_user %>
+        <%= link_to 'Buy More Credits', credit_packs_path, class: 'function-button', style: 'width: fit-content' %>
+        <%= link_to 'Your credit Transactions', credit_transactions_path, class: 'function-button', style: 'width: fit-content' %>
+        <%= link_to 'Admin Section', admin_users_path, class: 'function-button', style: 'width: fit-content' if current_user.admin? %>
+      <% end %>
     </div>
+    <div class="user-email">
     
     &nbsp;
     <div class="topic-list-title"> Topics:</div>

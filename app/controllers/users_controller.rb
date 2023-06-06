@@ -18,8 +18,8 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.destroy
-      redirect_to root_path, notice: 'User deleted Successfully'
+    if @user.soft_destroy
+      redirect_back_or_to root_path, notice: 'User deleted Successfully'
     else
       render :edit
     end
@@ -83,7 +83,7 @@ class UsersController < ApplicationController
   end
 
   private def check_if_current_user
-    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user == @user
+    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user == @user || current_user.admin?
   end
 
   private def set_user

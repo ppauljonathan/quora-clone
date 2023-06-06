@@ -16,11 +16,9 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :profile_picture
   acts_as_taggable_on :topics
-  with_options dependent: :restrict_with_error do |assoc|
-    assoc.has_many :questions
-    assoc.has_many :answers
-    assoc.has_many :comments
-  end
+  has_many :questions
+  has_many :answers
+  has_many :comments
   has_many :reports
   with_options join_table: :followings, class_name: 'User' do |assoc|
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
@@ -29,6 +27,8 @@ class User < ApplicationRecord
   has_many :orders
   has_many :credit_transactions
   has_many :notifications
+
+  default_scope { order(created_at: :desc).where(disabled_at: nil) }
 
   enum :role, ROLES, default: :user
 
@@ -48,6 +48,10 @@ class User < ApplicationRecord
     return false unless generate_reset_token
 
     UserMailer.with(user_id: id).reset_email.deliver_later
+  end
+
+  def soft_destroy
+    update(disabled_at: Time.now)
   end
 
   def verified?

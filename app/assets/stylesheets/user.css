@@ -60,9 +60,8 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 15vh;
-  right: 2%;
-  transform: translate(0%, -25%);
+  top: 0vh;
+  left: 125%;
 }
 
 .function-button {
@@ -165,4 +164,29 @@
   font-size: 3vh;
   position: relative;
   transform: translate(5%, 15%);
+}
+
+.button-holder{
+  display: flex;
+}
+
+.button-holder > * {
+  margin-left: 2%;
+}
+
+.delete-table-btn {
+  margin: auto;
+}
+
+.tab-list {
+  display: flex;
+  position: relative;
+  top: 10%;
+  left: 80%;
+  transform: translate(-50%);
+}
+
+.tab-list > * {
+  margin: 0.5%;
+  font-size: 3vh;
 }

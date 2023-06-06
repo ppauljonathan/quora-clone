@@ -2,10 +2,11 @@ class QuestionsController < ApplicationController
   QUESTIONS_PER_PAGE = 10
 
   before_action :check_credits, except: %i[index show comments]
-  before_action :set_question, only: %i[edit destroy comments show update]
+  before_action :set_question, only: %i[edit destroy comments show update unpublish]
   before_action :check_if_editable, only: %i[edit update destroy]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
+  before_action :check_admin, only: :unpublish
 
   skip_before_action :authorize, only: %i[index show comments]
 

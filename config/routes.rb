@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, param: :url_slug do
-    get :comments, on: :member
+      get :comments, on: :member
   end
 
   resources :answers do
@@ -49,6 +49,13 @@ Rails.application.routes.draw do
 
   resources :notifications, only: :index do
     post :read_all, on: :collection
+  end
+
+  namespace :admin do 
+    resources :users, only: %i[index]
+    resources :questions, param: :url_slug, only: %i[index] do
+      post :unpublish, on: :member
+    end
   end
 
   controller :votes do
