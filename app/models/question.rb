@@ -12,6 +12,7 @@ class Question < ApplicationRecord
 
   before_validation :generate_url_slug
   before_save :save_as
+  after_create_commit :post_question_notification
 
   default_scope { order(created_at: :desc) }
   scope :published, -> { where.not published_at: nil }
@@ -22,6 +23,7 @@ class Question < ApplicationRecord
   has_many_attached :files
   has_many :answers
   has_many :comments, as: :commentable
+  has_many :notifications
   has_rich_text :content
 
   def author?(author)
@@ -33,7 +35,6 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    debugger
     comments.none? && answers.none? && reports.none?
   end
 
@@ -53,6 +54,13 @@ class Question < ApplicationRecord
                        .parameterize
     duplicate_slugs_count = self.class.where('url_slug LIKE ?', "#{sample_slug}%").count
     self.url_slug = sample_slug + "-#{duplicate_slugs_count + 1}"
+  end
+
+  private def post_question_notification
+    ActionCable.server.broadcast('question_posted',
+                                 { id: id,
+                                   topics: topic_list,
+                                   poster_name: user.name })
   end
 
   private def save_as

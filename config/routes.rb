@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   get 'credit_packs/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  mount ActionCable.server => '/cable'
+
   root 'questions#index'
 
   resources :users do
@@ -44,6 +46,10 @@ Rails.application.routes.draw do
   end
 
   resources :credit_transactions, only: %i[index show]
+
+  resources :notifications, only: :index do
+    post :read_all, on: :collection
+  end
 
   controller :votes do
     post 'votes/upvote' => :upvote

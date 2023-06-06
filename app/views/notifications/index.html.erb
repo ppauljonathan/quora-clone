@@ -1,0 +1,22 @@
+<% @notifications.each do |notification| %>
+  <div
+    class="notification-card"
+    style="background: var(--<%= notification.unread? ? 'bright-white' : 'white' %>)"
+  >
+    Question Posted on the following topics
+    <div class="topics-list">
+      <% notification.question.topics.each do |topic| %>
+        <div class="topic"><%= topic.name %></div>
+      <% end %>
+    </div>
+    <%= link_to notification.question.title, question_path(url_slug: notification.question.url_slug), class: 'question-heading' %>
+    <br>
+    <br>
+    by: <div class="topic"><%= notification.question.user.name %></div>
+  </div>
+<% end%>
+
+
+<%= paginate @notifications %>
+
+<%= javascript_include_tag 'read_notifications' %>

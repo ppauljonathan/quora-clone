@@ -21,8 +21,8 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    stripe_session = Stripe::Checkout::Session.create({ success_url: success_order_url,
-                                                        cancel_url: cancel_order_url,
+    stripe_session = Stripe::Checkout::Session.create({ success_url: success_order_url(@order),
+                                                        cancel_url: cancel_order_url(@order),
                                                         mode: 'payment',
                                                         line_items: [{
                                                           price_data: {

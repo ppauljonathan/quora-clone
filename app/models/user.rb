@@ -28,6 +28,7 @@ class User < ApplicationRecord
   end
   has_many :orders
   has_many :credit_transactions
+  has_many :notifications
 
   enum :role, ROLES, default: :user
 
