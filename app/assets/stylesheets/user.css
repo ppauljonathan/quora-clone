@@ -180,9 +180,10 @@
 
 .tab-list {
   display: flex;
+  width: fit-content;
   position: relative;
   top: 10%;
-  left: 80%;
+  left: 50%;
   transform: translate(-50%);
 }
 
