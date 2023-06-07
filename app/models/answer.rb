@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
 
   validates :content, presence: true
 
-  before_update :set_credits, :rollback_if_reported
+  before_update :set_credits, :remove_credits_if_unpublished
 
   default_scope { where.not(published_at: nil) }
 
@@ -25,7 +25,7 @@ class Answer < ApplicationRecord
     end
   end
 
-  private def rollback_if_reported
+  private def remove_credits_if_unpublished
     return unless changes[:published_at]
     return unless !published_at_was.nil? && net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
 
