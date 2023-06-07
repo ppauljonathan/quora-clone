@@ -19,6 +19,23 @@ class Order < ApplicationRecord
     number
   end
 
+  def generate_stripe_session(success_url, cancel_url)
+    Stripe::Checkout::Session.create({ success_url: success_url,
+                                       cancel_url: cancel_url,
+                                       mode: 'payment',
+                                       line_items: [{
+                                         price_data: {
+                                           currency: 'inr',
+                                           unit_amount: (price * 100).to_i,
+                                           product_data: {
+                                             name: "#{credit_pack.credit_amount} Credit Pack",
+                                             description: credit_pack.description
+                                           }
+                                         },
+                                         quantity: 1
+                                       }] })
+  end
+
   private def set_number
     number = nil
     loop do
