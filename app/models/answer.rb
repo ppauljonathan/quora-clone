@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
 
   validates :content, presence: true
 
-  before_update :set_credits
+  before_update :set_credits, :rollback_if_reported
 
   default_scope { where.not(published_at: nil) }
 
@@ -23,5 +23,12 @@ class Answer < ApplicationRecord
     elsif net_upvote_count <= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was >= MIN_NET_UPVOTES_FOR_CREDIT
       user.decrement!(:credits, 1)
     end
+  end
+
+  private def rollback_if_reported
+    return unless changes[:published_at]
+    return unless !published_at_was.nil? && net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
+
+    user.decrement(:credits, 1)
   end
 end
