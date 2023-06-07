@@ -3,10 +3,11 @@
 <%= render 'top_bar', user: @user %>
 
 <br>
-<div class="bottom-panel-title">Followees</div>
-<%= render 'user_card', users: @followees %>
+<div class="bottom-panel">
+  <div class="bottom-panel-title">Followees</div>
+  <%= render 'user_card', users: @followees %>
 
-<div class="user-pagination-links">
-  <%= paginate @followees %>
+  <div class="user-pagination-links">
+    <%= paginate @followees %>
+  </div>
 </div>
-

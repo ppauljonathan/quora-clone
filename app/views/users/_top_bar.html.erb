@@ -14,8 +14,8 @@
     <div class="user-name" style="display: inline">
       <%= user.name %>
     </div>
-    <% unless current_user.id == params[:id].to_i %>
-      <% if current_user.follows? params[:id].to_i %>
+    <% unless current_user&.id == params[:id].to_i %>
+      <% if current_user&.follows? params[:id].to_i %>
         <%= button_to 'Unfollow', unfollow_user_path, class: 'function-button', form_class: 'follow-form' %>
       <% else %>
         <%= button_to 'Follow', follow_user_path, class: 'function-button', form_class: 'follow-form' %>
@@ -25,12 +25,17 @@
       <%= user.email %>
     </div>
     <br>
+    <div class="topic">
+      API_TOKEN: <%= user.api_token %>
+    </div>
+    <br>
+    <br>
     <div class="button-holder">
       Credits: <%= user.credits %>
       <% if user == current_user %>
         <%= link_to 'Buy More Credits', credit_packs_path, class: 'function-button', style: 'width: fit-content' %>
         <%= link_to 'Your credit Transactions', credit_transactions_path, class: 'function-button', style: 'width: fit-content' %>
-        <%= link_to 'Admin Section', admin_users_path, class: 'function-button', style: 'width: fit-content' if current_user.admin? %>
+        <%= link_to 'Admin Section', admin_users_path, class: 'function-button', style: 'width: fit-content' if current_user&.admin? %>
       <% end %>
     </div>
     <div class="user-email">

@@ -3,9 +3,11 @@
 <%= render 'top_bar', user: @user %>
 
 <br>
-<div class="bottom-panel-title">Answers</div>
-<%= render partial: 'answers/answer', collection: @answers %>
+<div class="bottom-panel">
+  <div class="bottom-panel-title">Answers</div>
+  <%= render partial: 'answers/answer', collection: @answers %>
 
-<div class="user-pagination-links">
-  <%= paginate @answers %>
+  <div class="user-pagination-links">
+    <%= paginate @answers %>
+  </div>
 </div>

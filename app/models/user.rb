@@ -10,7 +10,7 @@ class User < ApplicationRecord
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  before_create :generate_verification_token
+  before_create :generate_verification_token, :generate_api_token
   after_commit :send_verification_email
 
   has_secure_password
@@ -64,6 +64,10 @@ class User < ApplicationRecord
     update(verification_token: nil,
            verified_at: Time.now,
            credits: CREDITS_ON_VERIFICATION)
+  end
+
+  private def generate_api_token
+    update(reset_token: generate_token(:api))
   end
 
   private def generate_reset_token
