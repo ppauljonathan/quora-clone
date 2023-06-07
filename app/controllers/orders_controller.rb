@@ -21,20 +21,8 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    stripe_session = Stripe::Checkout::Session.create({ success_url: success_order_url,
-                                                        cancel_url: cancel_order_url,
-                                                        mode: 'payment',
-                                                        line_items: [{
-                                                          price_data: {
-                                                            currency: 'inr',
-                                                            unit_amount: (@order.price * 100).to_i,
-                                                            product_data: {
-                                                              name: "#{@order.credit_pack.credit_amount} Credit Pack",
-                                                              description: @order.credit_pack.description
-                                                            }
-                                                          },
-                                                          quantity: 1
-                                                        }] })
+    stripe_session = @order.generate_stripe_session(succes_order_url,
+                                                    cancel_order_url)
     credit_transaction = current_user.credit_transactions
                                      .create(order: @order,
                                              stripe_session_id: stripe_session.id)
