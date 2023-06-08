@@ -21,8 +21,8 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    stripe_session = @order.generate_stripe_session(succes_order_url,
-                                                    cancel_order_url)
+    stripe_session = @order.generate_stripe_session(success_order_url(@order),
+                                                    cancel_order_url(@order))
     credit_transaction = current_user.credit_transactions
                                      .create(order: @order,
                                              stripe_session_id: stripe_session.id)
