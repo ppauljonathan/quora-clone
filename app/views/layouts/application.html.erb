@@ -27,5 +27,9 @@
     <div class="main">
       <%= yield %>
     </div>
+
+    <div class="autoreload-notification" onclick="window.location.href = '<%= root_url %>';">
+      New questions posted, click here to reload page
+    </div>
   </body>
 </html>

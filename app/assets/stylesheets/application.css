@@ -144,3 +144,18 @@
   padding-left: 3%;
   border: 2px solid var(--black);
 }
+
+.autoreload-notification {
+  position: fixed;
+  top: 2%;
+  left: 50%;
+  transform: translate(-50%);
+  width: fit-content;
+  height: fit-content;
+  background-color: var(--bright-white);
+  border: 2px solid var(--red);
+  border-radius: 3vh;
+  padding: 3%;
+  z-index: 50;
+  visibility: hidden;
+}
