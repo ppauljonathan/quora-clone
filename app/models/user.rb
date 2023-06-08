@@ -67,7 +67,7 @@ class User < ApplicationRecord
   end
 
   private def generate_api_token
-    update(reset_token: generate_token(:api))
+    self.api_token = generate_token :api
   end
 
   private def generate_reset_token
