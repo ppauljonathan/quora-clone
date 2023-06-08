@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   end
 
   private def current_user
+    return if cookies.signed[:user_id].blank?
     @current_user ||= User.find_by_id(cookies.signed[:user_id])
   end
 
