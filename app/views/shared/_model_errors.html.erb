@@ -1,0 +1,12 @@
+<% if model.errors.any? %>
+  <div class="error-block">
+      <div class="form-error-heading">
+        The following errors prevented the <%= model.class %> from being saved
+      </div>
+      <ul class="form-error-list">
+        <% model.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
