@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
     if @answer.destroy
       redirect_to question_path(@answer.question.url_slug), notice: 'deleted successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 
@@ -29,7 +29,7 @@ class AnswersController < ApplicationController
     if @answer.update(answer_params)
       redirect_to question_path(@answer.question.url_slug), notice: 'updated successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 

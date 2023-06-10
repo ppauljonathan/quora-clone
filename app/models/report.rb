@@ -3,9 +3,10 @@ class Report < ApplicationRecord
 
   after_create_commit :check_reports
 
+  has_rich_text :content
+
   belongs_to :reportable, polymorphic: true
   belongs_to :user
-  has_rich_text :content
 
   validates :user_id, uniqueness: { scope: %i[reportable_type reportable_id] }
   validates :content, presence: true

@@ -3,6 +3,10 @@ class Question < ApplicationRecord
 
   URL_SLUG_WORD_LENGTH = 7
 
+  acts_as_taggable_on :topics
+  has_many_attached :files
+  has_rich_text :content
+
   attr_accessor :save_as_draft
 
   validates :title, uniqueness: true, presence: true
@@ -19,12 +23,9 @@ class Question < ApplicationRecord
   scope :drafts, -> { where published_at: nil }
 
   belongs_to :user
-  acts_as_taggable_on :topics
-  has_many_attached :files
   has_many :answers
   has_many :comments, as: :commentable
   has_many :notifications
-  has_rich_text :content
 
   def author?(author)
     author == user

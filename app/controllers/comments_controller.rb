@@ -12,7 +12,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_back_or_to root_path, notice: 'deleted successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 
@@ -20,7 +20,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_back_or_to root_path, notice: 'updated successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 

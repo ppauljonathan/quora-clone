@@ -7,15 +7,16 @@ class User < ApplicationRecord
   }.freeze
   CREDITS_ON_VERIFICATION = 5
 
+  has_secure_password
+  has_one_attached :profile_picture
+  acts_as_taggable_on :topics
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   before_create :generate_verification_token, :generate_api_token
   after_commit :send_verification_email
 
-  has_secure_password
-  has_one_attached :profile_picture
-  acts_as_taggable_on :topics
   has_many :questions
   has_many :answers
   has_many :comments
@@ -36,12 +37,16 @@ class User < ApplicationRecord
     credits > 1
   end
 
-  def resend_verification_mail
-    update(verification_token: generate_token(:verification), verified_at: nil)
+  def enable
+    update disabled_at: nil
   end
 
   def follows?(other_user_id)
     followee_ids.include? other_user_id
+  end
+
+  def resend_verification_mail
+    update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
   def send_reset_mail

@@ -80,6 +80,23 @@
   text-decoration: none;
 }
 
+.enable-button {
+  font-size: 2vh;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+  border: 2px solid var(--green);
+  background: var(--green);
+  color: var(--black);
+  border-radius: 0.5em;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.enable-button:hover {
+  background: var(--bright-green);
+}
+
 .function-button:hover {
   background: var(--bright-red);
 }
