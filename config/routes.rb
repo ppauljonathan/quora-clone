@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   resources :comments
 
-  resources :reports, only: :create
+  resources :abuse_reports, only: :create
 
   controller :credit_packs do
     get 'credit_packs' => :index
@@ -45,9 +45,9 @@ Rails.application.routes.draw do
 
   resources :credit_transactions, only: %i[index show]
 
-  controller :votes do
-    post 'votes/upvote' => :upvote
-    post 'votes/downvote' => :downvote
+  scope controller: :votes, path: 'votes' do
+    post 'upvote'
+    post 'downvote'
   end
 
   controller :registrations do

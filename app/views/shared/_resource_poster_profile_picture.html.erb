@@ -1,0 +1,9 @@
+<% if !resource.user || resource.user.profile_picture.blank? %>
+  <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
+<% else %>
+  <div
+    class="profile-thumbnail-in-question",
+    style = "background-image: url(<%= url_for resource.user.profile_picture %>)"
+  >
+<% end %>
+ </div>

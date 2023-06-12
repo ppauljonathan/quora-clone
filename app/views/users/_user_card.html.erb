@@ -1,7 +1,6 @@
 <div class="cards-container">
 <% users.each do |user| %>
-  <div class="user-card" >
-    <%= link_to '', user %>
+  <%= link_to user_path(user), class: 'user-card' do %>
     <% if user.profile_picture.blank? %>
     <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
   <% else %>
@@ -14,6 +13,6 @@
     <div class="card-name">
       <%= user.name %>
     </div>
-  </div>
+  <% end %>
 <% end %>
 </div>
