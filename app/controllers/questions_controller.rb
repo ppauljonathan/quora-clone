@@ -30,8 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @search_results = Question.published
-                              .page(params[:page])
+    @search_results = Question.page(params[:page])
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result

@@ -7,14 +7,14 @@ reportAbuse = (reportableType, reportableId) => {
   d.innerHTML = `
   <div class="report-abuse-form">
     <button class="function-button" onclick="closeAbuseForm()">X</button>
-    <form action="/reports" method="POST">
+    <form action="/abuse_reports" method="POST">
       <div class="form-heading">Report Abuse</div>
       <input type="hidden" name="authenticity_token" value=${csrf}>
-      <input type="hidden" name="report[reportable_type]" value=${reportableType}>
-      <input type="hidden" name="report[reportable_id]" value=${reportableId}>
-      <input type="hidden" name="report[content]" id="report-content">
+      <input type="hidden" name="abuse_report[reportable_type]" value=${reportableType}>
+      <input type="hidden" name="abuse_report[reportable_id]" value=${reportableId}>
+      <input type="hidden" name="abuse_report[content]" id="report-content">
       <trix-editor input="report-content" class="my-trix-mod" placeholder="Please state a reason"></trix-editor>
-      <input type="submit">
+      <input type="submit" class="function-button">
     </form>
   </div>
   `

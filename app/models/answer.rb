@@ -6,7 +6,9 @@ class Answer < ApplicationRecord
   has_many :comments, as: :commentable
   has_rich_text :content
 
+  before_save { self.published_at = Time.now }
+
   validates :content, presence: true
 
-  default_scope { order(created_at: :desc).where.not(published_at: nil) }
+  default_scope { order created_at: :desc }
 end

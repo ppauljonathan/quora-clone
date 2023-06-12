@@ -18,7 +18,7 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
   acts_as_taggable_on :topics
 
-  has_many :reports
+  has_many :abuse_reports
   has_many :questions
   has_many :answers
   has_many :comments

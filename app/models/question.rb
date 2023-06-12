@@ -14,9 +14,8 @@ class Question < ApplicationRecord
   before_validation :generate_url_slug, on: :create
   before_save :publish, unless: :save_as_draft
 
-  default_scope { order(created_at: :desc) }
-  scope :published, -> { where.not published_at: nil }
-  scope :drafts, -> { where published_at: nil }
+  default_scope { order created_at: :desc }
+  scope :drafts, -> { unscope(:where).where(published_at: nil) }
 
   belongs_to :user
   acts_as_taggable_on :topics
@@ -34,7 +33,7 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    comments.none && answers.none && reports.none
+    comments.none && answers.none && abuse_reports.none
   end
 
   def to_param
