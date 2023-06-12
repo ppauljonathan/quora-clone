@@ -28,9 +28,9 @@ Rails.application.routes.draw do
 
   resources :abuse_reports, only: :create
 
-  controller :votes do
-    post 'votes/upvote' => :upvote
-    post 'votes/downvote' => :downvote
+  scope controller: :votes, path: 'votes' do
+    post 'upvote'
+    post 'downvote'
   end
 
   controller :registrations do

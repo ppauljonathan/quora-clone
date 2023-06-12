@@ -32,11 +32,12 @@ async function upvote(event, upvotableType, upvotableId) {
   sibling = svg.parentElement.parentElement.lastElementChild.lastElementChild
   number = svg.parentElement.parentElement.children[1]
   val = Number(number.innerText)
-  if(jsonData.vote_type == 'upvote') {
+  if(jsonData.destroyed) {
+    svg.style.fill = 'var(--bright-black)'
+  } else {
     svg.style.fill = 'var(--red)'
     sibling.style.fill = 'var(--bright-black)'
-  } else {
-    svg.style.fill = 'var(--bright-black)'
+    
   }
  
   number.innerText = jsonData.net_vote_count
@@ -68,11 +69,11 @@ async function downvote(event, upvotableType, upvotableId) {
   sibling = svg.parentElement.parentElement.firstElementChild.lastElementChild
   number = svg.parentElement.parentElement.children[1]
   val = Number(number.innerText)
-  if(jsonData.vote_type == 'downvote') {
+  if(jsonData.destroyed) {
+    svg.style.fill = 'var(--bright-black)'
+  } else{
     svg.style.fill = 'var(--blue)'
     sibling.style.fill = 'var(--bright-black)'
-  } else {
-    svg.style.fill = 'var(--bright-black)'
   }
 
   number.innerText = jsonData.net_vote_count
