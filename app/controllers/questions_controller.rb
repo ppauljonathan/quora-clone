@@ -1,5 +1,5 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[edit destroy show update]
+  before_action :set_question, only: %i[edit destroy show update comments]
   before_action :can_view?, only: :show
   before_action :can_edit?, only: %i[edit destroy update]
 

@@ -1,12 +1,7 @@
 <div class="answer-show">
 <% if request.url.match? users_path %>
   <div class="question-on">
-    <% if comment.commentable.class == Question %>
-      ON: <%= link_to comment.commentable.title, comment.commentable %>
-    <% elsif comment.commentable.class == Answer %>
-      ON: <%= link_to answer_path(comment.commentable.id), comment.commentable %>
-      
-    <% end %>
+    <%= commented_on comment %>
     <br>
     AT: <%= comment.updated_at %>
   </div>
