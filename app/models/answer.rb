@@ -7,13 +7,16 @@ class Answer < ApplicationRecord
   belongs_to :user
   belongs_to :question
   has_many :comments, as: :commentable
+
   has_rich_text :content
+
+  before_save { self.published_at = Time.now }
 
   validates :content, presence: true
 
   before_update :set_credits, :remove_credits_if_unpublished
 
-  default_scope { where.not(published_at: nil) }
+  default_scope { order created_at: :desc }
 
   private def set_credits
     return unless changes[:net_upvote_count]

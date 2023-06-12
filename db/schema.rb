@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "abuse_reports", force: :cascade do |t|
+    t.string "reportable_type", null: false
+    t.bigint "reportable_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_abuse_reports_on_reportable"
+    t.index ["user_id"], name: "index_abuse_reports_on_user_id"
+  end
 
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
@@ -58,7 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "net_upvote_count", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -70,7 +79,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "net_upvote_count", default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
@@ -92,16 +100,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.index ["title"], name: "index_questions_on_title"
     t.index ["url_slug"], name: "index_questions_on_url_slug"
     t.index ["user_id"], name: "index_questions_on_user_id"
-  end
-
-  create_table "reports", force: :cascade do |t|
-    t.string "reportable_type", null: false
-    t.bigint "reportable_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
-    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -149,24 +147,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.integer "vote_type"
-    t.string "votable_type", null: false
-    t.bigint "votable_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
-  end
-
+  add_foreign_key "abuse_reports", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
-  add_foreign_key "reports", "users"
   add_foreign_key "taggings", "tags"
-  add_foreign_key "votes", "users"
 end

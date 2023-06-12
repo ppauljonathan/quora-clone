@@ -6,6 +6,7 @@ class User < ApplicationRecord
     admin: 1
   }.freeze
   CREDITS_ON_VERIFICATION = 5
+  CREDITS_TO_ASK_QUESTION = 1
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -16,21 +17,20 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :profile_picture
   acts_as_taggable_on :topics
-  with_options dependent: :restrict_with_error do |assoc|
-    assoc.has_many :questions
-    assoc.has_many :answers
-    assoc.has_many :comments
-  end
-  has_many :reports
+
   with_options join_table: :followings, class_name: 'User' do |assoc|
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
     assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
   end
+  has_many :abuse_reports
+  has_many :questions
+  has_many :answers
+  has_many :comments
 
   enum :role, ROLES, default: :user
 
   def can_ask_question?
-    credits > 1
+    credits > CREDITS_TO_ASK_QUESTION
   end
 
   def resend_verification_mail
@@ -45,6 +45,10 @@ class User < ApplicationRecord
     return false unless generate_reset_token
 
     UserMailer.with(user_id: id).reset_email.deliver_later
+  end
+
+  def unfollow(user)
+    follwees.delete user
   end
 
   def verified?
