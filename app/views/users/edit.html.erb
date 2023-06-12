@@ -1,18 +1,7 @@
 <%= form_with model: @user, class: 'center-align' do |form| %>
   <h1>Edit your details</h1>
   <%= render 'shared/message_blocks' %>
-  <% if @user.errors.any? %>
-    <div class="error-block">
-      <div class="form-error-heading">
-        The following errors prevented the User from being saved
-      </div>
-      <ul class="form-error-list">
-        <% @user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/model_errors', model: @user %>
   <div>
     <%= form.label :name, class: 'form-label' %>
     <%= form.text_field :name, class: 'form-field' %>

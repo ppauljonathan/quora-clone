@@ -9,9 +9,10 @@ class Question < ApplicationRecord
   validates :content, presence: true
   validates :topic_list, presence: true
   validates :url_slug, presence: true
+  validate :user_can_ask_question?
 
-  before_validation :generate_url_slug
-  before_save :save_as
+  before_validation :generate_url_slug, on: :create
+  before_save :publish, unless: :save_as_draft
 
   default_scope { order(created_at: :desc) }
   scope :published, -> { where.not published_at: nil }
@@ -25,7 +26,7 @@ class Question < ApplicationRecord
   has_rich_text :content
 
   def author?(author)
-    author == user
+    author.id == user.id
   end
 
   def draft?
@@ -41,11 +42,10 @@ class Question < ApplicationRecord
   end
 
   def self.ransackable_attributes(_auth_object = nil)
-    ['title']
+    %w[title]
   end
 
   private def generate_url_slug
-    return if url_slug
     return self.url_slug = title.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
 
     sample_slug = title.truncate_words(URL_SLUG_WORD_LENGTH)
@@ -54,8 +54,14 @@ class Question < ApplicationRecord
     self.url_slug = sample_slug + "-#{duplicate_slugs_count + 1}"
   end
 
-  private def save_as
-    self.published_at = save_as_draft ? nil : Time.now
+  private def user_can_ask_question?
+    return if user.can_ask_question?
+
+    errors.add :base, :invalid, message: 'You do not heve enough credits'
+  end
+
+  private def publish
+    self.published_at = Time.now
   end
 
   private def words_in_title
