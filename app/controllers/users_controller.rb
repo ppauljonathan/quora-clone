@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def unfollow
-    @user.followers.delete current_user
+    current_user.unfollow @user
 
     redirect_back_or_to @user, notice: 'successful'
   end

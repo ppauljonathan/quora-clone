@@ -47,6 +47,10 @@ class User < ApplicationRecord
     UserMailer.with(user_id: id).reset_email.deliver_later
   end
 
+  def unfollow(user)
+    follwees.delete user
+  end
+
   def verified?
     verified_at?
   end

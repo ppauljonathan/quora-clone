@@ -146,6 +146,8 @@
   border: 2px solid var(--black);
   display: flex;
   word-wrap: unset;
+  color: var(--black);
+  text-decoration: unset;
 }
 
 .user-card:hover {
