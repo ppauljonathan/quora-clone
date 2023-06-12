@@ -19,7 +19,6 @@ class User < ApplicationRecord
   acts_as_taggable_on :topics
 
   has_many :questions
-  has_many :questions
   has_many :answers
   has_many :comments
 
