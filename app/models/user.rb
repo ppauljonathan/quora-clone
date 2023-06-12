@@ -6,6 +6,7 @@ class User < ApplicationRecord
     admin: 1
   }.freeze
   CREDITS_ON_VERIFICATION = 5
+  CREDITS_TO_ASK_QUESTION = 1
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
@@ -15,14 +16,14 @@ class User < ApplicationRecord
 
   has_secure_password
   has_one_attached :profile_picture
-  has_many :questions, dependent: :restrict_with_exception
+  has_many :questions
   acts_as_taggable_on :topics
   has_many :answers, dependent: :restrict_with_exception
 
   enum :role, ROLES, default: :user
 
   def can_ask_question?
-    credits > 1
+    credits > CREDITS_TO_ASK_QUESTION
   end
 
   def resend_verification_mail

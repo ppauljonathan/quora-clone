@@ -1,6 +1,4 @@
 class UsersController < ApplicationController
-  ITEMS_PER_PAGE = 3
-
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
 
@@ -10,7 +8,6 @@ class UsersController < ApplicationController
     @answers = @user.answers
                     .includes(:rich_text_content)
                     .page(params[:page])
-                    .per(ITEMS_PER_PAGE)
   end
 
   def destroy
@@ -26,7 +23,6 @@ class UsersController < ApplicationController
                       .drafts
                       .includes(:user, :topics)
                       .page(params[:page])
-                      .per(ITEMS_PER_PAGE)
   end
 
   def index
@@ -38,7 +34,6 @@ class UsersController < ApplicationController
                       .published
                       .includes(:user, :topics)
                       .page(params[:page])
-                      .per(ITEMS_PER_PAGE)
   end
 
   def update
