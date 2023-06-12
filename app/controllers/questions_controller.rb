@@ -1,7 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :check_credits, except: %i[index show comments]
-  before_action :set_question, only: %i[edit destroy comments show update]
-  before_action :can_view?, only: %i[show comments]
+  before_action :set_question, only: %i[edit destroy show update]
+  before_action :can_view?, only: :show
   before_action :can_edit?, only: %i[edit destroy update]
 
   skip_before_action :authorize, only: %i[index show comments]
@@ -69,12 +68,6 @@ class QuestionsController < ApplicationController
     return if @question.author?(current_user) || @question.published_at?
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
-  end
-
-  private def check_credits
-    return if current_user.can_ask_question?
-
-    redirect_back_or_to root_path, notice: 'Not enough credit'
   end
 
   private def check_if_editable

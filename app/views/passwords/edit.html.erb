@@ -1,18 +1,7 @@
 <%= form_with model: @user, url: reset_password_path, class: 'form center-align' do |form| %>
   <%= render 'shared/message_blocks' %>
   <div class="form-heading">Reset Password</div>
-  <% if @user.errors.any? %>
-    <div class="error-block">
-      <div class="form-error-heading">
-        The following errors prevented the User from being saved
-      </div>
-      <ul class="form-error-list">
-        <% @user.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/model_errors', model: @user %>
 
   <%= form.hidden_field :id, value: @user.id %>
 
