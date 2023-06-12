@@ -2,6 +2,20 @@ module AbuseReportable
   extend ActiveSupport::Concern
 
   included do
-    has_many :reports, as: :reportable
+    attr_accessor :save_as_draft
+
+    has_many :abuse_reports, as: :reportable
+
+    default_scope { where.not published_at: nil }
+
+    before_save :publish, unless: :save_as_draft
+  end
+
+  def unpublish
+    update_column(:published_at, nil)
+  end
+
+  private def publish
+    self.published_at = Time.now
   end
 end

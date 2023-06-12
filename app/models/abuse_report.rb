@@ -1,4 +1,4 @@
-class Report < ApplicationRecord
+class AbuseReport < ApplicationRecord
   MAX_REPORTED_BY = 5
 
   after_create_commit :check_reports
@@ -11,8 +11,8 @@ class Report < ApplicationRecord
   validates :content, presence: true
 
   private def check_reports
-    return unless reportable.reports.count > MAX_REPORTED_BY
+    return unless reportable.abuse_reports.count > MAX_REPORTED_BY
 
-    reportable.update(published_at: nil)
+    reportable.unpublish
   end
 end
