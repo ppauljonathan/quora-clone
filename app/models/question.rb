@@ -39,10 +39,6 @@ class Question < ApplicationRecord
     url_slug
   end
 
-  def unpublish
-    update(published_at: nil, save_as_draft: true)
-  end
-
   def self.ransackable_attributes(_auth_object = nil)
     %w[title]
   end

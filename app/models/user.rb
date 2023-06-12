@@ -52,7 +52,7 @@ class User < ApplicationRecord
     UserMailer.with(user_id: id).reset_email.deliver_later
   end
 
-  def soft_destroy
+  def disable
     update(disabled_at: Time.now)
   end
 

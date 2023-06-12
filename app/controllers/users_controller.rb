@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.soft_destroy
+    if @user.disable
       redirect_back_or_to root_path, notice: 'User deleted Successfully'
     else
       render :edit
