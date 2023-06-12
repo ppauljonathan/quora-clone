@@ -3,8 +3,6 @@ class Question < ApplicationRecord
 
   URL_SLUG_WORD_LENGTH = 7
 
-  attr_accessor :save_as_draft
-
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
   validates :topic_list, presence: true
@@ -12,7 +10,6 @@ class Question < ApplicationRecord
   validate :user_can_ask_question?
 
   before_validation :generate_url_slug, on: :create
-  before_save :publish, unless: :save_as_draft
 
   default_scope { order created_at: :desc }
   scope :drafts, -> { unscope(:where).where(published_at: nil) }
@@ -57,10 +54,6 @@ class Question < ApplicationRecord
     return if user.can_ask_question?
 
     errors.add :base, :invalid, message: 'You do not heve enough credits'
-  end
-
-  private def publish
-    self.published_at = Time.now
   end
 
   private def words_in_title
