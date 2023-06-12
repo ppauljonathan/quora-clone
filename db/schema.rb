@@ -14,6 +14,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "abuse_reports", force: :cascade do |t|
+    t.string "reportable_type", null: false
+    t.bigint "reportable_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reportable_type", "reportable_id"], name: "index_abuse_reports_on_reportable"
+    t.index ["user_id"], name: "index_abuse_reports_on_user_id"
+  end
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -27,8 +37,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.bigint "blob_id", null: false
+    t.integer "record_id", null: false
+    t.integer "blob_id", null: false
     t.datetime "created_at", null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
@@ -47,7 +57,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -92,16 +102,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.index ["title"], name: "index_questions_on_title"
     t.index ["url_slug"], name: "index_questions_on_url_slug"
     t.index ["user_id"], name: "index_questions_on_user_id"
-  end
-
-  create_table "reports", force: :cascade do |t|
-    t.string "reportable_type", null: false
-    t.bigint "reportable_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["reportable_type", "reportable_id"], name: "index_reports_on_reportable"
-    t.index ["user_id"], name: "index_reports_on_user_id"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -149,24 +149,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_120457) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "votes", force: :cascade do |t|
-    t.integer "vote_type"
-    t.string "votable_type", null: false
-    t.bigint "votable_id", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_votes_on_user_id"
-    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
-  end
-
+  add_foreign_key "abuse_reports", "users"
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
-  add_foreign_key "reports", "users"
   add_foreign_key "taggings", "tags"
   add_foreign_key "votes", "users"
 end

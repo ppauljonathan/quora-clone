@@ -4,9 +4,10 @@ class Comment < ApplicationRecord
   belongs_to :commentable, polymorphic: true
   belongs_to :user
   has_rich_text :content
-  has_many :reports, as: :reportable
+
+  before_save { self.published_at = Time.now }
 
   validates :content, presence: true
 
-  default_scope { order(created_at: :desc).where.not(published_at: nil) }
+  default_scope { order created_at: :desc }
 end

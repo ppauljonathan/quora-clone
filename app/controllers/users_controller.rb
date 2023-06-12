@@ -64,7 +64,6 @@ class UsersController < ApplicationController
 
   def questions
     @questions = @user.questions
-                      .published
                       .includes(:user, :topics)
                       .page(params[:page])
   end

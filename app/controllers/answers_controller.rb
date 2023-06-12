@@ -4,7 +4,7 @@ class AnswersController < ApplicationController
 
   def create
     @answer = current_user.answers.build(answer_params)
-    flash[:notice] = 'created successfully' if @answer.save
+    flash[:notice] = @answer.save ? 'created successfully' : 'error in creating answer'
     redirect_to question_path(@answer.question.url_slug)
   end
 
