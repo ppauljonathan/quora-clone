@@ -1,16 +1,5 @@
 <%= form_with model: question, class: 'new-question-form' do |form| %>
-  <% if question.errors.any? %>
-    <div class="error-block">
-      <div class="form-error-heading">
-        The following errors prevented the question from being saved
-      </div>
-      <ul class="form-error-list">
-        <% question.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/model_errors', model: question %>
   <div class="form-content">
     <%= form.label :title, class: 'form-label' %>
     <%= form.text_field :title, class: 'form-field' %>
