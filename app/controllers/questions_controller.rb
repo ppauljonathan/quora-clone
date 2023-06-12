@@ -1,9 +1,5 @@
 class QuestionsController < ApplicationController
-  QUESTIONS_PER_PAGE = 10
-
-  before_action :check_credits, except: %i[index show comments]
   before_action :set_question, only: %i[edit destroy comments show update]
-  before_action :check_if_editable, only: %i[edit update destroy]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
 
@@ -37,8 +33,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @search_results = Question.published
-                              .page(params[:page])
+    @search_results = Question.page(params[:page])
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result
@@ -78,12 +73,6 @@ class QuestionsController < ApplicationController
     return if @question.author?(current_user) || @question.published_at?
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
-  end
-
-  private def check_credits
-    return if current_user.can_ask_question?
-
-    redirect_back_or_to root_path, notice: 'Not enough credit'
   end
 
   private def check_if_editable

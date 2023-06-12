@@ -1,0 +1,5 @@
+<% if user %>
+  <%= link_to user.name, user_path(user.id), class: 'question-user-name' %>
+<% else %>
+  <div class="topic">DEACTIVATED</div>
+<% end %>
