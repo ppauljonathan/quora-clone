@@ -7,20 +7,17 @@ class Question < ApplicationRecord
   has_many_attached :files
   has_rich_text :content
 
-  attr_accessor :save_as_draft
-
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
   validates :topic_list, presence: true
   validates :url_slug, presence: true
+  validate :user_can_ask_question?
 
-  before_validation :generate_url_slug
-  before_save :save_as
   after_create_commit :post_question_notification
+  before_validation :generate_url_slug, on: :create
 
-  default_scope { order(created_at: :desc) }
-  scope :published, -> { where.not published_at: nil }
-  scope :drafts, -> { where published_at: nil }
+  default_scope { order created_at: :desc }
+  scope :drafts, -> { unscope(:where).where(published_at: nil) }
 
   belongs_to :user
   has_many :answers
@@ -28,7 +25,7 @@ class Question < ApplicationRecord
   has_many :notifications
 
   def author?(author)
-    author == user
+    author.id == user.id
   end
 
   def draft?
@@ -36,23 +33,18 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    comments.none? && answers.none? && reports.none?
+    comments.none? && answers.none? && abuse_reports.none?
   end
 
   def to_param
     url_slug
   end
 
-  def unpublish
-    update(published_at: nil, save_as_draft: true)
-  end
-
   def self.ransackable_attributes(_auth_object = nil)
-    ['title']
+    %w[title]
   end
 
   private def generate_url_slug
-    return if url_slug
     return self.url_slug = title.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
 
     sample_slug = title.truncate_words(URL_SLUG_WORD_LENGTH)
@@ -68,8 +60,10 @@ class Question < ApplicationRecord
                                    poster_name: user.name })
   end
 
-  private def save_as
-    self.published_at = save_as_draft ? nil : Time.now
+  private def user_can_ask_question?
+    return if user.can_ask_question?
+
+    errors.add :base, :invalid, message: 'You do not heve enough credits'
   end
 
   private def words_in_title

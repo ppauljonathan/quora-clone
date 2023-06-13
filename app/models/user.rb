@@ -6,6 +6,7 @@ class User < ApplicationRecord
     admin: 1
   }.freeze
   CREDITS_ON_VERIFICATION = 5
+  CREDITS_TO_ASK_QUESTION = 1
 
   has_secure_password
   has_one_attached :profile_picture
@@ -17,10 +18,6 @@ class User < ApplicationRecord
   before_create :generate_verification_token, :generate_api_token
   after_commit :send_verification_email
 
-  has_many :questions
-  has_many :answers
-  has_many :comments
-  has_many :reports
   with_options join_table: :followings, class_name: 'User' do |assoc|
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
     assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
@@ -28,13 +25,17 @@ class User < ApplicationRecord
   has_many :orders
   has_many :credit_transactions
   has_many :notifications
+  has_many :abuse_reports
+  has_many :questions
+  has_many :answers
+  has_many :comments
 
   default_scope { order(created_at: :desc).where(disabled_at: nil) }
 
   enum :role, ROLES, default: :user
 
   def can_ask_question?
-    credits > 1
+    credits > CREDITS_TO_ASK_QUESTION
   end
 
   def enable
@@ -55,8 +56,16 @@ class User < ApplicationRecord
     UserMailer.with(user_id: id).reset_email.deliver_later
   end
 
-  def soft_destroy
+  def disable
     update(disabled_at: Time.now)
+  end
+
+  def unfollow(user)
+    follwees.delete user
+  end
+
+  def update_credits(amount, _reason)
+    user.increment!(credits: amount)
   end
 
   def verified?

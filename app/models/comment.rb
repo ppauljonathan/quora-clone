@@ -9,5 +9,5 @@ class Comment < ApplicationRecord
 
   validates :content, presence: true
 
-  default_scope { where.not(published_at: nil) }
+  default_scope { order created_at: :desc }
 end

@@ -1,6 +1,7 @@
-class Admin::UsersController < ApplicationController
+class Admin::UsersController < Admin::BaseController
   before_action :check_admin
   before_action :set_user, only: %i[enable disable]
+
   def index
     @users = User.unscoped.all.page(params[:page])
   end
@@ -11,7 +12,7 @@ class Admin::UsersController < ApplicationController
   end
 
   def disable
-    flash[:notice] = @user.soft_destroy ? 'user disabled successfully' : 'error in disabling user'
+    flash[:notice] = @user.disable ? 'user disabled successfully' : 'error in disabling user'
     redirect_to admin_users_path
   end
 
