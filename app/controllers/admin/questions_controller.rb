@@ -2,8 +2,7 @@ class Admin::QuestionsController < Admin::BaseController
   before_action :check_admin
 
   def index
-    @questions = Question.published
-                         .includes(:user)
+    @questions = Question.includes(:user)
                          .page(params[:page])
   end
 

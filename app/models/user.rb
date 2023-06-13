@@ -42,6 +42,10 @@ class User < ApplicationRecord
     update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
+  def enable
+    update disabled_at: nil
+  end
+
   def follows?(other_user_id)
     followee_ids.include? other_user_id
   end
@@ -53,14 +57,14 @@ class User < ApplicationRecord
   end
 
   def disable
-    update(disabled_at: Time.now)
+    update disabled_at: Time.now
   end
 
   def unfollow(user)
     follwees.delete user
   end
 
-  def update_credits(amount, _reason)
+  def update_credits(amount)
     user.increment!(credits: amount)
   end
 
