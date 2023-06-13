@@ -1,7 +1,13 @@
-<tr style="background: <%= user.admin? ? 'rgba(121, 203, 62, 0.535)' : '' %>">
+<tr style="background: <%= color_for user %>">
  <td><%= user.id %></td>
  <td><%= user.email %></td>
  <td><%= user.name %></td>
  <td><%= user.credits %></td>
- <td><%= button_to 'Disable', user, method: :delete, class: 'function-button delete-table-btn', data: { turbo: false } %></td>
+ <td>
+  <% if user.disabled_at? %>
+    <%= button_to 'Enable', enable_admin_user_path(user), method: :post, class: 'enable-button delete-table-btn', data: { turbo: false } %>
+  <% else %>
+    <%= button_to 'Disable', disable_admin_user_path(user), method: :post, class: 'function-button delete-table-btn', data: { turbo: false } %>
+  <% end %>
+ </td>
 </tr>

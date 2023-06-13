@@ -51,8 +51,14 @@ Rails.application.routes.draw do
     post :read_all, on: :collection
   end
 
-  namespace :admin do 
-    resources :users, only: %i[index]
+  namespace :admin do
+    resources :users, only: %i[index] do
+      member do
+        post :enable
+        post :disable
+      end
+    end
+
     resources :questions, param: :url_slug, only: %i[index] do
       post :unpublish, on: :member
     end
