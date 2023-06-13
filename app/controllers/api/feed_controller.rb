@@ -3,8 +3,7 @@ class Api::FeedController < ApplicationController
   skip_before_action :authorize
 
   def index
-    @questions = Question.published
-                         .tagged_with(@user.topic_list, any: true)
+    @questions = Question.tagged_with(@user.topic_list, any: true)
                          .includes(:rich_text_content,
                                    :topics,
                                    { answers: [:rich_text_content,
