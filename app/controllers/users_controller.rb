@@ -1,17 +1,27 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show edit update]
-
-  before_action :check_if_current_user, only: %i[edit update]
+  before_action :set_user, except: %i[index]
+  before_action :check_if_current_user, only: %i[edit update drafts destroy]
 
   skip_before_action :authorize, only: %i[index show]
-  before_action :current_user, only: %i[index show]
+
+  def destroy
+    if @user.destroy
+      redirect_to root_path, notice: 'User deleted Successfully'
+    else
+      redirect_to user_path(@user.id), alert: @user.errors
+    end
+  end
+
+  def drafts
+    @questions = Question.drafts.includes(:user, :topics).where user_id: @user.id
+  end
 
   def index
     @users = User.all
   end
 
-  def show
-    @topics = ['Science & Technology', 'Mathematics', 'Space']
+  def questions
+    @questions = Question.published.includes(:user, :topics).where(user_id: @user.id)
   end
 
   def update
@@ -23,15 +33,16 @@ class UsersController < ApplicationController
     end
   end
 
+  private def check_if_current_user
+    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user == @user
+  end
+
   private def set_user
-    @user = User.find(params[:id])
+    @user = User.includes(:topics, :profile_picture_attachment).find_by_id(params[:id])
+    redirect_to root_path, alert: 'user not found' unless @user
   end
 
   private def user_params
-    params.require(:user).permit(:name, :profile_picture)
-  end
-
-  private def check_if_current_user
-    redirect_back_or_to root_path, notice: 'cannot edit this user' unless current_user == @user
+    params.require(:user).permit(:name, :profile_picture, :topic_list)
   end
 end

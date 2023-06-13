@@ -1,0 +1,63 @@
+<div class="top-panel">
+
+  <% if user.profile_picture.blank? %>
+    <div class="profile-picture" style = "background-image: url('/assets/default-pfp.jpg')">
+  <% else %>
+    <div
+      class="profile-picture",
+      style = "background-image: url(<%= url_for user.profile_picture %>)"
+    >
+  <% end %>
+    </div>
+
+  <div class="user-details">
+    <div class="user-name">
+      <%= user.name %>
+    </div>
+    <div class="user-email">
+      <%= user.email %>
+    </div>
+    <div class="user-email">
+      Credits: <%= user.credits %>
+    </div>
+    
+    &nbsp;
+    <div class="topic-list-title"> Topics:</div>
+    <div class="topics-list">
+      <% user.topics.each do |topic| %>
+        <div class="topic"><%= topic.name %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="function-button-list">
+    <%= link_to 'Edit',
+                edit_user_path,
+                class: 'function-button' if user == @current_user%>
+
+    <%= highlighted_link 'Followers',
+                         'function-button',
+                         'highlighted-function-button',
+                         edit_user_path %>
+
+    <%= highlighted_link 'Questions',
+                         'function-button',
+                         'highlighted-function-button',
+                         questions_user_path %>
+
+    <%= highlighted_link 'Drafts',
+                         'function-button',
+                         'highlighted-function-button',
+                         drafts_user_path if user == @current_user %>
+
+    <%= highlighted_link 'Answers',
+                         'function-button',
+                         'highlighted-function-button',
+                         edit_user_path %>
+
+    <%= highlighted_link 'Comments',
+                         'function-button',
+                         'highlighted-function-button',
+                         edit_user_path %>
+  </div>
+</div>

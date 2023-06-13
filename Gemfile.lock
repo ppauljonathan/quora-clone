@@ -66,6 +66,8 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    acts-as-taggable-on (9.0.1)
+      activerecord (>= 6.0, < 7.1)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
     ast (2.4.2)
@@ -74,6 +76,13 @@ GEM
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
+    cairo (1.17.8)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.2.2)
+      red-colors
+    cairo-gobject (4.1.5)
+      cairo (>= 1.16.2)
+      glib2 (= 4.1.5)
     capybara (3.39.0)
       addressable
       matrix
@@ -91,8 +100,17 @@ GEM
       reline (>= 0.3.1)
     erubi (1.12.0)
     ffi (1.15.5)
+    fiddle (1.1.1)
+    gio2 (4.1.5)
+      fiddle
+      gobject-introspection (= 4.1.5)
+    glib2 (4.1.5)
+      native-package-installer (>= 1.0.3)
+      pkg-config (>= 1.3.5)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    gobject-introspection (4.1.5)
+      glib2 (= 4.1.5)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -123,6 +141,7 @@ GEM
     mini_mime (1.1.2)
     minitest (5.18.0)
     msgpack (1.7.0)
+    native-package-installer (1.1.5)
     net-imap (0.3.4)
       date
       net-protocol
@@ -138,6 +157,10 @@ GEM
     parallel (1.23.0)
     parser (3.2.2.1)
       ast (~> 2.4.1)
+    pkg-config (1.5.1)
+    poppler (4.1.5)
+      cairo-gobject (= 4.1.5)
+      gio2 (= 4.1.5)
     public_suffix (5.0.1)
     puma (5.6.5)
       nio4r (~> 2.0)
@@ -173,6 +196,12 @@ GEM
       zeitwerk (~> 2.5)
     rainbow (3.1.1)
     rake (13.0.6)
+    ransack (4.0.0)
+      activerecord (>= 6.1.5)
+      activesupport (>= 6.1.5)
+      i18n
+    red-colors (0.3.0)
+      matrix
     regexp_parser (2.8.0)
     reline (0.3.3)
       io-console (~> 0.5)
@@ -209,6 +238,8 @@ GEM
       railties (>= 6.0.0)
     thor (1.2.1)
     timeout (0.3.2)
+    trix (0.10.1)
+      rails
     turbo-rails (1.4.0)
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
@@ -237,20 +268,25 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  acts-as-taggable-on (~> 9.0)
   bcrypt (~> 3.1.7)
   bootsnap
   capybara
   debug
+  fiddle (~> 1.1.1)
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
+  poppler (~> 4.1.5)
   puma (~> 5.0)
   rails (~> 7.0.4, >= 7.0.4.3)
+  ransack (~> 4.0.0)
   rubocop
   selenium-webdriver
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  trix (~> 0.10.1)
   turbo-rails
   tzinfo-data
   web-console

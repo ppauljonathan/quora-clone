@@ -1,0 +1,10 @@
+<%= render 'shared/message_blocks' %>
+
+<div class="form-heading question-form-title">Edit Question</div>
+
+<%= render 'form', question: @question %>
+
+<%= button_to 'Delete Question',
+              question_path(@question.url_slug),
+              class: 'delete-question',
+              method: :delete %>

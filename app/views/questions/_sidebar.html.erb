@@ -1,0 +1,21 @@
+<div class="sidebar">
+<%= form_with method: :get, scope: :topics, url: root_path, class: 'footer-form' do |form|%>
+  <div class="form-label">Filter Questions by Topics</div>
+  <br>
+  <div class="check-list">
+    <% topics.each do |topic| %>
+      <div>
+      <% if @selected&.include? topic %>
+        <%= form.check_box topic, include_hidden: false, checked: true, class: 'check-box' %>
+      <% else %>
+        <%= form.check_box topic, include_hidden: false, class: 'check-box' %>
+      <% end %>
+      <%= form.label topic%>
+      </div>
+    <% end %>
+  </div>
+  <%= form.submit 'Filter' %>
+<% end %>
+<%= button_to 'Clear all Filters', questions_path, method: :get, form_class: 'filter-clear-form' %>
+<br>
+</div>

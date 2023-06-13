@@ -1,0 +1,27 @@
+<%= form_with model: question, class: 'new-question-form' do |form| %>
+  <%= render 'shared/model_errors', model: question %>
+  <div class="form-content">
+    <%= form.label :title, class: 'form-label' %>
+    <%= form.text_field :title, class: 'form-field' %>
+  </div>
+  <div class="form-content">
+    <%= form.label :content, class: 'form-label' %>
+    <%= form.hidden_field :content, id: 'question_content' %>
+    <trix-editor input="question_content" style="height: 30vh; overflow: scroll; padding: 3%; border_radius: 1vh"></trix-editor>
+  </div>
+  <div class="form-content">
+    <%= form.label 'Upload Files', class: 'form-label' %>
+    <%= form.file_field :files, multiple: true, class: 'form-field', accept: 'application/pdf' %>
+  </div>
+  <div class="form-content">
+    <%= form.label 'Topics (comma seperated)', class: 'form-label' %>
+    <%= form.text_field :topic_list,value: topic_list_for(question), class: 'form-field', id: 'search' %>
+    <ul id="search-results"></ul>
+  </div>
+  <%= form.check_box :save_as_draft, style: 'display: inline', include_hidden: false %>
+  <%= form.label 'Save as Draft?', class: 'form-label', style: 'display: inline' %>
+  <br>
+  <%= form.submit 'Submit', class: 'form-submit' %>
+<% end %>
+
+<%= javascript_include_tag 'topics_dropdown' %>

@@ -1,15 +1,8 @@
 <div class="center-align" style="text-align: center">
-  <% if flash[:notice] %>
-    <div class="message-block">
-      <%= flash[:notice] %>
-    </div>
-  <% elsif flash[:alert] %>
-    <div class="error-block">
-      <%= flash[:alert] %>
-    </div>
-  <% end %>
+  <%= render 'shared/message_blocks' %>
+
   <div class="form-heading">Reset your Password</div>
-  <br>
+  &nbsp;
 
   <div class="form-label">please enter the email to send password reset link</div>
 

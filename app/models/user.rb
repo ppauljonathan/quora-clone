@@ -4,26 +4,25 @@ class User < ApplicationRecord
   ROLES = {
     user: 0,
     admin: 1
-  }
+  }.freeze
+  CREDITS_ON_VERIFICATION = 5
+  CREDITS_TO_ASK_QUESTION = 1
 
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
-  has_secure_password
-
   before_create :generate_verification_token
   after_commit :send_verification_email
 
+  has_secure_password
   has_one_attached :profile_picture
+  has_many :questions
+  acts_as_taggable_on :topics
 
   enum :role, ROLES, default: :user
 
-  def verify
-    update(verification_token: nil, verified_at: Time.now) unless verified?
-  end
-
-  def verified?
-    verified_at?
+  def can_ask_question?
+    credits > CREDITS_TO_ASK_QUESTION
   end
 
   def resend_verification_mail
@@ -36,6 +35,22 @@ class User < ApplicationRecord
     UserMailer.with(user_id: id).reset_email.deliver_later
   end
 
+  def verified?
+    verified_at?
+  end
+
+  def verify
+    return if verified?
+
+    update(verification_token: nil,
+           verified_at: Time.now,
+           credits: CREDITS_ON_VERIFICATION)
+  end
+
+  private def generate_reset_token
+    update(reset_token: generate_token(:reset))
+  end
+
   private def generate_verification_token
     self.verification_token = generate_token :verification
   end
@@ -44,9 +59,5 @@ class User < ApplicationRecord
     return unless verification_token && !verified?
 
     UserMailer.with(user_id: id).verification_email.deliver_later
-  end
-
-  private def generate_reset_token
-    update(reset_token: generate_token(:reset))
   end
 end

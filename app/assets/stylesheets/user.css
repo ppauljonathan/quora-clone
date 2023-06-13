@@ -18,17 +18,6 @@
   background-position: center;
 }
 
-.no-photo-message {
-  position: relative;
-  max-width: 20vmin;
-  word-wrap: normal;
-  text-align: center;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: -20;
-}
-
 .user-details {
   height: inherit;
   width: 60vw;
@@ -38,8 +27,12 @@
 }
 
 .user-name {
-  font-size: xx-large;
+  font-size: 6vh;
   font-weight: bold;
+}
+
+.user-email {
+  font-size: 2vh;
 }
 
 .topics-list {
@@ -49,23 +42,31 @@
   max-height: 15vh;
 }
 
+.topic-list-title {
+  font-size: 2vh;
+}
+
 .topic {
   display: inline;
   padding: 0.25em;
   margin: 0.25em;
-  border: 2px solid black;
+  border: 2px solid var(--black);
+  font-size: 2vh;
+  text-decoration: none;
+  color: var(--black);
 }
 
 .function-button-list {
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 10%;
+  top: 15vh;
   right: 2%;
+  transform: translate(0%, -25%);
 }
 
 .function-button {
-  font-size: large;
+  font-size: 2.3vh;
   padding: 0.2em;
   margin-bottom: 0.2em;
   border: 2px solid var(--red);
@@ -77,6 +78,32 @@
   text-decoration: none;
 }
 
-.function-button:hover, .highlighted-function-button {
+.function-button:hover {
   background: var(--bright-red);
+}
+
+.highlighted-function-button {
+  font-size: 2.3vh;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+  border: 2px solid var(--red);
+  background: var(--bright-red);
+  color: var(--bright-white);
+  border-radius: 0.5em;
+  text-align: center;
+  display: block;
+  text-decoration: none;  
+}
+
+.bottom-panel-title {
+  font-size: 6vh;
+  font-weight: bold;
+  padding-left: 2%; 
+}
+
+.delete-user {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 400%);
 }

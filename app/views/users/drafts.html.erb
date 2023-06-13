@@ -1,0 +1,7 @@
+<%= render 'shared/message_blocks' %>
+
+<%= render 'top_bar', user: @user %>
+
+<br>
+<div class="bottom-panel-title">Drafts</div>
+<%= render partial: 'questions/question', collection: @questions %>

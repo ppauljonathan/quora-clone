@@ -1,7 +1,7 @@
 <nav class="navbar">
-  <%= link_to 'QuoraClone', root_path, class: 'navbar-title' %>
+  <%= link_to image_tag('/assets/quora.png', class: 'logo-image'), root_path %>
   <div class="navbar-list">
-    <% if @current_user %>
+    <% if current_user %>
 
       <%= highlighted_link 'Home',
                            'navbar-buttons',
@@ -11,8 +11,13 @@
       <%= highlighted_link 'Account',
                            'navbar-buttons',
                            'navbar-button-highlight',
-                           user_path(id: @current_user) %>
-      
+                           user_path(id: current_user.id) %>
+                          
+      <%= highlighted_link 'Ask a Question',
+                           'navbar-buttons',
+                           'navbar-button-highlight',
+                           new_question_path %>
+     
       <%= button_to 'Logout', logout_path, class: 'navbar-form-buttons', method: :delete %>
     <% else %>
       <% if request.path == login_path %>

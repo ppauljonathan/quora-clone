@@ -1,0 +1,22 @@
+<div class='question-card'>
+  <%= link_to question.title, question_path(url_slug: question.url_slug), class: 'question-heading' %>
+  <div class="question-asked-by">
+    <div class="question-sub-headings">
+      author:
+      <div class="topic"><%= question.user&.name || 'DEACTIVATED' %></div>
+    </div>
+  </div>
+  <% if should_display_edit_button? question %>
+    <%= link_to 'Edit', edit_question_path(question.url_slug), class: 'edit-question-button' %>
+  <% end %>
+  &nbsp;
+  <div class="topics-list">
+    <div class="question-sub-headings">
+      topics:
+    </div>
+    <% question.topics.each do |topic| %>
+      <div class="topic"><%= topic.name %></div>
+    <% end %>
+  </div>
+
+</div>

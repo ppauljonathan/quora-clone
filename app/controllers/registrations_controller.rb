@@ -1,19 +1,21 @@
 class RegistrationsController < ApplicationController
   before_action :redirect_if_logged_in
-  skip_before_action :authorize
 
-  def new
-    @user = User.new
-  end
+  skip_before_action :authorize
 
   def create
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to confirmation_path, notice: 'Verify your email to login'
+      flash[:token_notice] = 'Verify your email to login'
+      redirect_to login_path
     else
       render :new, notice: @user.errors, status: 422
     end
+  end
+
+  def new
+    @user = User.new
   end
 
   private def user_params
