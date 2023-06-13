@@ -10,7 +10,5 @@ class Answer < ApplicationRecord
 
   validates :content, presence: true
 
-  before_save { self.published_at = Time.now }
-
   default_scope { order created_at: :desc }
 end
