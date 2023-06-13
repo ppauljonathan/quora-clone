@@ -4,12 +4,12 @@ class CommentsController < ApplicationController
   def create
     @comment = current_user.comments.build(comment_params)
     flash[:notice] = @comment.save ? 'created successfully' : 'error in creating comment'
-    redirect_back_or_to root_path
+    redirect_to @comment.commentable
   end
 
   def destroy
     if @comment.destroy
-      redirect_back_or_to root_path, notice: 'deleted successfully'
+      redirect_to @comment.commentable, notice: 'deleted successfully'
     else
       render :edit
     end
@@ -17,7 +17,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      redirect_back_or_to root_path, notice: 'updated successfully'
+      redirect_to @comment.commentable, notice: 'updated successfully'
     else
       render :edit
     end
@@ -28,7 +28,7 @@ class CommentsController < ApplicationController
   end
 
   private def set_comment
-    @comment = comment.includes(:rich_text_content,
+    @comment = Comment.includes(:rich_text_content,
                                 commentable: [:rich_text_content,
                                               { user: :profile_picture_attachment},
                                               :files_attachments])
