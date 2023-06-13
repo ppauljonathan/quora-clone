@@ -58,6 +58,7 @@ Rails.application.routes.draw do
         post :disable
       end
     end
+
     resources :questions, param: :url_slug, only: %i[index] do
       post :unpublish, on: :member
     end
