@@ -1,4 +1,4 @@
-<% if question.files.any? %>
+<% if question.try(:files)&.any? %>
   <div class="form-heading" style="margin-left: 4%">Attached Files:</div>
   <div class="question-files" style="margin-left: 4%">
     <% @question.files_attachments.each do |file| %>
