@@ -42,10 +42,6 @@ class User < ApplicationRecord
     update disabled_at: nil
   end
 
-  def enable
-    update disabled_at: nil
-  end
-
   def follows?(other_user_id)
     followee_ids.include? other_user_id
   end
