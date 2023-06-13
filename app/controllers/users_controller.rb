@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if @user.soft_destroy
+    if @user.disable
       redirect_back_or_to root_path, notice: 'User deleted Successfully'
     else
       render :edit
@@ -53,7 +53,7 @@ class UsersController < ApplicationController
   end
 
   def unfollow
-    @user.followers.delete current_user
+    current_user.unfollow @user
 
     redirect_back_or_to @user, notice: 'successful'
   end
@@ -64,7 +64,6 @@ class UsersController < ApplicationController
 
   def questions
     @questions = @user.questions
-                      .published
                       .includes(:user, :topics)
                       .page(params[:page])
   end

@@ -14,8 +14,4 @@ class ApplicationController < ActionController::Base
   private def redirect_if_logged_in
     redirect_back_or_to root_path if current_user
   end
-
-  private def check_admin
-    redirect_back_or_to root_path, notice: 'cannot access this path' unless current_user.admin?
-  end
 end
