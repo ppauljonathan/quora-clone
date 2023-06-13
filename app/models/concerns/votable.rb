@@ -27,16 +27,16 @@ module Votable
     return unless changes[:published_at]
     return unless !published_at_was.nil? && net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
 
-    user.decrement(:credits, 1)
+    user.update_credits(-CREDITS_AWARDED)
   end
 
   private def set_credits
     return unless changes[:net_upvote_count]
 
     if net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was <= MIN_NET_UPVOTES_FOR_CREDIT
-      user.update_credits(CREDITS_AWARDED, "#{votable_type} vas upvoted")
+      user.update_credits(CREDITS_AWARDED)
     elsif net_upvote_count <= MIN_NET_UPVOTES_FOR_CREDIT && net_upvote_count_was >= MIN_NET_UPVOTES_FOR_CREDIT
-      user.update_credits(-CREDITS_AWARDED, "#{votable_type} vas downvoted")
+      user.update_credits(-CREDITS_AWARDED)
     end
   end
 end

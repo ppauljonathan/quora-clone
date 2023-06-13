@@ -64,7 +64,7 @@ class User < ApplicationRecord
     follwees.delete user
   end
 
-  def update_credits(amount, _reason)
+  def update_credits(amount)
     user.increment!(credits: amount)
   end
 
