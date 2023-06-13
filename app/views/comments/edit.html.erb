@@ -1,10 +1,10 @@
-<%= render 'questions/full_question', question: @comment.question %>
+<%= render 'questions/full_question', question: @comment.commentable %>
 
 <hr style="width: 80vw; margin: 2%; margin-left: 10%;">
 
 <div class="form-heading" style="margin-left: 4%">Edit Your comment</div>
 
-<%= render 'form', comment: @comment, question: @comment.question %>
+<%= render 'form', comment: @comment, resource: @comment.commentable %>
 
 <%= button_to 'Delete comment',
               @comment,

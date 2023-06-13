@@ -10,8 +10,8 @@
 <% else %>
   <%= render 'shared/vote_panel', resource: answer %>
   <div class="question-user-details">
-    <%= render 'shared/resource_poster_profile_picture', resource: answer %>
-    <%= render 'shared/resource_poster_name', resource: answer %>
+    <%= render 'shared/user_profile_picture', user: answer.user %>
+    <%= render 'shared/user_name', user: answer.user %>
   </div>
 <% end %>
 

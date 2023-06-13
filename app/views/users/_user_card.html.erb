@@ -1,18 +1,10 @@
 <div class="cards-container">
-<% users.each do |user| %>
-  <%= link_to user_path(user), class: 'user-card' do %>
-    <% if user.profile_picture.blank? %>
-    <div class="profile-thumbnail-in-question" style = "background-image: url('/assets/default-pfp.jpg')">
-  <% else %>
-    <div
-      class="profile-thumbnail-in-question",
-      style = "background-image: url(<%= url_for user.profile_picture %>)"
-    >
+  <% users.each do |user| %>
+    <div class='user-card'>
+      <%= render 'shared/user_profile_picture', user: user %>
+      <div class="card-name">
+       <%= render 'shared/user_name', user: user %>
+      </div>
+    <div>
   <% end %>
-    </div>
-    <div class="card-name">
-      <%= user.name %>
-    </div>
-  <% end %>
-<% end %>
 </div>
