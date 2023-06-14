@@ -18,6 +18,10 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
   acts_as_taggable_on :topics
 
+  with_options join_table: :followings, class_name: 'User' do |assoc|
+    assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
+    assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
+  end
   has_many :abuse_reports
   has_many :questions
   has_many :answers
@@ -33,10 +37,18 @@ class User < ApplicationRecord
     update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
+  def follows?(other_user_id)
+    followee_ids.include? other_user_id
+  end
+
   def send_reset_mail
     return false unless generate_reset_token
 
     UserMailer.with(user_id: id).reset_email.deliver_later
+  end
+
+  def unfollow(user)
+    follwees.delete user
   end
 
   def verified?

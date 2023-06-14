@@ -11,9 +11,16 @@
     </div>
 
   <div class="user-details">
-    <div class="user-name">
+    <div class="user-name" style="display: inline">
       <%= user.name %>
     </div>
+    <% unless current_user.id == params[:id].to_i %>
+      <% if current_user.follows? params[:id].to_i %>
+        <%= button_to 'Unfollow', unfollow_user_path, class: 'function-button', form_class: 'follow-form' %>
+      <% else %>
+        <%= button_to 'Follow', follow_user_path, class: 'function-button', form_class: 'follow-form' %>
+      <% end %>
+    <% end %>
     <div class="user-email">
       <%= user.email %>
     </div>
@@ -38,7 +45,12 @@
     <%= highlighted_link 'Followers',
                          'function-button',
                          'highlighted-function-button',
-                         edit_user_path %>
+                         followers_user_path %>
+
+    <%= highlighted_link 'Followees',
+                         'function-button',
+                         'highlighted-function-button',
+                         followees_user_path %>
 
     <%= highlighted_link 'Questions',
                          'function-button',

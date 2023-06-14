@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
   before_action :set_user, except: %i[index]
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
+  before_action :check_if_not_current_user, only: %i[follow unfollow]
 
-  skip_before_action :authorize, only: %i[index show questions answers comments]
+  skip_before_action :authorize, only: %i[index show questions answers comments followers following]
 
   def answers
     @answers = @user.answers
@@ -31,6 +32,32 @@ class UsersController < ApplicationController
                       .page(params[:page])
   end
 
+  def follow
+    @user.followers << current_user
+  rescue ActiveRecord::RecordNotUnique
+    redirect_back_or_to @user, alert: 'already followed'
+  else
+    redirect_back_or_to @user, notice: 'successful'
+  end
+
+  def followers
+    @followers = @user.followers
+                      .includes(:profile_picture_attachment)
+                      .page(params[:page])
+  end
+
+  def followees
+    @followees = @user.followees
+                       .includes(:profile_picture_attachment)
+                       .page(params[:page])
+  end
+
+  def unfollow
+    current_user.unfollow @user
+
+    redirect_back_or_to @user, notice: 'successful'
+  end
+
   def index
     @users = User.all
   end
@@ -48,6 +75,10 @@ class UsersController < ApplicationController
       flash.now[:error] = @user.errors
       render :edit, status: 422
     end
+  end
+
+  private def check_if_not_current_user
+    redirect_back_or_to root_path, notice: 'cannot follow self' if current_user == @user
   end
 
   private def check_if_current_user

@@ -1,0 +1,10 @@
+<div class="cards-container">
+  <% users.each do |user| %>
+    <div class='user-card'>
+      <%= render 'shared/user_profile_picture', user: user %>
+      <div class="card-name">
+       <%= render 'shared/user_name', user: user %>
+      </div>
+    <div>
+  <% end %>
+</div>
