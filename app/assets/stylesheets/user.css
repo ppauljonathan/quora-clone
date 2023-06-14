@@ -107,3 +107,16 @@
   left: 50%;
   transform: translate(-50%, 400%);
 }
+
+.user-pagination-links {
+  width: fit-content;
+  position: relative;
+  left: 65%;
+  transform: translate(-50%);
+}
+
+.user-pagination-links > nav {
+  display: flex;
+  word-wrap: none;
+  width: 50vw;
+}

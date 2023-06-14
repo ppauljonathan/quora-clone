@@ -1,0 +1,15 @@
+<div class="question-show-title"><%= question.title %></div>
+
+<div class="question-user-details">
+  <%= render 'shared/resource_poster_profile_picture', resource: question %>
+  <%= render 'shared/resource_poster_name', resource: question %>
+</div>
+
+<div class="topics-list", style="padding-left: 5%">
+  <div class="question-sub-headings">
+    topics:
+  </div>
+  <% question.topics.each do |topic| %>
+    <div class="topic"><%= topic.name %></div>
+  <% end %>
+</div>

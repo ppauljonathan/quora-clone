@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     member do
       get :questions
       get :drafts
+      get :answers
     end
   end
 
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
       get :search
     end
   end
+
+  resources :answers
 
   controller :registrations do
     get 'signup' => :new

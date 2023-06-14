@@ -28,7 +28,7 @@
 <% end %>
 
 <%= button_to 'Delete Account',
-              user_path(@user.id),
+              @user,
               class: 'delete-user',
               method: :delete,
               form: { data: { turbo_confirm: 'Are you Sure you want to delete the user' } } %>

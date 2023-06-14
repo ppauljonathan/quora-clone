@@ -16,7 +16,7 @@
 
 :root {
 --black: #000;
---red: #a00;
+--red: rgb(108, 29, 29);
 --green: #0a0;
 --yellow: #aa0;
 --blue: #00a;
@@ -24,7 +24,7 @@
 --cyan: #0aa;
 --white: #ddd;
 --bright-black: #666;
---bright-red: #f00;
+--bright-red: rgb(148, 48, 48);
 --bright-green: #0f0;
 --bright-yellow: #ff0;
 --bright-blue: #00f;
@@ -77,4 +77,22 @@
   border: 0.5vmin solid var(--yellow);
   background: rgba(170, 170, 0, 0.326);
   border-radius: 2vh;
+}
+
+.page, .prev, .next, .first, .last {
+  padding: 2%;
+  margin: 2%;
+  background: var(--red);
+  border: 0.5vmin solid var(--black);
+  border-radius: 2vh;
+}
+
+.page:hover, .prev:hover, .next:hover, .first:hover, .last:hover, .current {
+  color: var(--bright-white);
+  background: var(--bright-red);
+}
+
+.page > a, .prev > a, .next > a, .first > a, .last > a {
+  text-decoration: none;
+  color: var(--white);
 }

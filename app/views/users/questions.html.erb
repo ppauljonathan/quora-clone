@@ -5,3 +5,7 @@
 <br>
 <div class="bottom-panel-title">Questions</div>
 <%= render partial: 'questions/question', collection: @questions %>
+
+<div class="user-pagination-links">
+  <%= paginate @questions %>
+</div>

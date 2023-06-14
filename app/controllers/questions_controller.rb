@@ -25,7 +25,9 @@ class QuestionsController < ApplicationController
   end
 
   def index
+    @paginated_questions = Question.page(params[:page]).per(QUESTIONS_PER_PAGE)
     @search_results = Question.published
+                              .page(params[:page])
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result
@@ -67,12 +69,20 @@ class QuestionsController < ApplicationController
     redirect_back_or_to root_path, notice: 'Cannot access this path'
   end
 
+  private def check_if_editable
+    redirect_back_or_to question_path(@question), notice: 'cannot edit this question' unless @question.editable?
+  end
+
   private def question_params
     params.require(:question).permit(:title, :content, :topic_list, :save_as_draft, files: [])
   end
 
   private def set_question
-    @question = Question.includes(:topics, :files_attachments, :rich_text_content, user: :profile_picture_attachment)
+    @question = Question.includes(:topics,
+                                  :files_attachments,
+                                  :rich_text_content,
+                                  { user: :profile_picture_attachment },
+                                  { answers: :rich_text_content })
                         .find_by_url_slug(params[:url_slug])
   end
 end

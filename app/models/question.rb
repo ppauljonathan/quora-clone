@@ -18,6 +18,7 @@ class Question < ApplicationRecord
   acts_as_taggable_on :topics
   has_rich_text :content
   has_many_attached :files
+  has_many :answers
 
   attr_accessor :save_as_draft
 
@@ -27,6 +28,10 @@ class Question < ApplicationRecord
 
   def draft?
     !published_at?
+  end
+
+  def editable?
+    answers.none?
   end
 
   def to_param

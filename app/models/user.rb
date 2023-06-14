@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_one_attached :profile_picture
   has_many :questions
   acts_as_taggable_on :topics
+  has_many :answers, dependent: :restrict_with_exception
 
   enum :role, ROLES, default: :user
 

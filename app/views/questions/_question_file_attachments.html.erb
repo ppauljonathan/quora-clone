@@ -1,0 +1,13 @@
+<% if question.files.any? %>
+  <div class="form-heading" style="margin-left: 4%">Attached Files:</div>
+  <div class="question-files" style="margin-left: 4%">
+    <% @question.files_attachments.each do |file| %>
+      <div class="file-item">
+        <%= image_tag file.preview(resize_to_limit: [100, 100]) %>
+        <br>
+        <%= file.blob.filename %>
+        <%= link_to 'Download', rails_blob_url(file) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<%= form_with model: answer, class: 'answer-form' do |form| %>
+  <%= form.label 'Write Your Answer', class: 'form-label' %>
+  <%= form.hidden_field :question_id, value: question %>
+  <%= form.hidden_field :content, id: 'answer-content' %>
+  <trix-editor input="answer-content" class="my-trix-mod"></trix-editor>
+  
+  <br>
+  <%= form.submit 'Submit', class: 'form-submit' %>
+<% end %>

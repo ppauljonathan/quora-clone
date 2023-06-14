@@ -5,6 +5,6 @@
 <%= render 'form', question: @question %>
 
 <%= button_to 'Delete Question',
-              question_path(@question.url_slug),
+              @question,
               class: 'delete-question',
               method: :delete %>
