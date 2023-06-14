@@ -1,0 +1,13 @@
+<%= render 'shared/message_blocks' %>
+
+<div class="question-user-details">
+  <%= render 'shared/resource_poster_profile_picture', resource: answer %>
+  <%= render 'shared/resource_poster_name', resource: answer %>
+</div>
+
+<div style="margin-top: 2%; margin-left: 5%;">
+  ON: <%= link_to answer.question.title, answer.question %>
+</div>
+
+<div class="question-content" style='font-size: 3vh; margin-left: 5%;'><%= answer.content %>
+</div>

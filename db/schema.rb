@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_22_091712) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_24_112352) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "action_text_rich_texts", force: :cascade do |t|
     t.string "name", null: false
     t.text "body"
@@ -50,20 +53,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_091712) do
   end
 
   create_table "answers", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "question_id", null: false
+    t.bigint "user_id"
+    t.bigint "question_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "published_at", precision: nil
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
+  end
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commentable_type", null: false
+    t.bigint "commentable_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
     t.string "title"
     t.text "content"
     t.string "url_slug"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,11 +85,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_091712) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id"
+    t.bigint "tag_id"
     t.string "taggable_type"
-    t.integer "taggable_id"
+    t.bigint "taggable_id"
     t.string "tagger_type"
-    t.integer "tagger_id"
+    t.bigint "tagger_id"
     t.string "context", limit: 128
     t.datetime "created_at", precision: nil
     t.string "tenant", limit: 128
@@ -121,6 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_22_091712) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
+  add_foreign_key "comments", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "taggings", "tags"
 end

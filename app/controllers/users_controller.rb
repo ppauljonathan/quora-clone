@@ -6,15 +6,21 @@ class UsersController < ApplicationController
 
   def answers
     @answers = @user.answers
-                    .includes(:rich_text_content)
+                    .includes(:rich_text_content, :question)
                     .page(params[:page])
+  end
+
+  def comments
+    @comments = @user.comments
+                     .includes(:rich_text_content, :commentable)
+                     .page(params[:page])
   end
 
   def destroy
     if @user.destroy
       redirect_to root_path, notice: 'User deleted Successfully'
     else
-      redirect_to user_path(@user.id), alert: @user.errors
+      render :edit
     end
   end
 
@@ -50,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   private def set_user
-    @user = User.includes(:profile_picture_attachment, :topics).find_by_id(params[:id])
+    @user = User.find_by_id(params[:id])
     redirect_to root_path, alert: 'user not found' unless @user
   end
 

@@ -1,0 +1,22 @@
+<div class="answer-show">
+<% if request.url.match? users_path %>
+  <div class="question-on">
+    <%= commented_on comment %>
+    <br>
+    AT: <%= comment.updated_at %>
+  </div>
+<% else %>
+  <div class="question-user-details">
+    <%= render 'shared/resource_poster_profile_picture', resource: comment %>
+    <%= render 'shared/resource_poster_name', resource: comment %>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if current_user == comment.user %>
+
+<div class="answer-content">
+  <%= comment.content %>
+</div>
+
+
+</div>

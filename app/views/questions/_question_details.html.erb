@@ -1,4 +1,4 @@
-<div class="question-show-title"><%= question.title %></div>
+<div class="question-show-title"><%= question.try(:title) %></div>
 
 <div class="question-user-details">
   <%= render 'shared/resource_poster_profile_picture', resource: question %>
@@ -9,7 +9,7 @@
   <div class="question-sub-headings">
     topics:
   </div>
-  <% question.topics.each do |topic| %>
+  <% question.try(:topics)&.each do |topic| %>
     <div class="topic"><%= topic.name %></div>
   <% end %>
 </div>

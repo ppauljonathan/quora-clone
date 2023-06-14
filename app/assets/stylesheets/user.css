@@ -111,8 +111,7 @@
 .user-pagination-links {
   width: fit-content;
   position: relative;
-  left: 65%;
-  transform: translate(-50%);
+  margin: auto;
 }
 
 .user-pagination-links > nav {

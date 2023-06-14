@@ -1,0 +1,11 @@
+<br>
+<div class="options-list">
+  <%= highlighted_link 'Answers',
+                        'function-button',
+                        'highlighted-function-button',
+                        question_path(@question.url_slug) %>
+  <%= highlighted_link 'Comments',
+                        'function-button',
+                        'highlighted-function-button',
+                        comments_question_path(@question.url_slug) %>
+</div>

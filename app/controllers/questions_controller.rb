@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[edit destroy show update]
+  before_action :set_question, only: %i[edit destroy show update comments]
   before_action :can_view?, only: :show
   before_action :can_edit?, only: %i[edit destroy update]
 
-  skip_before_action :authorize, only: %i[index show]
+  skip_before_action :authorize, only: %i[index show comments]
 
   def create
     @question = current_user.questions.build(question_params)
@@ -13,6 +13,11 @@ class QuestionsController < ApplicationController
     else
       render :new
     end
+  end
+
+  def comments
+    @comments = @question.comments
+                         .page(params[:page])
   end
 
   def destroy
@@ -25,7 +30,6 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @paginated_questions = Question.page(params[:page]).per(QUESTIONS_PER_PAGE)
     @search_results = Question.published
                               .page(params[:page])
                               .includes(:user, :topics)
@@ -39,6 +43,11 @@ class QuestionsController < ApplicationController
 
   def new
     @question = Question.new
+  end
+
+  def show
+    @answers = @question.answers
+                        .page(params[:page])
   end
 
   def update
@@ -61,14 +70,6 @@ class QuestionsController < ApplicationController
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
 
-  private def check_access
-    return if @question.can_be_accessed_by?(current_user,
-                                            request.path,
-                                            request.method)
-
-    redirect_back_or_to root_path, notice: 'Cannot access this path'
-  end
-
   private def check_if_editable
     redirect_back_or_to question_path(@question), notice: 'cannot edit this question' unless @question.editable?
   end
@@ -82,7 +83,8 @@ class QuestionsController < ApplicationController
                                   :files_attachments,
                                   :rich_text_content,
                                   { user: :profile_picture_attachment },
-                                  { answers: :rich_text_content })
+                                  { answers: :rich_text_content },
+                                  { comments: :rich_text_content })
                         .find_by_url_slug(params[:url_slug])
   end
 end

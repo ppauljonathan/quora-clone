@@ -1,0 +1,10 @@
+<%= form_with model: comment, class: 'answer-form' do |form| %>
+  <%= form.label 'Write Your Comment', class: 'form-label' %>
+  <%= form.hidden_field :commentable_type, value: resource.class %>
+  <%= form.hidden_field :commentable_id, value: resource.id %>
+  <%= form.hidden_field :content, id: 'answer-content' %>
+  <trix-editor input="answer-content" class="my-trix-mod"></trix-editor>
+  
+  <br>
+  <%= form.submit 'Submit', class: 'form-submit' %>
+<% end %>

@@ -16,9 +16,11 @@ class User < ApplicationRecord
 
   has_secure_password
   has_one_attached :profile_picture
-  has_many :questions
   acts_as_taggable_on :topics
-  has_many :answers, dependent: :restrict_with_exception
+
+  has_many :questions
+  has_many :answers
+  has_many :comments
 
   enum :role, ROLES, default: :user
 
