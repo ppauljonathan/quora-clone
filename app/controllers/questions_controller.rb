@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: %i[edit destroy show update comments]
-  before_action :can_view?, only: :show
+  before_action :set_question, only: %i[edit destroy comments show update]
+  before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
 
   skip_before_action :authorize, only: %i[index show comments]
@@ -30,8 +30,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @search_results = Question.published
-                              .page(params[:page])
+    @search_results = Question.page(params[:page])
                               .includes(:user, :topics)
                               .ransack(params[:q])
     @questions = @search_results.result
@@ -86,5 +85,6 @@ class QuestionsController < ApplicationController
                                   { answers: :rich_text_content },
                                   { comments: :rich_text_content })
                         .find_by_url_slug(params[:url_slug])
+    redirect_back_or_to questions_path, alert: 'question not found' unless @question
   end
 end

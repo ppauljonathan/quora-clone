@@ -1,4 +1,8 @@
 <%= render 'full_answer', answer: @answer %>
+
+<div class="options-list">
+  <button class='function-button' onclick="reportAbuse('<%= @answer.class %>', <%= @answer.id %>)">Report Abuse</button>
+</div>
 <hr style="width: 80vw; margin: 2%; margin-left: 10%;">
 <div class="form-heading" style="margin-left: 4%">Comments:</div>
 <%= render @comments %>

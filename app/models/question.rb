@@ -1,7 +1,7 @@
 class Question < ApplicationRecord
-  URL_SLUG_WORD_LENGTH = 7
+  include AbuseReportable
 
-  attr_accessor :save_as_draft
+  URL_SLUG_WORD_LENGTH = 7
 
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
@@ -10,11 +10,9 @@ class Question < ApplicationRecord
   validate :user_can_ask_question?
 
   before_validation :generate_url_slug, on: :create
-  before_save :publish, unless: :save_as_draft
 
   default_scope { order created_at: :desc }
-  scope :published, -> { where.not published_at: nil }
-  scope :drafts, -> { where published_at: nil }
+  scope :drafts, -> { unscope(:where).where(published_at: nil) }
 
   belongs_to :user
   acts_as_taggable_on :topics
@@ -32,7 +30,7 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    answers.none?
+    comments.none && answers.none && abuse_reports.none
   end
 
   def to_param
@@ -56,10 +54,6 @@ class Question < ApplicationRecord
     return if user.can_ask_question?
 
     errors.add :base, :invalid, message: 'You do not heve enough credits'
-  end
-
-  private def publish
-    self.published_at = Time.now
   end
 
   private def words_in_title

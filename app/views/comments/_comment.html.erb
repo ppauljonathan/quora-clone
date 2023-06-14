@@ -12,6 +12,9 @@
   </div>
 <% end %>
 
+<% unless request.url.match? users_path %>
+  <button class="edit-question-button" onclick="reportAbuse('<%= comment.class %>', <%= comment.id %>)">Report Abuse</button>
+<% end %>
 <%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if current_user == comment.user %>
 
 <div class="answer-content">

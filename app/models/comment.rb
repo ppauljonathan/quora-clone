@@ -1,4 +1,6 @@
 class Comment < ApplicationRecord
+  include AbuseReportable
+
   belongs_to :commentable, polymorphic: true
   belongs_to :user
   has_rich_text :content
