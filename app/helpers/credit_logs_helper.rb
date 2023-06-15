@@ -1,0 +1,2 @@
+module CreditLogsHelper
+end

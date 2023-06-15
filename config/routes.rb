@@ -94,6 +94,8 @@ Rails.application.routes.draw do
 
   get 'topics/search'
 
+  get 'credit_logs' => 'credit_logs#index'
+
   # Defines the root path route ("/")
   # root "articles#index"
 end
