@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -85,6 +85,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "credit_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "remark"
+    t.integer "credit_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_credit_logs_on_user_id"
+  end
+
   create_table "credit_packs", force: :cascade do |t|
     t.decimal "price", precision: 7, scale: 2
     t.integer "credit_amount"
@@ -108,6 +117,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
     t.bigint "followee_id", null: false
     t.bigint "follower_id", null: false
     t.index ["followee_id", "follower_id"], name: "unique_followers", unique: true
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id", "user_id"], name: "index_notifications_on_question_id_and_user_id", unique: true
+    t.index ["question_id"], name: "index_notifications_on_question_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -177,6 +197,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
     t.string "reset_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "api_token"
   end
 
   create_table "votes", force: :cascade do |t|
@@ -196,8 +217,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_02_081920) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
+<<<<<<< HEAD
   add_foreign_key "credit_transactions", "orders"
   add_foreign_key "credit_transactions", "users"
+=======
+  add_foreign_key "credit_logs", "users"
+  add_foreign_key "credit_transactions", "orders"
+  add_foreign_key "credit_transactions", "users"
+  add_foreign_key "notifications", "questions"
+  add_foreign_key "notifications", "users"
+>>>>>>> feature/upvotes
   add_foreign_key "orders", "credit_packs"
   add_foreign_key "orders", "users"
   add_foreign_key "questions", "users"

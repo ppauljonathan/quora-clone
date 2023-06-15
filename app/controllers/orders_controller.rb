@@ -37,10 +37,12 @@ class OrdersController < ApplicationController
     if @credit_transaction.incomplete?
       return redirect_to checkout_order_path(@order), alert: 'transaction is not complete'
     end
-    unless @credit_transaction.successful! && @order.successful! && current_user.increment!(:credits, @order.credit_pack.credit_amount)
+
+    unless @credit_transaction.successful! &&
+           @order.successful! &&
+           current_user.update_credits(@order.credit_pack.credit_amount, 'purchased credits from store')
       redirect_to checkout_order_path(@order), alert: 'error in transaction'
     end
-
   end
 
   def update

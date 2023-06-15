@@ -1,0 +1,14 @@
+<div class="form-heading">Your Credit Log</div>
+
+<div class="table-wrap">
+  <table class="transactions-table">
+    <thead>
+      <td class="sno">Sno</td>
+      <td class="cred-pack">Credits Granted</td>
+      <td>Remarks</td>
+    </thead>
+    <% @credit_logs.each_with_index do |credit_log, index| %>
+      <%= render 'credit_log', credit_log: credit_log, index: index %>
+    <% end %>
+  </table>
+</div>
