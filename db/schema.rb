@@ -217,16 +217,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
-<<<<<<< HEAD
-  add_foreign_key "credit_transactions", "orders"
-  add_foreign_key "credit_transactions", "users"
-=======
   add_foreign_key "credit_logs", "users"
   add_foreign_key "credit_transactions", "orders"
   add_foreign_key "credit_transactions", "users"
   add_foreign_key "notifications", "questions"
   add_foreign_key "notifications", "users"
->>>>>>> feature/upvotes
   add_foreign_key "orders", "credit_packs"
   add_foreign_key "orders", "users"
   add_foreign_key "questions", "users"
