@@ -25,9 +25,13 @@
       <%= user.email %>
     </div>
     <br>
-    <div class="topic">
-      API_TOKEN: <%= user.api_token %>
-    </div>
+    
+    <% if user == current_user %>  
+      <div class="topic">
+        API_TOKEN: <%= user.api_token %>
+      </div>
+    <% end %>
+    
     <br>
     <br>
     <div class="button-holder">
