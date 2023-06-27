@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :check_previous_orders, only: :create
-  before_action :set_order, only: %i[show update checkout cancel success]
+  before_action :set_order, only: %i[show checkout cancel success]
   before_action :set_transaction, only: %i[cancel success]
 
   def cancel
@@ -42,16 +42,6 @@ class OrdersController < ApplicationController
            @order.successful! &&
            current_user.update_credits(@order.credit_pack.credit_amount, 'purchased credits from store')
       redirect_to checkout_order_path(@order), alert: 'error in transaction'
-    end
-  end
-
-  def update
-    @order.update(order_params)
-
-    if @order.save
-      redirect_to current_user, notice: 'order saved successfully'
-    else
-      render :show
     end
   end
 
