@@ -50,10 +50,11 @@ class OrdersController < ApplicationController
   end
 
   private def check_previous_orders
-    @order = current_user.orders.in_cart.find_by_credit_pack_id(order_params[:credit_pack_id])
+    @order = current_user.orders.in_cart.first
 
     return unless @order
 
+    @order.update order_params
     redirect_to checkout_order_path(@order)
   end
 
