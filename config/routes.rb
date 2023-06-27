@@ -30,10 +30,6 @@ Rails.application.routes.draw do
 
   resources :abuse_reports, only: :create
 
-  controller :credit_packs do
-    get 'credit_packs' => :index
-  end
-
   resources :orders, only: %i[create show], param: :number do
     member do
       get :cancel
@@ -46,6 +42,8 @@ Rails.application.routes.draw do
   resources :credit_transactions, only: %i[index show]
 
   resources :credit_packs, only: :index
+  resources :credit_logs, only: :index
+
 
   resources :notifications, only: :index do
     post :read_all, on: :collection
