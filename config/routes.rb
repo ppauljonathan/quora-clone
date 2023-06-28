@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users do
+  resources :users, except: %i[new create] do
     member do
       get :questions
       get :drafts
@@ -22,17 +22,15 @@ Rails.application.routes.draw do
     get :comments, on: :member
   end
 
-  resources :answers do
+  resources :answers, except: :index do
     get :comments, on: :member
   end
 
-  resources :comments
+  resources :comments, except: %i[index show]
 
   resources :abuse_reports, only: :create
 
-  controller :credit_packs do
-    get 'credit_packs' => :index
-  end
+  resources :credit_packs, only: :index
 
   resources :orders, param: :number do
     member do
@@ -44,6 +42,7 @@ Rails.application.routes.draw do
   end
 
   resources :credit_transactions, only: %i[index show]
+  resources :credit_logs, only: :index
 
   scope controller: :votes, path: 'votes' do
     post 'upvote'
@@ -74,8 +73,6 @@ Rails.application.routes.draw do
   end
 
   get 'topics/search'
-
-  get 'credit_logs' => 'credit_logs#index'
 
   # Defines the root path route ("/")
   # root "articles#index"

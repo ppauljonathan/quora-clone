@@ -56,7 +56,6 @@ class User < ApplicationRecord
   end
 
   def update_credits(amount, remark)
-    increment!(:credits, amount)
     credit_logs.create(credit_amount: amount, remark: remark)
   end
 
