@@ -18,6 +18,13 @@ module Votable
     update(net_upvote_count: upvotes - downvotes)
   end
 
+  def vote(type, user_id)
+    vote = votes.find_or_create_by(user_id: user_id)
+    return vote.destroy if vote.public_send("#{type}vote?")
+
+    vote.public_send "#{type}vote!"
+  end
+
   def vote_by_user(user)
     vote = votes.find { |v| v.user_id == user.id }
     vote&.vote_type

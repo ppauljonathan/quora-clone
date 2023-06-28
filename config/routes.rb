@@ -40,6 +40,7 @@ Rails.application.routes.draw do
   end
 
   resources :credit_transactions, only: %i[index show]
+  resources :credit_logs, only: :index
 
   resources :credit_packs, only: :index
   resources :credit_logs, only: :index
