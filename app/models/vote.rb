@@ -11,12 +11,6 @@ class Vote < ApplicationRecord
 
   enum :vote_type, VOTE_TYPES
 
-  def vote(type)
-    return destroy if public_send "#{type}vote?"
-
-    public_send "#{type}vote!"
-  end
-
   private def votable_set_net_upvotes
     votable.set_net_upvotes
   end

@@ -32,7 +32,7 @@ async function upvote(event, upvotableType, upvotableId) {
   sibling = svg.parentElement.parentElement.lastElementChild.lastElementChild
   number = svg.parentElement.parentElement.children[1]
   val = Number(number.innerText)
-  if(jsonData.destroyed) {
+  if(svg.style.fill == 'var(--red)') {
     svg.style.fill = 'var(--bright-black)'
   } else {
     svg.style.fill = 'var(--red)'
@@ -69,7 +69,7 @@ async function downvote(event, upvotableType, upvotableId) {
   sibling = svg.parentElement.parentElement.firstElementChild.lastElementChild
   number = svg.parentElement.parentElement.children[1]
   val = Number(number.innerText)
-  if(jsonData.destroyed) {
+  if(svg.style.fill == 'var(--blue)') {
     svg.style.fill = 'var(--bright-black)'
   } else{
     svg.style.fill = 'var(--blue)'
