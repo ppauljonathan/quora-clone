@@ -45,7 +45,6 @@ Rails.application.routes.draw do
   resources :credit_packs, only: :index
   resources :credit_logs, only: :index
 
-
   resources :notifications, only: :index do
     post :read_all, on: :collection
   end
