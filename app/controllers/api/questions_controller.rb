@@ -1,4 +1,4 @@
-class Api::FeedController < ApplicationController
+class Api::QuestionsController < ApplicationController
   before_action :set_user_from_token
   skip_before_action :authorize
 

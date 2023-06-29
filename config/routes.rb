@@ -65,7 +65,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'topics/:topic' => 'topics#index'
-    get 'feed' => 'feed#index'
+    get 'feed' => 'questions#index'
   end
 
   scope controller: :votes, path: 'votes' do
