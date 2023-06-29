@@ -5,7 +5,7 @@ const intersects = (a, b) => {
   return [...new Set(a)].some(x => s.has(x));
 };
 
-consumer.subscriptions.create("QuestionChannel", {
+consumer.subscriptions.create("NotificationChannel", {
   connected() {
     // Called when the subscription is ready for use on the server
   },
