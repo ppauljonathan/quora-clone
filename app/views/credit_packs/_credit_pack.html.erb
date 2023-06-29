@@ -11,7 +11,7 @@
   </div>
   <%= button_to 'Purchase',
                 orders_path,
-                params: { order: { credit_pack_id: credit_pack.id, credit_pack_quantity: 1 } },
+                params: { order: { credit_pack_id: credit_pack.id, amount: credit_pack.price } },
                 class: 'function-button',
                 style: 'margin: auto; margin-top: 5%' %>
 </div>
