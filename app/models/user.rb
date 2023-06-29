@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
   has_many :orders
   has_many :credit_transactions
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
   has_many :abuse_reports
   has_many :questions
   has_many :answers

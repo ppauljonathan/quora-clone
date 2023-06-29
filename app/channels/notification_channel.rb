@@ -1,6 +1,6 @@
-class QuestionChannel < ApplicationCable::Channel
+class NotificationChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'question_posted'
+    stream_from 'notification_posted'
   end
 
   def unsubscribed
@@ -10,7 +10,7 @@ class QuestionChannel < ApplicationCable::Channel
   def create_notification(data)
     notification = @connection.current_user
                               .notifications
-                              .build(question_id: data['id'])
+                              .build(notifiable_id: data['id'], notifiable_type: data['type'])
     Rails.logger.info('notification could not be made') unless notification.save
   end
 end
