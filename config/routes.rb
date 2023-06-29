@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'orders/new'
-  get 'credit_packs/index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   root 'questions#index'
