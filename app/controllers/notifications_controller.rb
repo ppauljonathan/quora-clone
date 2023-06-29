@@ -12,8 +12,7 @@ class NotificationsController < ApplicationController
 
   private def set_notifications
     @notifications = current_user.notifications
-                                 .includes(:user,
-                                           question: %i[topics user])
+                                 .includes(:user, :notifiable)
                                  .page(params[:page])
   end
 end
