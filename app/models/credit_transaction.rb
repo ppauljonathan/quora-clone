@@ -12,8 +12,16 @@ class CreditTransaction < ApplicationRecord
 
   default_scope { order created_at: :desc }
 
-  def incomplete?
+  def unpaid?
     stripe_payment_status = Stripe::Checkout::Session.retrieve(stripe_session_id).to_h[:payment_status]
     stripe_payment_status == 'unpaid'
+  end
+
+  def mark_success
+    transaction do
+      successful!
+      order.successful!
+      user.update_credits(@order.credit_pack.credit_amount, 'purchased credits from store')
+    end
   end
 end
