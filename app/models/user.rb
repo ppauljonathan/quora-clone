@@ -22,9 +22,11 @@ class User < ApplicationRecord
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
     assoc.has_and_belongs_to_many :followees, foreign_key: 'follower_id', association_foreign_key: 'followee_id'
   end
-  has_many :orders
-  has_many :credit_transactions
-  has_many :notifications, dependent: :destroy
+  with_options dependent: :destroy
+    has_many :notifications
+    has_many :orders
+    has_many :credit_transactions
+  end
   has_many :abuse_reports
   has_many :questions
   has_many :answers
