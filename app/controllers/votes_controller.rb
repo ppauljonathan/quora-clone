@@ -3,7 +3,7 @@ class VotesController < ApplicationController
   before_action :set_vote
 
   def downvote
-    if @voteable.vote :down, current_user.id
+    if @voteable.downvote current_user.id
       render json: @voteable, serializer: VoteableSerializer, status: 200
     else
       render json: { message: 'unprocessable entity' }, status: 422
@@ -11,7 +11,7 @@ class VotesController < ApplicationController
   end
 
   def upvote
-    if @voteable.vote :up, current_user.id
+    if @voteable.upvote current_user.id
       render json: @voteable, serializer: VoteableSerializer, status: 200
     else
       render json: { message: 'unprocessable entity' }, status: 422

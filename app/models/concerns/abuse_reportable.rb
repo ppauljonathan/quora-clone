@@ -1,6 +1,9 @@
 module AbuseReportable
   extend ActiveSupport::Concern
 
+  MIN_NET_UPVOTES_FOR_CREDIT = 5
+  CREDITS_AWARDED = 1
+
   included do
     attr_accessor :save_as_draft
 
@@ -13,6 +16,7 @@ module AbuseReportable
 
   def unpublish
     update_column(:published_at, nil)
+    user.update_credits(-CREDITS_AWARDED, "#{self.class} unpublished") if net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
   end
 
   private def publish
