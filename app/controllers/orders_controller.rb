@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :check_previous_orders, only: :create
   before_action :set_order, only: %i[show update checkout cancel success]
   before_action :set_transaction, only: %i[cancel success]
 
@@ -11,7 +10,8 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @order = current_user.orders.build order_params
+    @order = find_existing_order || current_user.orders.build
+    @order.assign_attributes order_params
 
     if @order.save
       redirect_to checkout_order_path(@order)
@@ -21,28 +21,19 @@ class OrdersController < ApplicationController
   end
 
   def checkout
-    stripe_session = @order.generate_stripe_session(success_order_url(@order),
-                                                    cancel_order_url(@order))
-    credit_transaction = current_user.credit_transactions
-                                     .create(order: @order,
-                                             stripe_session_id: stripe_session.id)
-    if credit_transaction
-      redirect_to stripe_session.url, allow_other_host: true
+    stripe_url = @order.checkout(success_order_url(@order), cancel_order_url(@order))
+    if stripe_url
+      redirect_to stripe_url, allow_other_host: true
     else
-      redirect_back_or_to @order, alert: 'transaction failed'
+      redirect_back_or_to @order, alert: 'Transaction could not be made'
     end
   end
 
   def success
-    if @credit_transaction.incomplete?
-      return redirect_to checkout_order_path(@order), alert: 'transaction is not complete'
-    end
+    return redirect_to checkout_order_path(@order), alert: 'transaction is not complete' if @credit_transaction.unpaid?
+    return if @credit_transaction.mark_success
 
-    unless @credit_transaction.successful! &&
-           @order.successful! &&
-           current_user.update_credits(@order.credit_pack.credit_amount, 'purchased credits from store')
-      redirect_to checkout_order_path(@order), alert: 'error in transaction'
-    end
+    redirect_to checkout_order_path(@order), alert: 'error in transaction'
   end
 
   def update
@@ -55,17 +46,12 @@ class OrdersController < ApplicationController
     end
   end
 
-  private def order_params
-    params.require(:order).permit(:credit_pack_id)
+  private def find_existing_order
+    current_user.orders.in_cart.last
   end
 
-  private def check_previous_orders
-    @order = current_user.orders.in_cart.first
-
-    return unless @order
-
-    @order.update order_params
-    redirect_to checkout_order_path(@order)
+  private def order_params
+    params.require(:order).permit(:credit_pack_id, :amount)
   end
 
   private def set_order
@@ -75,7 +61,7 @@ class OrdersController < ApplicationController
   end
 
   private def set_transaction
-    @credit_transaction = @order.credit_transactions.last
-    redirect_to @order, alert: 'transaction not fount' unless @credit_transaction
+    @credit_transaction = CreditTransaction.find_by_id(params[:transaction_id])
+    redirect_to @order, alert: 'transaction not found' unless @credit_transaction
   end
 end
