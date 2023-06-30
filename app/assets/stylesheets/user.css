@@ -1,7 +1,9 @@
 .top-panel {
   width: 100vw;
-  height: 30vh;
+  height: 35vh;
   border-bottom: 2px solid var(--black);
+  position: relative;
+  margin-top: 6vh;
 }
 
 .profile-picture {
@@ -24,6 +26,7 @@
   position: relative;
   top: -85%;
   left: 33vmin;
+  margin-top: 6vh;
 }
 
 .user-name {
@@ -109,6 +112,11 @@
   text-align: center;
   display: block;
   text-decoration: none;  
+}
+
+.bottom-panel {
+  position: relative;
+  top: -80%;
 }
 
 .bottom-panel-title {

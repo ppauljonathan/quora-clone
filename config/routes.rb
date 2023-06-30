@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, param: :url_slug do
-      get :comments, on: :member
+    get :comments, on: :member
   end
 
   resources :answers, except: :index do
@@ -59,6 +59,11 @@ Rails.application.routes.draw do
     resources :questions, param: :url_slug, only: %i[index] do
       post :unpublish, on: :member
     end
+  end
+
+  namespace :api do
+    get 'topics/:topic' => 'topics#index'
+    get 'feed' => 'questions#index'
   end
 
   scope controller: :votes, path: 'votes' do
