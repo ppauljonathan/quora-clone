@@ -120,13 +120,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "question_id", null: false
+    t.string "notifiable_type", null: false
+    t.bigint "notifiable_id", null: false
     t.bigint "user_id", null: false
     t.integer "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["question_id", "user_id"], name: "index_notifications_on_question_id_and_user_id", unique: true
-    t.index ["question_id"], name: "index_notifications_on_question_id"
+    t.index ["notifiable_id", "user_id"], name: "index_notifications_on_notifiable_id_and_user_id", unique: true
+    t.index ["notifiable_type", "notifiable_id"], name: "index_notifications_on_notifiable"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -221,7 +222,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   add_foreign_key "credit_logs", "users"
   add_foreign_key "credit_transactions", "orders"
   add_foreign_key "credit_transactions", "users"
-  add_foreign_key "notifications", "questions"
   add_foreign_key "notifications", "users"
   add_foreign_key "orders", "credit_packs"
   add_foreign_key "orders", "users"

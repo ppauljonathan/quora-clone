@@ -1,0 +1,14 @@
+<% @notifications.each do |notification| %>
+  <div
+    class="notification-card"
+    style="background: var(--<%= notification.unread? ? 'bright-white' : 'white' %>)"
+  >
+    <%= notification.notifiable_type %> posted
+    <%= link_to 'Click Here', notification.notifiable %> to view
+  </div>
+<% end%>
+
+
+<%= paginate @notifications %>
+
+<%= javascript_include_tag 'read_notifications' %>

@@ -1,5 +1,6 @@
 class Question < ApplicationRecord
   include AbuseReportable
+  include Notifiable
 
   URL_SLUG_WORD_LENGTH = 7
 
@@ -19,6 +20,7 @@ class Question < ApplicationRecord
   has_many_attached :files
   has_many :answers
   has_many :comments, as: :commentable
+  has_many :notifications, as: :notifiable, dependent: :destroy
   has_rich_text :content
 
   def author?(author)

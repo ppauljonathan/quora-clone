@@ -11,7 +11,7 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to root_path, notice: 'Question Created'
     else
-      render :new
+      render :new, status: 422
     end
   end
 

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
+  mount ActionCable.server => '/cable'
+
   root 'questions#index'
 
   resources :users, except: %i[new create] do
@@ -41,6 +43,10 @@ Rails.application.routes.draw do
 
   resources :credit_transactions, only: %i[index show]
   resources :credit_logs, only: :index
+
+  resources :notifications, only: :index do
+    post :read_all, on: :collection
+  end
 
   scope controller: :votes, path: 'votes' do
     post 'upvote'

@@ -1,3 +1,13 @@
+@keyframes notif-blink {
+  from {
+    color: var(--white)
+  }
+
+  to {
+    color: var(--bright-yellow);
+  }
+}
+
 .navbar {
   position: fixed;
   top: 0%;
@@ -40,6 +50,26 @@
   width: fit-content;
   height: fit-content;
   display: inline;
+}
+
+.notification-bell {
+  position: absolute;
+  color: var(--white);
+  width: 4vh;
+  height: 4vh;
+  top: -15%;
+  left: -10%;
+}
+
+.notification-bell:hover {
+  color: var(--bright-white);
+}
+
+.notified {
+  animation-name: notif-blink;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
 .navbar-buttons {
