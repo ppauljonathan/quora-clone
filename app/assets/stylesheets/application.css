@@ -117,3 +117,19 @@
   z-index: 30;
   background: #0000007a;
 }
+
+.vote-list {
+  position: relative;
+  float: left;
+  display: flex;
+  flex-direction: column;
+}
+
+.net-upvote-number {
+  font-size: 3vh;
+}
+
+.upvote, .downvote {
+  width: 5vh;
+  height: 5vh;
+}

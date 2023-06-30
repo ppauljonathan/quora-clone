@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users do
+  resources :users, except: %i[new create] do
     member do
       get :questions
       get :drafts
@@ -20,13 +20,20 @@ Rails.application.routes.draw do
     get :comments, on: :member
   end
 
-  resources :answers do
+  resources :answers, except: :index do
     get :comments, on: :member
   end
 
-  resources :comments
+  resources :comments, except: %i[index show]
 
   resources :abuse_reports, only: :create
+
+  resources :credit_logs, only: :index
+
+  scope controller: :votes, path: 'votes' do
+    post 'upvote'
+    post 'downvote'
+  end
 
   controller :registrations do
     get 'signup' => :new

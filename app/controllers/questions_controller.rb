@@ -17,6 +17,9 @@ class QuestionsController < ApplicationController
 
   def comments
     @comments = @question.comments
+                         .includes({ user: :profile_picture_attachment },
+                                   :rich_text_content,
+                                   votes: :user)
                          .page(params[:page])
   end
 
@@ -46,6 +49,9 @@ class QuestionsController < ApplicationController
 
   def show
     @answers = @question.answers
+                        .includes({ user: :profile_picture_attachment },
+                                  :rich_text_content,
+                                  votes: :user)
                         .page(params[:page])
   end
 
@@ -78,12 +84,8 @@ class QuestionsController < ApplicationController
   end
 
   private def set_question
-    @question = Question.includes(:topics,
-                                  :files_attachments,
-                                  :rich_text_content,
-                                  { user: :profile_picture_attachment },
-                                  { answers: :rich_text_content },
-                                  { comments: :rich_text_content })
+    @question = Question.includes(:files_attachments,
+                                  { user: :profile_picture_attachment })
                         .find_by_url_slug(params[:url_slug])
     redirect_back_or_to questions_path, alert: 'question not found' unless @question
   end

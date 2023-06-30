@@ -30,7 +30,7 @@ class Question < ApplicationRecord
   end
 
   def editable?
-    comments.none && answers.none && abuse_reports.none
+    comments.none? && answers.none? && abuse_reports.none?
   end
 
   def to_param

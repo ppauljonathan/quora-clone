@@ -26,6 +26,8 @@ class User < ApplicationRecord
   has_many :questions
   has_many :answers
   has_many :comments
+  has_many :votes
+  has_many :credit_logs
 
   enum :role, ROLES, default: :user
 
@@ -49,6 +51,10 @@ class User < ApplicationRecord
 
   def unfollow(user)
     follwees.delete user
+  end
+
+  def update_credits(amount, remark)
+    credit_logs.create(credit_amount: amount, remark: remark)
   end
 
   def verified?

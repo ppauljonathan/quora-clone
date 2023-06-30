@@ -3,7 +3,7 @@ class CommentsController < ApplicationController
 
   def create
     @comment = current_user.comments.build(comment_params)
-    flash[:notice] = 'created successfully' if @comment.save
+    flash[:notice] = @comment.save ? 'created successfully' : 'error in creating comment'
     redirect_to @comment.commentable
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "net_upvote_count", default: 0
     t.index ["question_id"], name: "index_answers_on_question_id"
     t.index ["user_id"], name: "index_answers_on_user_id"
   end
@@ -79,14 +80,65 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
     t.datetime "published_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "net_upvote_count", default: 0
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "credit_logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "remark"
+    t.integer "credit_amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_credit_logs_on_user_id"
+  end
+
+  create_table "credit_packs", force: :cascade do |t|
+    t.decimal "price", precision: 7, scale: 2
+    t.integer "credit_amount"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "credit_transactions", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "user_id", null: false
+    t.string "stripe_session_id"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_credit_transactions_on_order_id"
+    t.index ["user_id"], name: "index_credit_transactions_on_user_id"
   end
 
   create_table "followings", id: false, force: :cascade do |t|
     t.bigint "followee_id", null: false
     t.bigint "follower_id", null: false
     t.index ["followee_id", "follower_id"], name: "unique_followers", unique: true
+  end
+
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "question_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["question_id", "user_id"], name: "index_notifications_on_question_id_and_user_id", unique: true
+    t.index ["question_id"], name: "index_notifications_on_question_id"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.bigint "credit_pack_id", null: false
+    t.bigint "user_id", null: false
+    t.integer "status"
+    t.string "number", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_pack_id"], name: "index_orders_on_credit_pack_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "questions", force: :cascade do |t|
@@ -145,6 +197,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
     t.string "reset_token"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "api_token"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "vote_type"
+    t.string "votable_type", null: false
+    t.bigint "votable_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_votes_on_user_id"
+    t.index ["votable_type", "votable_id"], name: "index_votes_on_votable"
   end
 
   add_foreign_key "abuse_reports", "users"
@@ -153,6 +217,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_29_051143) do
   add_foreign_key "answers", "questions"
   add_foreign_key "answers", "users"
   add_foreign_key "comments", "users"
+  add_foreign_key "credit_logs", "users"
+  add_foreign_key "credit_transactions", "orders"
+  add_foreign_key "credit_transactions", "users"
+  add_foreign_key "notifications", "questions"
+  add_foreign_key "notifications", "users"
+  add_foreign_key "orders", "credit_packs"
+  add_foreign_key "orders", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "taggings", "tags"
+  add_foreign_key "votes", "users"
 end

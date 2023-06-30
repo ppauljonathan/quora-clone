@@ -1,4 +1,5 @@
 class Comment < ApplicationRecord
+  include Votable
   include AbuseReportable
 
   belongs_to :commentable, polymorphic: true

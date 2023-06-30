@@ -29,7 +29,7 @@
 
 .sidebar {
   background: var(--red);
-  position: absolute;
+  position: fixed;
   scroll-behavior: unset;
   top: 6vh;
   left: 0%;
