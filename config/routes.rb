@@ -28,6 +28,18 @@ Rails.application.routes.draw do
 
   resources :abuse_reports, only: :create
 
+  resources :credit_packs, only: :index
+
+  resources :orders, param: :number do
+    member do
+      get :cancel
+      get :checkout, to: 'orders#show'
+      get :success
+      post :checkout
+    end
+  end
+
+  resources :credit_transactions, only: %i[index show]
   resources :credit_logs, only: :index
 
   scope controller: :votes, path: 'votes' do

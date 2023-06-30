@@ -253,6 +253,7 @@ GEM
       websocket (~> 1.0)
     sendgrid-ruby (6.6.2)
       ruby_http_client (~> 3.4)
+    spring (4.1.1)
     sprockets (4.2.0)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -263,6 +264,7 @@ GEM
     sqlite3 (1.6.2-x86_64-linux)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.5.0)
     tap (1.4.0)
       configurable (~> 0.7.0)
     thor (1.2.1)
@@ -316,9 +318,11 @@ DEPENDENCIES
   rubocop
   selenium-webdriver
   sendgrid-ruby (~> 6.6.2)
+  spring
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  stripe (~> 8.5.0)
   tap (~> 1.4.0)
   trix (~> 0.10.1)
   turbo-rails

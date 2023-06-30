@@ -51,7 +51,7 @@
 
 .check-list {
   height: fit-content;
-  max-height: 80vh;
+  max-height: 60vh;
   overflow: scroll;
 }
 

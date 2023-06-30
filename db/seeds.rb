@@ -18,3 +18,15 @@ User.create!(name: 'Jonathan',
              password: 'secret',
              credits: 5,
              verified_at: Time.now)
+
+CreditPack.create!(price: '499.99',
+                   credit_amount: '50',
+                   description: 'starter pack')
+
+CreditPack.create!(price: '949.99',
+                   credit_amount: '100',
+                   description: 'bonus pack')
+
+CreditPack.create!(price: '1799.99',
+                   credit_amount: '200',
+                   description: 'super pack')

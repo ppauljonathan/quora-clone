@@ -1,0 +1,20 @@
+<div class="center-align">
+  <div class="form-label">
+    Transaction_id: <%= @credit_transaction.stripe_session_id %>
+  </div>
+  <br>
+  <div style="display: flex">
+  STATUS: &nbsp;<%= render 'status', status: @credit_transaction.status %>
+  </div>
+  <br>
+  <div class="line-item">
+    <div class="form-heading">
+      <%= @order.credit_pack.credit_amount %>
+    </div>
+    <div class="credit-pack-description">credits</div>
+  </div>
+  <br>
+  <div class="form-label" style="display: flex;">
+    Price: ₹<div id="induvidual_price"><%= @order.credit_pack.price %></div>
+  </div>
+</div>

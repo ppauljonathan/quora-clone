@@ -66,6 +66,8 @@ gem 'kaminari', '~> 1.2.2'
 
 gem 'sendgrid-ruby', '~> 6.6.2'
 
+gem 'stripe', '~> 8.5.0'
+
 gem 'active_model_serializers', '~> 0.10.13'
 
 group :development, :test do
@@ -83,7 +85,7 @@ group :development do
   # gem "rack-mini-profiler"
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
+  gem "spring"
 end
 
 group :test do
