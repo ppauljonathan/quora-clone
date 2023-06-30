@@ -16,12 +16,12 @@ consumer.subscriptions.create("NotificationChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
+    this.sendAutoReloadNotification();
     let topics = this.getCurrentUserTopics();
 
     if(!intersects(topics, data.topics)) return;
 
     this.perform('create_notification', data)
-
     this.displayNotification();
   },
 
@@ -34,5 +34,15 @@ consumer.subscriptions.create("NotificationChannel", {
   displayNotification() {
     var bell = document.getElementsByClassName('notification-bell')[0]
     bell.classList += ' notified'
+  },
+
+  sendAutoReloadNotification() {
+    let url = window.location.href.split('/')[3].split('?')[0];
+    
+    if(!(url == '' || url == 'questions')) return;
+
+    let elem = document.getElementsByClassName('autoreload-notification')[0]
+    console.log(elem)
+    elem.style.visibility="visible"
   }
 });

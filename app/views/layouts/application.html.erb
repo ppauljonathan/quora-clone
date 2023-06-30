@@ -17,7 +17,7 @@
   <body>
 
     <div
-      style="display:hidden"
+      style="visibility: hidden"
       id="current_user_topics"
       data="<%= current_user&.topic_list %>"
     ></div>
@@ -26,6 +26,10 @@
 
     <div class="main">
       <%= yield %>
+    </div>
+
+    <div class="autoreload-notification" onclick="window.location.href = '<%= root_url %>';">
+      New questions posted, click here to reload page
     </div>
   </body>
 </html>

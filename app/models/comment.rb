@@ -2,9 +2,10 @@ class Comment < ApplicationRecord
   include Votable
   include AbuseReportable
 
+  has_rich_text :content
+
   belongs_to :commentable, polymorphic: true
   belongs_to :user
-  has_rich_text :content
 
   validates :content, presence: true
 

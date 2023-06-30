@@ -4,6 +4,10 @@ class Question < ApplicationRecord
 
   URL_SLUG_WORD_LENGTH = 7
 
+  acts_as_taggable_on :topics
+  has_many_attached :files
+  has_rich_text :content
+
   validates :title, uniqueness: true, presence: true
   validates :content, presence: true
   validates :topic_list, presence: true
@@ -16,8 +20,6 @@ class Question < ApplicationRecord
   scope :drafts, -> { unscope(:where).where(published_at: nil) }
 
   belongs_to :user
-  acts_as_taggable_on :topics
-  has_many_attached :files
   has_many :answers
   has_many :comments, as: :commentable
   has_many :notifications, as: :notifiable, dependent: :destroy

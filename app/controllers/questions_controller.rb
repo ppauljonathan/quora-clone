@@ -29,7 +29,7 @@ class QuestionsController < ApplicationController
       flash[:notice] = 'Question deleted Successfully'
       redirect_to user_path(@question.user_id)
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 
@@ -60,7 +60,7 @@ class QuestionsController < ApplicationController
     if @question.update(question_params)
       redirect_to root_path, notice: 'Question Updated'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 

@@ -3,7 +3,6 @@ class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: %i[enable disable]
 
   def index
-    @users = User.all.page(params[:page])
     @users = User.unscoped.all.page(params[:page])
   end
 

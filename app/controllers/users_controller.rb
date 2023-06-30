@@ -21,7 +21,7 @@ class UsersController < ApplicationController
     if @user.disable
       redirect_back_or_to root_path, notice: 'User deleted Successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 

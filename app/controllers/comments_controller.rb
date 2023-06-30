@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
     if @comment.destroy
       redirect_to @comment.commentable, notice: 'deleted successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 
@@ -19,7 +19,7 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       redirect_to @comment.commentable, notice: 'updated successfully'
     else
-      render :edit
+      render :edit, status: 422
     end
   end
 

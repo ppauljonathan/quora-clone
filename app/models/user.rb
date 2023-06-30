@@ -8,15 +8,15 @@ class User < ApplicationRecord
   CREDITS_ON_VERIFICATION = 5
   CREDITS_TO_ASK_QUESTION = 1
 
+  has_secure_password
+  has_one_attached :profile_picture
+  acts_as_taggable_on :topics
+
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
 
   before_create :generate_verification_token, :generate_api_token
   after_commit :send_verification_email
-
-  has_secure_password
-  has_one_attached :profile_picture
-  acts_as_taggable_on :topics
 
   with_options join_table: :followings, class_name: 'User' do |assoc|
     assoc.has_and_belongs_to_many :followers, foreign_key: 'followee_id', association_foreign_key: 'follower_id'
@@ -42,16 +42,16 @@ class User < ApplicationRecord
     credits > CREDITS_TO_ASK_QUESTION
   end
 
-  def resend_verification_mail
-    update(verification_token: generate_token(:verification), verified_at: nil)
-  end
-
   def enable
     update disabled_at: nil
   end
 
   def follows?(other_user_id)
     followee_ids.include? other_user_id
+  end
+
+  def resend_verification_mail
+    update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
   def send_reset_mail

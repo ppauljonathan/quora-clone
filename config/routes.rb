@@ -30,9 +30,7 @@ Rails.application.routes.draw do
 
   resources :abuse_reports, only: :create
 
-  resources :credit_packs, only: :index
-
-  resources :orders, param: :number do
+  resources :orders, only: %i[create show], param: :number do
     member do
       get :cancel
       get :checkout, to: 'orders#show'
@@ -42,6 +40,9 @@ Rails.application.routes.draw do
   end
 
   resources :credit_transactions, only: %i[index show]
+  resources :credit_logs, only: :index
+
+  resources :credit_packs, only: :index
   resources :credit_logs, only: :index
 
   resources :notifications, only: :index do
