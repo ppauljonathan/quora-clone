@@ -112,4 +112,13 @@
   color: var(--bright-white);
   border-color: var(--bright-white);
 }
+
+.admin-section {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--bright-white);
+  font-size: 5vh;
+}
  

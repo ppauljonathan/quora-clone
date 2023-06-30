@@ -60,9 +60,8 @@
   width: fit-content;
   height: fit-content;
   position: absolute;
-  top: 15vh;
-  right: 2%;
-  transform: translate(0%, -25%);
+  top: 0vh;
+  left: 125%;
 }
 
 .function-button {
@@ -76,6 +75,23 @@
   text-align: center;
   display: block;
   text-decoration: none;
+}
+
+.enable-button {
+  font-size: 2vh;
+  padding: 0.2em;
+  margin-bottom: 0.2em;
+  border: 2px solid var(--green);
+  background: var(--green);
+  color: var(--black);
+  border-radius: 0.5em;
+  text-align: center;
+  display: block;
+  text-decoration: none;
+}
+
+.enable-button:hover {
+  background: var(--bright-green);
 }
 
 .function-button:hover {
@@ -160,4 +176,30 @@
   transform: translate(5%, 15%);
   width: fit-content;
   height: fit-content;
+}
+
+.button-holder{
+  display: flex;
+}
+
+.button-holder > * {
+  margin-left: 2%;
+}
+
+.delete-table-btn {
+  margin: auto;
+}
+
+.tab-list {
+  display: flex;
+  width: fit-content;
+  position: relative;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.tab-list > * {
+  margin: 0.5%;
+  font-size: 3vh;
 }

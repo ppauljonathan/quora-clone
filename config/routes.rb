@@ -19,7 +19,7 @@ Rails.application.routes.draw do
   end
 
   resources :questions, param: :url_slug do
-    get :comments, on: :member
+      get :comments, on: :member
   end
 
   resources :answers, except: :index do
@@ -46,6 +46,19 @@ Rails.application.routes.draw do
 
   resources :notifications, only: :index do
     post :read_all, on: :collection
+  end
+
+  namespace :admin do
+    resources :users, only: %i[index] do
+      member do
+        post :enable
+        post :disable
+      end
+    end
+
+    resources :questions, param: :url_slug, only: %i[index] do
+      post :unpublish, on: :member
+    end
   end
 
   scope controller: :votes, path: 'votes' do

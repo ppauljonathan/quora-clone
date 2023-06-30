@@ -1,0 +1,6 @@
+<tr>
+  <td><%= question.title.truncate(20) %></td>
+  <td><%= question.user.name %></td>
+  <td><%= question.user.email %></td>
+  <td><%= button_to 'Unpublish', unpublish_admin_question_path(url_slug: question.url_slug), class: 'function-button delete-table-btn' %></td>
+</tr>

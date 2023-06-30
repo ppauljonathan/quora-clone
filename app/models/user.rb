@@ -34,6 +34,8 @@ class User < ApplicationRecord
   has_many :votes
   has_many :credit_logs
 
+  default_scope { order(created_at: :desc).where(disabled_at: nil) }
+
   enum :role, ROLES, default: :user
 
   def can_ask_question?
@@ -44,6 +46,10 @@ class User < ApplicationRecord
     update(verification_token: generate_token(:verification), verified_at: nil)
   end
 
+  def enable
+    update disabled_at: nil
+  end
+
   def follows?(other_user_id)
     followee_ids.include? other_user_id
   end
@@ -52,6 +58,10 @@ class User < ApplicationRecord
     return false unless generate_reset_token
 
     UserMailer.with(user_id: id).reset_email.deliver_later
+  end
+
+  def disable
+    update disabled_at: Time.now
   end
 
   def unfollow(user)

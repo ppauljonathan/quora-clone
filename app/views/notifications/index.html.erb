@@ -8,7 +8,8 @@
   </div>
 <% end%>
 
-
-<%= paginate @notifications %>
+<div class="user-pagination-links">
+  <%= paginate @notifications %>
+</div>
 
 <%= javascript_include_tag 'read_notifications' %>

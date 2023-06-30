@@ -2,6 +2,7 @@ class QuestionsController < ApplicationController
   before_action :set_question, only: %i[edit destroy comments show update]
   before_action :can_view?, only: %i[show comments]
   before_action :can_edit?, only: %i[edit destroy update]
+  before_action :check_admin, only: :unpublish
 
   skip_before_action :authorize, only: %i[index show comments]
 
@@ -73,10 +74,6 @@ class QuestionsController < ApplicationController
     return if @question.author?(current_user) || @question.published_at?
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
-  end
-
-  private def check_if_editable
-    redirect_back_or_to question_path(@question), notice: 'cannot edit this question' unless @question.editable?
   end
 
   private def question_params

@@ -1,0 +1,20 @@
+<%= render 'shared/message_blocks' %>
+
+<%= render 'admin/shared/tabs' %>
+
+<div class="bottom-panel-title">Questions</div>
+
+<table class="transactions-table">
+  <thead>
+    <td>Title</td>
+    <td>By</td>
+    <td>Email</td>
+    <td>Actions</td>
+  </thead>
+  <%= render @questions %>
+</table>
+
+<div class="user-pagination-links">
+  <%= paginate @questions %>
+</div>
+

@@ -1,4 +1,4 @@
-<tr style="background: <%= index.even? ? 'var(--white)' : 'var(--bright-white)'%>">
+<tr>
   <td class="sno"><%= index + 1 %></td>
   <td class="tid"><%= link_to credit_transaction.stripe_session_id.truncate(20),
                   credit_transaction %></td>
