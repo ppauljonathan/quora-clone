@@ -7,14 +7,7 @@
   STATUS: &nbsp;<%= render 'status', status: @credit_transaction.status %>
   </div>
   <br>
-  <div class="line-item">
-    <div class="form-heading">
-      <%= @order.credit_pack.credit_amount %>
-    </div>
-    <div class="credit-pack-description">credits</div>
-  </div>
-  <br>
   <div class="form-label" style="display: flex;">
-    Price: ₹<div id="induvidual_price"><%= @order.credit_pack.price %></div>
+    Order Amount: ₹<div id="induvidual_price"><%= @order.amount %></div>
   </div>
 </div>

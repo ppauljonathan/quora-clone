@@ -30,7 +30,12 @@
                            'navbar-buttons',
                            'navbar-button-highlight',
                            new_question_path %>
-     
+
+      <%= highlighted_link 'Your Cart',
+                           'navbar-buttons',
+                           'navbar-button-highlight',
+                           order_path(current_user.orders.in_cart.last) if current_user.orders.in_cart.exists? %>
+
       <%= button_to 'Logout', logout_path, class: 'navbar-form-buttons', method: :delete %>
     <% else %>
       <% if request.path == login_path %>

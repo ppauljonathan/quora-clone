@@ -36,6 +36,9 @@ Rails.application.routes.draw do
       get :checkout, to: 'orders#show'
       get :success
       post :checkout
+      post :update_cart
+      delete :remove_line_item
+      post :clear_cart
     end
   end
 

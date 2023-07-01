@@ -2,7 +2,7 @@
   <td class="sno"><%= index + 1 %></td>
   <td class="tid"><%= link_to credit_transaction.stripe_session_id.truncate(20),
                   credit_transaction %></td>
-  <td class="cred-pack"><%= credit_transaction.order.credit_pack.credit_amount %>/₹<%= credit_transaction.order.price %></td>
+  <td class="cred-pack"><%= credit_transaction.order.total_credits %>/₹<%= credit_transaction.order.amount %></td>
   <td class="time"><%= credit_transaction.created_at %></td>
   <td class="status" style="font-weight: 600"><%= render 'status', status: credit_transaction.status %></td>
 </tr>
