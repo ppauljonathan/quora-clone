@@ -64,17 +64,13 @@ class OrdersController < ApplicationController
   end
 
   private def check_pending_transaction
-    redirect_to user_path(current_user), alert: 'cannot access this page' unless @transaction.pending?
+    redirect_to user_path(current_user), alert: 'cannot access this page' unless @credit_transaction.pending?
   end
 
   private def find_existing_order
     current_user.orders.in_cart.last
   end
 
-  private def check_cart_not_empty
-    redirect_back_or_to credit_packs_path, notice: 'cart is empty' if @order.line_items.empty?
-  end
-  
   private def check
   end
 
