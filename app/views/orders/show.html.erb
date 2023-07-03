@@ -3,20 +3,25 @@
 <%= render 'shared/message_blocks' %>
 <div class="form-heading">Your Order</div>
 <br>
-    <div class="line-item">
-      <div class="form-heading">
-        <%= @order.credit_pack.credit_amount %>
+  <% @order.line_items.each do |line_item| %>
+    <div class='cart-quantity-change'>
+      <%= button_to 'Add', update_cart_order_path(@order, update_by: 1, line_item_id: line_item.id), class: 'form-cancel' %>
+      <%= button_to 'Subtract', update_cart_order_path(@order, update_by: -1, line_item_id: line_item.id), class: 'form-cancel' %>
+      <div class='user-card'>
+        <%= line_item.credit_pack.credit_amount %> credit pack
+        x <%= line_item.quantity %>
+        = <%= line_item.amount %>
       </div>
-      <div class="credit-pack-description">credits</div>
+      <%= button_to 'Remove' , remove_line_item_order_path(@order, line_item_id: line_item.id), method: :delete, class: 'form-submit' %>
     </div>
-    <br>
-    <div class="form-label" style="display: flex;">
-      Price: ₹<div id="induvidual_price"><%= @order.credit_pack.price %></div>
-    </div>
-    <br>
+  <% end %>
 
+  <div class="form-heading">
+    Total: <%= @order.amount %>
+  </div>
   <div class="other-buttons">
     <%= button_to 'Proceed to Checkout', checkout_order_path, class: 'form-submit', style: 'margin-left: 5%; width: fit-content', data: { turbo: false } %>
     <%= link_to 'Back', credit_packs_path, class: 'form-cancel', style: 'margin-left: 5%; padding: auto;' %>
+    <%= button_to 'Clear Cart', clear_cart_order_path(@order), class: 'form-submit', style: 'margin-left: 5%; width: fit-content', remote: true%>
   </div>
 </div>

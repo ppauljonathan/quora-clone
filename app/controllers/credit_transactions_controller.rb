@@ -3,6 +3,7 @@ class CreditTransactionsController < ApplicationController
 
   def index
     @credit_transactions = current_user.credit_transactions
+                                       .includes(order: { line_items: :credit_pack })
   end
 
   private def set_credit_transaction

@@ -5,7 +5,7 @@ class CreateOrders < ActiveRecord::Migration[7.0]
       t.references :user, null: false, foreign_key: true
       t.integer :status
       t.string :number, null: false, unique: true
-      t.integer :amount
+      t.decimal :amount, precision: 7, scale: 2
 
       t.timestamps
     end
