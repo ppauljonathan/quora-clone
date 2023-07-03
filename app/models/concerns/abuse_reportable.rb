@@ -16,7 +16,9 @@ module AbuseReportable
 
   def unpublish
     update_column(:published_at, nil)
-    user.update_credits(-CREDITS_AWARDED, "#{self.class} unpublished") if net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
+    if try(net_upvote_count) >= MIN_NET_UPVOTES_FOR_CREDIT
+      user.update_credits(-CREDITS_AWARDED, "#{self.class} unpublished")
+    end
   end
 
   private def publish
