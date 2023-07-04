@@ -71,9 +71,6 @@ class OrdersController < ApplicationController
     current_user.orders.in_cart.last
   end
 
-  private def check
-  end
-
   private def set_line_item
     @line_item = LineItem.find_by_id(params[:line_item_id])
   end
