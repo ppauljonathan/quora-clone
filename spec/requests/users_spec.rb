@@ -13,13 +13,13 @@ RSpec.describe 'User requests', type: :request do
     it 'should redirect if user not found' do
       user_id = -1
       get user_path(id: user_id)
-      expect(response.status).to be(302)
+      expect(response).to have_http_status(302)
       expect(flash[:alert]).to eq('user not found')
     end
 
     it 'should render users show page' do
       get user_path(user)
-      expect(response.status).to be(200)
+      expect(response).to have_http_status(200)
       expect(request).to have_rendered('show')
     end
   end
@@ -44,7 +44,7 @@ RSpec.describe 'User requests', type: :request do
 
         it 'should redirect' do
           patch user_path(other_user)
-          expect(response.status).to be(302)
+          expect(response).to have_http_status(302)
           expect(flash[:notice]).to eq('cannot access this path')
         end
       end
@@ -54,13 +54,13 @@ RSpec.describe 'User requests', type: :request do
           it 'should not update' do
             patch user_path(user, user: { name: '' })
             expect(request).to have_rendered('edit')
-            expect(response.status).to be(422)
+            expect(response).to have_http_status(422)
           end
         end
         context 'with valid params' do
           it 'should update' do
             patch user_path(user, user: { name: 'Updated Name' })
-            expect(response.status).to be(302)
+            expect(response).to have_http_status(302)
             expect(flash[:notice]).to eq('succesfully updated')
           end
         end
@@ -81,7 +81,7 @@ RSpec.describe 'User requests', type: :request do
 
         it 'should redirect' do
           delete user_path(other_user)
-          expect(response.status).to be(302)
+          expect(response).to have_http_status(302)
           expect(flash[:notice]).to eq('cannot access this path')
         end
       end
@@ -89,7 +89,7 @@ RSpec.describe 'User requests', type: :request do
       context 'and accesses their update action' do
         it 'should delete user' do
           delete user_path(user)
-          expect(response.status).to be(302)
+          expect(response).to have_http_status(302)
           expect(flash[:notice]).to eq('User deleted Successfully')
         end
       end
@@ -112,14 +112,14 @@ RSpec.describe 'User requests', type: :request do
 
       it 'should not be able to follow themself' do
         post follow_user_path(user)
-        expect(response.status).to be(302)
+        expect(response).to have_http_status(302)
         expect(flash[:notice]).to eq('cannot follow self')
       end
 
       it 'should be able to follow other user' do
         other_user = create :user
         post follow_user_path(other_user)
-        expect(response.status).to be(302)
+        expect(response).to have_http_status(302)
         expect(flash[:notice]).to eq('successful')
         expect(other_user.followers).to include(user)
       end
@@ -136,7 +136,7 @@ RSpec.describe 'User requests', type: :request do
 
       it 'should not be able to unfollow themself' do
         post unfollow_user_path(user)
-        expect(response.status).to be(302)
+        expect(response).to have_http_status(302)
         expect(flash[:notice]).to eq('cannot follow self')
       end
 
@@ -144,7 +144,7 @@ RSpec.describe 'User requests', type: :request do
         other_user = create :user
         other_user.followers << user
         post unfollow_user_path(other_user)
-        expect(response.status).to be(302)
+        expect(response).to have_http_status(302)
         expect(flash[:notice]).to eq('successful')
         expect(other_user.followers).not_to include(user)
       end
