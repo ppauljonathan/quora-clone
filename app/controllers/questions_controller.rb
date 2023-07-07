@@ -71,7 +71,7 @@ class QuestionsController < ApplicationController
   end
 
   private def can_view?
-    return if @question.author?(current_user) || @question.published_at?
+    return if @question.published_at? || @question.author?(current_user)
 
     redirect_back_or_to root_path, alert: 'Cannot access this path'
   end
@@ -81,7 +81,8 @@ class QuestionsController < ApplicationController
   end
 
   private def set_question
-    @question = Question.includes(:files_attachments,
+    @question = Question.unscoped
+                        .includes(:files_attachments,
                                   { user: :profile_picture_attachment })
                         .find_by_url_slug(params[:url_slug])
     redirect_back_or_to questions_path, alert: 'question not found' unless @question
