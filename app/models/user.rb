@@ -65,7 +65,7 @@ class User < ApplicationRecord
   end
 
   def unfollow(user)
-    follwees.delete user
+    followees.delete user
   end
 
   def update_credits(amount, remark)

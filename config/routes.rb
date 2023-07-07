@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users, except: %i[new create] do
+  resources :users, except: %i[new create index] do
     member do
       get :questions
       get :drafts
