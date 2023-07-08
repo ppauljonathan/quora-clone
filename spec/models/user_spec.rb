@@ -42,6 +42,8 @@ RSpec.describe User, type: :model do
     it { should have_many :comments }
     it { should have_many :votes }
     it { should have_many :credit_logs }
+    it { should have_one_attached :profile_picture}
+    it { should have_secure_password }
   end
 
   let(:user) { create :user }
