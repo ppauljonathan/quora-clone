@@ -97,5 +97,7 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0.5'
   gem 'rspec-rails', '~> 6.0.3'
   gem "selenium-webdriver"
+  gem 'shoulda-callback-matchers', '~> 1.1'
+  gem 'shoulda-matchers', '~> 5.3.0'
   gem "webdrivers"
 end

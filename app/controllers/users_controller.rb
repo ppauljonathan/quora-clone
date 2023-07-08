@@ -33,11 +33,11 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @user.followers << current_user
-  rescue ActiveRecord::RecordNotUnique
-    redirect_back_or_to @user, alert: 'already followed'
-  else
-    redirect_back_or_to @user, notice: 'successful'
+    if current_user.follow(@user)
+      redirect_back_or_to @user, notice: 'successful'
+    else
+      redirect_back_or_to @user, alert: 'already followed'
+    end
   end
 
   def followers
