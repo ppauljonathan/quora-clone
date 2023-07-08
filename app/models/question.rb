@@ -26,6 +26,8 @@ class Question < ApplicationRecord
   has_rich_text :content
 
   def author?(author)
+    return false unless author
+
     author.id == user.id
   end
 
