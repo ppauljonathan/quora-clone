@@ -14,8 +14,6 @@ class Order < ApplicationRecord
 
   enum :status, STATUSES, default: :in_cart
 
-  delegate :price, to: :credit_pack
-
   def checkout(success_url, cancel_url)
     transaction do
       credit_transaction = credit_transactions.create(user_id: user_id)
