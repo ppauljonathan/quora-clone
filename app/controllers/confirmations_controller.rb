@@ -6,9 +6,7 @@ class ConfirmationsController < ApplicationController
   skip_before_action :authorize
 
   def resend
-    return unless @user.resend_verification_mail
-
-    flash[:token_notice] = 'Verification email sent'
+    flash[:token_notice] = 'Verification email sent' if @user.resend_verification_mail
     redirect_to login_path
   end
 
