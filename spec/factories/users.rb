@@ -10,4 +10,8 @@ FactoryBot.define do
   trait :admin do
     role { :admin }
   end
+
+  trait :disabled do
+    disabled_at { Time.now }
+  end
 end

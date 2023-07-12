@@ -15,10 +15,11 @@ module AbuseReportable
   end
 
   def unpublish
-    update_column(:published_at, nil)
-    if try(net_upvote_count) >= MIN_NET_UPVOTES_FOR_CREDIT
+    if self.class.name != 'Question' && net_upvote_count >= MIN_NET_UPVOTES_FOR_CREDIT
       user.update_credits(-CREDITS_AWARDED, "#{self.class} unpublished")
     end
+
+    update_column(:published_at, nil)
   end
 
   private def publish

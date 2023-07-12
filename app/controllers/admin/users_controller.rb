@@ -16,7 +16,7 @@ class Admin::UsersController < Admin::BaseController
     redirect_to admin_users_path
   end
 
-  def set_user
+  private def set_user
     @user = User.unscoped.find_by_id(params[:id])
     redirect_back_or_to admin_users_path, notice: 'user not found' unless @user
   end
