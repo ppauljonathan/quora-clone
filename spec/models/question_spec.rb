@@ -7,6 +7,8 @@ RSpec.describe Question, type: :model do
 
   subject { build :question, user: user }
 
+  it_behaves_like 'Abuse Reportable'
+
   describe 'validations' do
     it { should validate_uniqueness_of :title }
     it { should validate_presence_of :title }
@@ -73,6 +75,13 @@ RSpec.describe Question, type: :model do
       it 'should be editable otherwise' do
         expect(question).to be_editable
       end
+    end
+  end
+
+  describe '#unpublish' do
+    it 'should unpublish question' do
+      question.unpublish
+      expect(question).to be_draft
     end
   end
 end

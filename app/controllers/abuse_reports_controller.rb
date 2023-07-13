@@ -10,7 +10,7 @@ class AbuseReportsController < ApplicationController
 
   private def report_params
     params.require(:abuse_report).permit(:reportable_type,
-                                   :reportable_id,
-                                   :content)
+                                         :reportable_id,
+                                         :content)
   end
 end
