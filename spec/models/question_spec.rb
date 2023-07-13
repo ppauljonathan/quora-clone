@@ -8,6 +8,7 @@ RSpec.describe Question, type: :model do
   subject { build :question, user: user }
 
   it_behaves_like 'Abuse Reportable'
+  it_behaves_like 'Notifiable'
 
   describe 'validations' do
     it { should validate_uniqueness_of :title }
