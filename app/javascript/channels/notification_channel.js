@@ -42,7 +42,6 @@ consumer.subscriptions.create("NotificationChannel", {
     if(!(url == '' || url == 'questions')) return;
 
     let elem = document.getElementsByClassName('autoreload-notification')[0]
-    console.log(elem)
     elem.style.visibility="visible"
   }
 });

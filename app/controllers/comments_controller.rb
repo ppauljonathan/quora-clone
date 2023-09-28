@@ -30,7 +30,7 @@ class CommentsController < ApplicationController
   private def set_comment
     @comment = Comment.includes(:rich_text_content,
                                 commentable: [:rich_text_content,
-                                              { user: :profile_picture_attachment},
+                                              { user: :profile_picture_attachment },
                                               :files_attachments])
                       .find_by_id(params[:id])
     redirect_back_or_to current_user, alert: 'comment not found' unless @comment
