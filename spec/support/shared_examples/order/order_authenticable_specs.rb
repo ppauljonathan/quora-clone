@@ -1,0 +1,10 @@
+RSpec.shared_examples 'Order Authenticable' do |method, path_helper|
+  context 'when user not logged in' do
+    it 'should redirect' do
+      path = path_helper == :orders_path ? public_send(:orders_path) : public_send(path_helper, order)
+      public_send(method, path)
+      expect(response).to have_http_status(302)
+      expect(flash[:alert]).to eq('Please Log in to continue')
+    end
+  end
+end

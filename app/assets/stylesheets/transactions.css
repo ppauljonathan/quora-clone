@@ -50,3 +50,11 @@ tr:nth-child(even) {
 .table-wrap {
   width: 100%;
 }
+
+.cart-quantity-change {
+  display: flex;
+}
+
+.cart-quantity-change > *{
+  font-size: 3vh;
+}

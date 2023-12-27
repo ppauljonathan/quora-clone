@@ -34,7 +34,7 @@ module Votable
   end
 
   def vote_by_user(user)
-    vote = votes.find { |v| v.user_id == user.id }
+    vote = votes.find_by_user_id(user.id)
     vote&.vote_type
   end
 

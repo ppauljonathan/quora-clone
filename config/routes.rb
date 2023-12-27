@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   root 'questions#index'
 
-  resources :users, except: %i[new create] do
+  resources :users, except: %i[new create index] do
     member do
       get :questions
       get :drafts
@@ -36,6 +36,9 @@ Rails.application.routes.draw do
       get :checkout, to: 'orders#show'
       get :success
       post :checkout
+      post :update_cart
+      delete :remove_line_item
+      post :clear_cart
     end
   end
 

@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, except: %i[index]
+  before_action :set_user
   before_action :check_if_current_user, only: %i[edit update drafts destroy]
   before_action :check_if_not_current_user, only: %i[follow unfollow]
 
-  skip_before_action :authorize, only: %i[index show questions answers comments followers following]
+  skip_before_action :authorize, only: %i[index show questions answers comments followers followees]
 
   def answers
     @answers = @user.answers
@@ -33,11 +33,11 @@ class UsersController < ApplicationController
   end
 
   def follow
-    @user.followers << current_user
-  rescue ActiveRecord::RecordNotUnique
-    redirect_back_or_to @user, alert: 'already followed'
-  else
-    redirect_back_or_to @user, notice: 'successful'
+    if current_user.follow(@user)
+      redirect_back_or_to @user, notice: 'successful'
+    else
+      redirect_back_or_to @user, alert: 'already followed'
+    end
   end
 
   def followers
@@ -56,10 +56,6 @@ class UsersController < ApplicationController
     current_user.unfollow @user
 
     redirect_back_or_to @user, notice: 'successful'
-  end
-
-  def index
-    @users = User.all
   end
 
   def questions

@@ -46,6 +46,12 @@ class User < ApplicationRecord
     update disabled_at: nil
   end
 
+  def follow(other_user)
+    followees << other_user
+  rescue ActiveRecord::RecordNotUnique
+    false
+  end
+
   def follows?(other_user_id)
     followee_ids.include? other_user_id
   end
@@ -65,7 +71,7 @@ class User < ApplicationRecord
   end
 
   def unfollow(user)
-    follwees.delete user
+    followees.delete user
   end
 
   def update_credits(amount, remark)

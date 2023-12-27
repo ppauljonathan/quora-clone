@@ -21,7 +21,7 @@ class CreditTransaction < ApplicationRecord
     transaction do
       successful!
       order.successful!
-      user.update_credits(@order.credit_pack.credit_amount, 'purchased credits from store')
+      user.update_credits(order.total_credits, 'purchased credits from store')
     end
   end
 end

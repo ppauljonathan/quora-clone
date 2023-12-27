@@ -7,15 +7,12 @@ class Order < ApplicationRecord
 
   before_create :set_number
 
-  belongs_to :credit_pack
   belongs_to :user
   has_many :credit_transactions
-
-  validates :amount, numericality: { greater_than_or_equal_to: 0.1 }
+  has_many :line_items, dependent: :destroy
+  has_many :credit_packs, through: :line_items
 
   enum :status, STATUSES, default: :in_cart
-
-  delegate :price, to: :credit_pack
 
   def checkout(success_url, cancel_url)
     transaction do
@@ -26,8 +23,21 @@ class Order < ApplicationRecord
     end
   end
 
+  def clear_cart
+    line_items.destroy_all
+  end
+
+  def set_amount
+    update_columns(amount: line_items.pluck(:amount)
+                             .reduce(:+))
+  end
+
   def to_param
     number
+  end
+
+  def total_credits
+    line_items.sum(&:total_credits)
   end
 
   private def generate_stripe_urls(success_url, cancel_url, transaction_id)
@@ -38,16 +48,12 @@ class Order < ApplicationRecord
   end
 
   private def generate_stripe_session(success_url, cancel_url)
-    line_items = [{ price_data: { currency: 'inr',
-                                  unit_amount: (price * 100).to_i,
-                                  product_data: { name: "#{credit_pack.credit_amount} Credit Pack",
-                                                  description: credit_pack.description } },
-                    quantity: 1 }]
+    line_item_data = line_items.map(&:generate_stripe_checkout_data)
 
     Stripe::Checkout::Session.create({ success_url: success_url,
                                        cancel_url: cancel_url,
                                        mode: 'payment',
-                                       line_items: line_items })
+                                       line_items: line_item_data })
   end
 
   private def set_number

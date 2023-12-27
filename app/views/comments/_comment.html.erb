@@ -1,5 +1,5 @@
 <div class="answer-show">
-<% if request.url.match? users_path %>
+<% if request.url.match? '/users' %>
   <div class="question-on">
     <%= commented_on comment %>
     <br>
@@ -15,7 +15,7 @@
   </div>
 <% end %>
 
-<% unless request.url.match? users_path %>
+<% unless request.url.match? '/users' %>
   <button class="edit-question-button" onclick="reportAbuse('<%= comment.class %>', <%= comment.id %>)">Report Abuse</button>
 <% end %>
 <%= link_to 'Edit', edit_comment_path(comment.id), class: 'edit-question-button' if current_user == comment.user %>

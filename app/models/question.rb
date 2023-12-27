@@ -26,6 +26,8 @@ class Question < ApplicationRecord
   has_rich_text :content
 
   def author?(author)
+    return false unless author
+
     author.id == user.id
   end
 
@@ -46,7 +48,7 @@ class Question < ApplicationRecord
   end
 
   private def generate_url_slug
-    return self.url_slug = title.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
+    return self.url_slug = title&.parameterize if words_in_title < URL_SLUG_WORD_LENGTH
 
     sample_slug = title.truncate_words(URL_SLUG_WORD_LENGTH)
                        .parameterize
@@ -61,6 +63,6 @@ class Question < ApplicationRecord
   end
 
   private def words_in_title
-    title.split.count
+    title&.split&.count || 0
   end
 end

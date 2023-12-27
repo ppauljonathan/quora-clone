@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_29_095631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -119,6 +119,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
     t.index ["followee_id", "follower_id"], name: "unique_followers", unique: true
   end
 
+  create_table "line_items", force: :cascade do |t|
+    t.bigint "order_id", null: false
+    t.bigint "credit_pack_id", null: false
+    t.decimal "amount", precision: 9, scale: 2
+    t.integer "quantity", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_pack_id"], name: "index_line_items_on_credit_pack_id"
+    t.index ["order_id"], name: "index_line_items_on_order_id"
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.string "notifiable_type", null: false
     t.bigint "notifiable_id", null: false
@@ -132,14 +143,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.bigint "credit_pack_id", null: false
     t.bigint "user_id", null: false
     t.integer "status"
     t.string "number", null: false
-    t.integer "amount"
+    t.decimal "amount", precision: 7, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["credit_pack_id"], name: "index_orders_on_credit_pack_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
@@ -222,8 +231,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_15_131831) do
   add_foreign_key "credit_logs", "users"
   add_foreign_key "credit_transactions", "orders"
   add_foreign_key "credit_transactions", "users"
+  add_foreign_key "line_items", "credit_packs"
+  add_foreign_key "line_items", "orders"
   add_foreign_key "notifications", "users"
-  add_foreign_key "orders", "credit_packs"
   add_foreign_key "orders", "users"
   add_foreign_key "questions", "users"
   add_foreign_key "taggings", "tags"
