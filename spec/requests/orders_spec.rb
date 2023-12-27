@@ -1,6 +1,4 @@
 require 'rails_helper'
-
-STRIPE_URL_REGEX = %r{^https://checkout.stripe.com/c/pay}
 FAILED_PAYMENT_SESSION = 'cs_test_b1SwgeHJqV2GHHrPWu6A5lWcIdJKKA90MBVAsP0SuvQ6Sc755mKSIKBlEs'.freeze
 SUCCESSFUL_PAYMENT_SESSION = 'cs_test_a1jtE3oyoCMsqWudZXViqTiPWaCtxPBnkMGrN1MAocmOvgMYB5FEWwNnDQ'.freeze
 
@@ -93,6 +91,15 @@ RSpec.describe "Orders", type: :request do
   end
 
   describe 'POST /orders/:number/checkout' do
+    let(:stripe_session) do
+      OpenStruct.new({
+        id: '123',
+        url: '/stripeUrl'
+      })
+    end
+
+    before { allow(Stripe::Checkout::Session).to receive(:create).and_return(stripe_session) }
+
     it_behaves_like 'Order Authenticable', :post, :checkout_order_path
 
     context 'user logged in' do
@@ -104,7 +111,7 @@ RSpec.describe "Orders", type: :request do
       it 'should redirect to sripe url' do
         post(checkout_order_path(order))
         expect(response).to have_http_status(302)
-        expect(response.location).to match_regex(STRIPE_URL_REGEX)
+        expect(response.location).to eq 'http://www.example.com/stripeUrl'
       end
     end
   end
@@ -175,6 +182,8 @@ RSpec.describe "Orders", type: :request do
       it_behaves_like 'Reject Empty Cart', :success
 
       context 'on unpaid transaction' do
+        let(:stripe_response) { { payment_status: 'unpaid' } }
+        before { allow(Stripe::Checkout::Session).to receive(:retrieve).and_return(stripe_response) }
         before { create(:line_item, order: order) }
 
         it 'should redirect' do
@@ -186,6 +195,9 @@ RSpec.describe "Orders", type: :request do
       end
 
       context 'on paid transaction' do
+        let(:stripe_response) { { payment_status: 'paid' } }
+        before { allow(Stripe::Checkout::Session).to receive(:retrieve).and_return(stripe_response) }
+
         before { create(:line_item, order: order) }
 
         it 'should render success page' do
@@ -207,6 +219,9 @@ RSpec.describe "Orders", type: :request do
       it_behaves_like 'Reject Empty Cart', :cancel
 
       context 'on paid transaction' do
+        let(:stripe_response) { { payment_status: 'paid' } }
+        before { allow(Stripe::Checkout::Session).to receive(:retrieve).and_return(stripe_response) }
+
         before { create(:line_item, order: order) }
 
         it 'should redirect' do
@@ -217,6 +232,9 @@ RSpec.describe "Orders", type: :request do
       end
 
       context 'on unpaid transaction' do
+        let(:stripe_response) { { payment_status: 'unpaid' } }
+        before { allow(Stripe::Checkout::Session).to receive(:retrieve).and_return(stripe_response) }
+
         before { create(:line_item, order: order) }
 
         it 'should render cancel page' do

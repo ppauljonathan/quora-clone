@@ -58,7 +58,7 @@ gem 'trix', '~> 0.10.1'
 
 gem 'fiddle', '~> 1.1.1'
 
-gem 'poppler', '~> 4.1.5'
+# gem 'poppler', '~> 4.1.5'
 
 gem 'ransack', '~> 4.0.0'
 

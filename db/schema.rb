@@ -146,7 +146,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_29_095631) do
     t.bigint "user_id", null: false
     t.integer "status"
     t.string "number", null: false
-    t.decimal "amount", precision: 7, scale: 2
+    t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"

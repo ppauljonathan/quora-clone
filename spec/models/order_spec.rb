@@ -20,11 +20,21 @@ RSpec.describe Order, type: :model do
   end
 
   describe '#checkout' do
+    let(:stripe_session) do
+      OpenStruct.new({
+        id: '123',
+        url: 'stripeUrl'
+      })
+    end
+
+    before { allow(Stripe::Checkout::Session).to receive(:create).and_return(stripe_session) }
+
     it 'should generate stripe session and credit transaction' do
       create :line_item, order: order
       stripe_session_url = order.checkout SUCCESS_URL, CANCEL_URL
       expect(order.credit_transactions).not_to be_empty
-      expect(stripe_session_url).to match_regex(STRIPE_URL_REGEX)
+      expect(stripe_session_url).to eq stripe_session.url
+      expect(order.credit_transactions.last.stripe_session_id).to eq stripe_session.id
     end
   end
 
